@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { animate } from 'framer-motion';
 
 import Logo from './logo';
 
@@ -15,7 +16,14 @@ export default function Sidebar() {
 				selectedNavTab + 1
 			] as HTMLButtonElement;
 
-			tabRef.current.style.top = `${navTab.offsetTop}px`;
+			animate(
+				tabRef.current,
+				{ top: `${navTab.offsetTop}px` },
+				{
+					duration: 0.15,
+					ease: 'easeOut',
+				}
+			);
 		}
 	}, [selectedNavTab]);
 

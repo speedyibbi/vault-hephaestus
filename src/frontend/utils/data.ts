@@ -13,8 +13,9 @@ export const navigationTabs = [
 		name: 'Settings',
 		icon: Gear,
 	},
-	{
-		name: 'Exit',
-		icon: ArrowOut,
-	},
 ];
+
+export const exitTab = {
+	name: 'Exit',
+	icon: ArrowOut,
+};

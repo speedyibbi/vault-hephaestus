@@ -1,6 +1,6 @@
 import Logo from './logo';
 
-import { navigationTabs } from '../utils/data';
+import { navigationTabs, exitTab } from '../utils/data';
 
 export default function Sidebar() {
 	return (
@@ -9,7 +9,7 @@ export default function Sidebar() {
 			<nav className='flex-grow flex flex-col place-content-start place-items-start gap-5'>
 				{navigationTabs.map((tab) => (
 					<button
-						className='h-14 px-6 flex place-content-start place-items-center gap-6'
+						className='w-full h-14 px-6 flex place-content-start place-items-center gap-6 text-muted hover:text-foreground transition-colors duration-150'
 						style={{
 							marginTop: tab.name === 'Exit' ? 'auto' : '0px',
 						}}
@@ -19,6 +19,10 @@ export default function Sidebar() {
 					</button>
 				))}
 			</nav>
+			<button className='w-full h-14 mt-auto px-6 flex place-content-start place-items-center gap-6 text-muted hover:text-foreground transition-colors duration-150'>
+				<exitTab.icon className='w-5 stroke-current' />
+				<p className='leading-none text-xl'>{exitTab.name}</p>
+			</button>
 		</aside>
 	);
 }

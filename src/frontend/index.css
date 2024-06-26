@@ -2,11 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+	--foreground: #ffffff;
+	--background: #0a0a10;
+	--muted: #ffffff80;
+	--accent: #1d1d2f;
+}
+
 html,
 body,
 * {
 	margin: 0;
 	padding: 0;
+	color: var(--foreground);
 	box-sizing: border-box;
+	background-color: var(--background);
 	scroll-behavior: smooth;
 }

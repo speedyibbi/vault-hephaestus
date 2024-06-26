@@ -4,11 +4,16 @@ import { animate } from 'framer-motion';
 import Logo from './logo';
 
 import { navigationTabs, exitTab } from '../utils/data';
+import { useTabStore } from '../utils/tab-store';
 
 export default function Sidebar() {
+	const tab = useTabStore((state) => state.tab);
+	const setTab = useTabStore((state) => state.setTab);
 	const tabRef = useRef<HTMLSpanElement>(null);
 	const navRef = useRef<HTMLDivElement>(null);
-	const [selectedNavTab, setSelectedTab] = useState(0);
+	const [selectedNavTab, setSelectedTab] = useState(
+		navigationTabs.findIndex((navTab) => navTab.name === tab)
+	);
 
 	useEffect(() => {
 		if (tabRef.current && navRef.current) {
@@ -24,6 +29,8 @@ export default function Sidebar() {
 					ease: 'easeOut',
 				}
 			);
+
+			setTab(navigationTabs[selectedNavTab].name);
 		}
 	}, [selectedNavTab]);
 

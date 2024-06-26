@@ -54,7 +54,7 @@ export default function Sidebar() {
 					</button>
 				))}
 			</nav>
-			<button className='w-full h-14 mt-auto px-6 flex place-content-start place-items-center gap-6 text-muted hover:text-foreground transition-colors duration-150'>
+			<button className='w-full h-14 mt-auto px-6 flex place-content-start place-items-center gap-6 text-muted hover:text-danger transition-colors duration-150'>
 				<exitTab.icon className='w-5 stroke-current' />
 				<p className='leading-none text-xl'>{exitTab.name}</p>
 			</button>

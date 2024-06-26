@@ -9,6 +9,7 @@ module.exports = {
 				background: 'var(--background)',
 				muted: 'var(--muted)',
 				accent: 'var(--accent)',
+				danger: 'var(--danger)',
 			},
 		},
 	},

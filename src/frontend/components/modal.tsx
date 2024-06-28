@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
 
 interface Props {
 	text?: string;
@@ -35,8 +36,11 @@ export default function Modal({
 	}, []);
 
 	return (
-		<dialog
+		<motion.dialog
 			ref={modalRef}
+			initial={{ scale: 0 }}
+			animate={{ scale: 1 }}
+			transition={{ duration: 0.15 }}
 			className='px-20 py-10 justify-self-center top-1/3 rounded-2xl bg-white drop-shadow-2xl'
 		>
 			<p className='mb-12 font-medium text-xl text-center leading-none tracking-tighter'>
@@ -56,6 +60,6 @@ export default function Modal({
 					{buttonTwoText}
 				</button>
 			</span>
-		</dialog>
+		</motion.dialog>
 	);
 }

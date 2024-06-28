@@ -1,3 +1,5 @@
+import { AnimatePresence } from 'framer-motion';
+
 import MainLayout from './layouts/main-layout';
 
 import { useTabStore } from './utils/tab-store';
@@ -7,7 +9,11 @@ export default function App() {
 
 	return (
 		<div className='w-screen h-screen relative overflow-hidden'>
-			<MainLayout>{tab.name}</MainLayout>
+			<MainLayout>
+				<AnimatePresence>
+					<tab.page />
+				</AnimatePresence>
+			</MainLayout>
 		</div>
 	);
 }

@@ -17,22 +17,22 @@ export default function Sidebar() {
 	);
 
 	useEffect(() => {
-		if (tabRef.current && navRef.current) {
-			const navTab = navRef.current.children[
-				selectedNavTab + 1
-			] as HTMLButtonElement;
+		if (!tabRef.current || !navRef.current) return;
 
-			animate(
-				tabRef.current,
-				{ top: `${navTab.offsetTop}px` },
-				{
-					duration: 0.15,
-					ease: 'easeOut',
-				}
-			);
+		const navTab = navRef.current.children[
+			selectedNavTab + 1
+		] as HTMLButtonElement;
 
-			setTab(navigationTabs[selectedNavTab]);
-		}
+		animate(
+			tabRef.current,
+			{ top: `${navTab.offsetTop}px` },
+			{
+				duration: 0.15,
+				ease: 'easeOut',
+			}
+		);
+
+		setTab(navigationTabs[selectedNavTab]);
 	}, [selectedNavTab]);
 
 	return (

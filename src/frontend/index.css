@@ -19,6 +19,14 @@ body,
 	scroll-behavior: smooth;
 }
 
+*:focus {
+	outline-color: var(--muted);
+}
+
+*::backdrop {
+	backdrop-filter: blur(1.6rem);
+}
+
 body {
 	color: var(--foreground);
 	background-color: var(--background);

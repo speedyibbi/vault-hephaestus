@@ -50,4 +50,5 @@ body {
 	font-weight: 500;
 	color: var(--foreground);
 	background-color: var(--background);
+	user-select: none;
 }

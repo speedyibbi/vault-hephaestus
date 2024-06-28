@@ -4,6 +4,12 @@ module.exports = {
 	content: ['./src/frontend/**/*.{html,js,jsx,ts,tsx}'],
 	theme: {
 		extend: {
+			minWidth: {
+				fit: 'fit-content',
+			},
+			width: {
+				128: '32rem',
+			},
 			colors: {
 				foreground: 'var(--foreground)',
 				background: 'var(--background)',

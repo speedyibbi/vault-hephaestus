@@ -9,10 +9,11 @@ import { useTabStore } from '../utils/tab-store';
 export default function Sidebar() {
 	const tab = useTabStore((state) => state.tab);
 	const setTab = useTabStore((state) => state.setTab);
+
 	const tabRef = useRef<HTMLSpanElement>(null);
 	const navRef = useRef<HTMLDivElement>(null);
 	const [selectedNavTab, setSelectedTab] = useState(
-		navigationTabs.findIndex((navTab) => navTab.name === tab)
+		navigationTabs.findIndex((navTab) => navTab.name === tab.name)
 	);
 
 	useEffect(() => {
@@ -30,7 +31,7 @@ export default function Sidebar() {
 				}
 			);
 
-			setTab(navigationTabs[selectedNavTab].name);
+			setTab(navigationTabs[selectedNavTab]);
 		}
 	}, [selectedNavTab]);
 

@@ -3,11 +3,11 @@ import { create } from 'zustand';
 import { navigationTabs } from './data';
 
 interface Store {
-	tab: string;
-	setTab: (tab: string) => void;
+	tab: NavigationTab;
+	setTab: (tab: NavigationTab) => void;
 }
 
 export const useTabStore = create<Store>((set) => ({
-	tab: navigationTabs[0].name,
-	setTab: (tab: string) => set({ tab }),
+	tab: navigationTabs[0],
+	setTab: (tab) => set({ tab }),
 }));

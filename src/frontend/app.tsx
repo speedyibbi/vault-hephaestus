@@ -7,7 +7,7 @@ export default function App() {
 
 	return (
 		<div className='w-screen h-screen relative overflow-hidden'>
-			<MainLayout>{tab}</MainLayout>
+			<MainLayout>{tab.name}</MainLayout>
 		</div>
 	);
 }

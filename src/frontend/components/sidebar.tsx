@@ -58,13 +58,13 @@ export default function Sidebar() {
 						}}
 					>
 						<tab.icon className='w-5 stroke-current' />
-						<p className='leading-none text-xl'>{tab.name}</p>
+						<p className='font-medium text-xl leading-none tracking-tighter'>{tab.name}</p>
 					</button>
 				))}
 			</nav>
 			<button className='w-full h-14 mt-auto px-6 flex place-content-start place-items-center gap-6 text-muted hover:text-danger transition-colors duration-150'>
 				<exitTab.icon className='w-5 stroke-current' />
-				<p className='leading-none text-xl'>{exitTab.name}</p>
+				<p className='font-medium text-xl leading-none tracking-tighter'>{exitTab.name}</p>
 			</button>
 		</aside>
 	);

@@ -3,7 +3,7 @@ import PasswordGenerator from '../pages/password-generator';
 import Settings from '../pages/settings';
 import { Shield, Key, Gear, ArrowOut } from '../components/icons';
 
-export const navigationTabs: NavigationTab[] = [
+export const navigationTabs: INavigationTab[] = [
 	{
 		name: 'Credentials',
 		icon: Shield,

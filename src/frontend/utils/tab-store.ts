@@ -3,8 +3,8 @@ import { create } from 'zustand';
 import { navigationTabs } from './data';
 
 interface Store {
-	tab: NavigationTab;
-	setTab: (tab: NavigationTab) => void;
+	tab: INavigationTab;
+	setTab: (tab: INavigationTab) => void;
 }
 
 export const useTabStore = create<Store>((set) => ({

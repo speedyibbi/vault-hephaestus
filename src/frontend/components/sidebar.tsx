@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { animate } from 'framer-motion';
 
 import Logo from './logo';
+import Modal from './modal';
 
 import { navigationTabs, exitTab } from '../utils/data';
 import { useTabStore } from '../utils/tab-store';
@@ -15,6 +16,7 @@ export default function Sidebar() {
 	const [selectedNavTab, setSelectedTab] = useState(
 		navigationTabs.findIndex((navTab) => navTab.name === tab.name)
 	);
+	const [exitModalOpen, setExitModalOpen] = useState(false);
 
 	useEffect(() => {
 		if (!tabRef.current || !navRef.current) return;
@@ -65,7 +67,9 @@ export default function Sidebar() {
 				))}
 			</nav>
 			<button
-				onClick={() => {}}
+				onClick={() => {
+					setExitModalOpen(true);
+				}}
 				className='w-full h-12 mt-auto px-6 flex place-content-start place-items-center gap-6 text-muted hover:text-danger transition-colors duration-150'
 			>
 				<exitTab.icon className='w-4 stroke-current' />
@@ -73,6 +77,15 @@ export default function Sidebar() {
 					{exitTab.name}
 				</p>
 			</button>
+			{exitModalOpen && (
+				<Modal
+					onButtonOneClick={() => setExitModalOpen(false)}
+					onButtonTwoClick={() => {
+						setExitModalOpen(true);
+						window.electron.exitApplication();
+					}}
+				/>
+			)}
 		</aside>
 	);
 }

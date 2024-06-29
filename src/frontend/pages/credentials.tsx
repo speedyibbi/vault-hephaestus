@@ -11,7 +11,7 @@ export default function Credentials() {
 			animate={{ opacity: 1 }}
 			exit={{ opacity: 0 }}
 			transition={{ duration: 0.15, ease: 'easeOut' }}
-			className='h-full flex flex-col place-content-start place-items-start gap-24'
+			className='h-full relative flex flex-col place-content-start place-items-start gap-24'
 		>
 			<span className='w-full flex place-content-between place-items-center gap-12'>
 				<Searchbar />
@@ -22,7 +22,7 @@ export default function Credentials() {
 					<PlusCross className='w-5 stroke-current' />
 				</button>
 			</span>
-			<span className='w-full h-1/2 mt-auto font-medium text-xl text-center leading-none tracking-tighter'>
+			<span className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 font-medium text-xl leading-none tracking-tighter'>
 				No items
 			</span>
 		</motion.section>

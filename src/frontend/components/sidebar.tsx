@@ -58,13 +58,20 @@ export default function Sidebar() {
 						}}
 					>
 						<tab.icon className='w-4 stroke-current' />
-						<p className='font-medium text-base leading-none tracking-tighter'>{tab.name}</p>
+						<p className='font-medium text-base leading-none tracking-tighter'>
+							{tab.name}
+						</p>
 					</button>
 				))}
 			</nav>
-			<button className='w-full h-12 mt-auto px-6 flex place-content-start place-items-center gap-6 text-muted hover:text-danger transition-colors duration-150'>
+			<button
+				onClick={() => {}}
+				className='w-full h-12 mt-auto px-6 flex place-content-start place-items-center gap-6 text-muted hover:text-danger transition-colors duration-150'
+			>
 				<exitTab.icon className='w-4 stroke-current' />
-				<p className='font-medium text-base leading-none tracking-tighter'>{exitTab.name}</p>
+				<p className='font-medium text-base leading-none tracking-tighter'>
+					{exitTab.name}
+				</p>
 			</button>
 		</aside>
 	);

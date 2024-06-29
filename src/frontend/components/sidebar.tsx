@@ -40,31 +40,31 @@ export default function Sidebar() {
 			<Logo className='w-36' />
 			<nav
 				ref={navRef}
-				className='relative flex-grow flex flex-col place-content-start place-items-start gap-5'
+				className='relative flex-grow flex flex-col place-content-start place-items-start gap-4'
 			>
 				<span
 					ref={tabRef}
-					className='w-full h-14 absolute top-0 left-0 bg-accent rounded-2xl'
+					className='w-full h-12 absolute top-0 left-0 bg-accent rounded-2xl'
 				/>
 				{navigationTabs.map((tab, idx) => (
 					<button
 						key={idx}
 						onClick={() => setSelectedTab(idx)}
-						className={`w-full h-14 px-6 relative flex place-content-start place-items-center gap-6 ${
+						className={`w-full h-12 px-6 relative flex place-content-start place-items-center gap-6 ${
 							selectedNavTab === idx ? 'text-foreground' : 'text-muted'
 						} hover:text-foreground transition-colors duration-150`}
 						style={{
 							marginTop: tab.name === 'Exit' ? 'auto' : '0px',
 						}}
 					>
-						<tab.icon className='w-5 stroke-current' />
-						<p className='font-medium text-xl leading-none tracking-tighter'>{tab.name}</p>
+						<tab.icon className='w-4 stroke-current' />
+						<p className='font-medium text-base leading-none tracking-tighter'>{tab.name}</p>
 					</button>
 				))}
 			</nav>
-			<button className='w-full h-14 mt-auto px-6 flex place-content-start place-items-center gap-6 text-muted hover:text-danger transition-colors duration-150'>
-				<exitTab.icon className='w-5 stroke-current' />
-				<p className='font-medium text-xl leading-none tracking-tighter'>{exitTab.name}</p>
+			<button className='w-full h-12 mt-auto px-6 flex place-content-start place-items-center gap-6 text-muted hover:text-danger transition-colors duration-150'>
+				<exitTab.icon className='w-4 stroke-current' />
+				<p className='font-medium text-base leading-none tracking-tighter'>{exitTab.name}</p>
 			</button>
 		</aside>
 	);

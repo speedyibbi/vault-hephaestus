@@ -43,7 +43,7 @@ export default function Modal({
 			transition={{ duration: 0.15 }}
 			className='px-20 py-10 justify-self-center top-1/3 rounded-2xl bg-white drop-shadow-2xl'
 		>
-			<p className='mb-12 font-medium text-xl text-center leading-none tracking-tighter'>
+			<p className='mb-12 font-medium text-base text-center leading-none tracking-tighter'>
 				{text}
 			</p>
 			<span className='flex place-content-center place-items-center gap-3'>

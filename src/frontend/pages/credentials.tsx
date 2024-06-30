@@ -1,9 +1,13 @@
-import { motion } from 'framer-motion';
+import { useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 
 import Searchbar from '../components/searchbar';
+import AccountForm from '../components/account-form';
 import { PlusCross } from '../components/icons';
 
 export default function Credentials() {
+	const [showForm, setShowForm] = useState(false);
+
 	return (
 		<motion.section
 			key='credentials'
@@ -16,15 +20,37 @@ export default function Credentials() {
 			<span className='w-full flex place-content-between place-items-center gap-12'>
 				<Searchbar />
 				<button
-					onClick={() => {}}
+					onClick={() => {
+						setShowForm((formState) => !formState);
+					}}
 					className='p-4 hover:bg-accent rounded-2xl transition-colors duration-150'
 				>
-					<PlusCross className='w-5 stroke-current' />
+					<motion.span
+						initial={{ rotateZ: '0deg' }}
+						animate={{ rotateZ: showForm ? '45deg' : '0deg' }}
+						exit={{ rotateZ: '0deg' }}
+						className='block'
+					>
+						<PlusCross className='w-5 stroke-current' />
+					</motion.span>
 				</button>
 			</span>
-			<span className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 font-medium text-xl leading-none tracking-tighter'>
-				No items
-			</span>
+			<AnimatePresence mode='wait'>
+				{showForm ? (
+					<AccountForm />
+				) : (
+					<motion.span
+						key='no-items'
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						exit={{ opacity: 0 }}
+						transition={{ duration: 0.15, ease: 'easeOut' }}
+						className='w-full h-full flex place-content-center place-items-center font-medium text-xl leading-none tracking-tighter'
+					>
+						No items
+					</motion.span>
+				)}
+			</AnimatePresence>
 		</motion.section>
 	);
 }

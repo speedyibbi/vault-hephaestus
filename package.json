@@ -33,6 +33,7 @@
 		"@electron-forge/plugin-webpack": "^7.4.0",
 		"@electron/fuses": "^1.8.0",
 		"@emotion/is-prop-valid": "^1.2.2",
+		"@types/better-sqlite3": "^7.6.10",
 		"@types/react": "^18.3.3",
 		"@types/react-dom": "^18.3.0",
 		"@typescript-eslint/eslint-plugin": "^5.62.0",

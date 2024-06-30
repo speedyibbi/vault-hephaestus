@@ -1,4 +1,5 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
+import db from './db';
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
@@ -21,7 +22,10 @@ const createWindow = (): void => {
 };
 
 app.on('ready', () => {
+	db.openConnection();
+
 	ipcMain.handle('exitApplication', () => app.quit());
+
 	createWindow();
 });
 
@@ -35,4 +39,8 @@ app.on('activate', () => {
 	if (BrowserWindow.getAllWindows().length === 0) {
 		createWindow();
 	}
+});
+
+app.on('will-quit', () => {
+	db.closeConnection();
 });

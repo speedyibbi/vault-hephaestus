@@ -15,7 +15,7 @@ export default function Searchbar() {
 				type='text'
 				onChange={searchHandler}
 				placeholder='Search'
-				className='flex-grow font-medium text-xl placeholder-current leading-none tracking-tighter bg-transparent focus:outline-none'
+				className='flex-grow font-medium text-xl text-foreground leading-none tracking-tighter bg-transparent focus:outline-none'
 			/>
 		</form>
 	);

@@ -33,6 +33,7 @@ body,
 * {
 	margin: 0;
 	padding: 0;
+	text-wrap: nowrap;
 	box-sizing: border-box;
 	scroll-behavior: smooth;
 }
@@ -43,6 +44,18 @@ body,
 
 *::backdrop {
 	backdrop-filter: blur(1.6rem);
+}
+
+*::placeholder {
+	color: var(--muted) !important;
+}
+
+input::file-selector-button {
+	margin: 0;
+	padding: 0;
+	color: var(--muted);
+	border: none;
+	background-color: transparent;
 }
 
 body {

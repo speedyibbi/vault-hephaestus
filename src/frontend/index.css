@@ -51,11 +51,13 @@ body,
 }
 
 input::file-selector-button {
+	height: 100%;
 	margin: 0;
 	padding: 0;
 	color: var(--muted);
 	border: none;
 	background-color: transparent;
+	cursor: inherit;
 }
 
 body {

@@ -1,6 +1,23 @@
-import { motion } from 'framer-motion';
+import { useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 
 export default function AccountForm() {
+	const [imagePreview, setImagePreview] = useState('');
+
+	const imageSelectionHandler = (
+		event: React.ChangeEvent<HTMLInputElement>
+	) => {
+		const file = event.target.files?.[0];
+		if (!file) return;
+
+		const reader = new FileReader();
+		reader.onload = () => {
+			const image = reader.result?.toString();
+			setImagePreview(image);
+		};
+		reader.readAsDataURL(file);
+	};
+
 	return (
 		<motion.form
 			key='account-form'
@@ -25,18 +42,38 @@ export default function AccountForm() {
 						/>
 					</div>
 					<div className='w-full'>
-						<div className='w-full h-12 px-6 relative flex place-content-start place-items-center rounded-2xl bg-accent'>
-							<input
-								id='image'
-								name='image'
-								type='file'
-								placeholder='Chose image'
-								className='w-full font-medium text-xl text-transparent leading-none tracking-tighter cursor-pointer'
-							/>
-						</div>
-						<span className='mt-3 px-4 py-2 inline-block border-2 border-accent rounded-xl font-medium text-sm text-muted leading-none tracking-tighter'>
-							No image selected
-						</span>
+						<input
+							id='image'
+							name='image'
+							type='file'
+							accept='image/*'
+							onChange={imageSelectionHandler}
+							className='w-full h-12 px-6 flex place-content-start place-items-center font-medium text-xl text-transparent leading-none tracking-tighter rounded-2xl bg-accent cursor-pointer'
+						/>
+						<AnimatePresence>
+							{imagePreview.length > 0 ? (
+								<motion.img
+									initial={{ opacity: 0 }}
+									animate={{ opacity: 1 }}
+									exit={{ opacity: 0 }}
+									transition={{ duration: 0.15, ease: 'easeOut' }}
+									src={imagePreview}
+									alt='image'
+									className='w-96 mt-3 inline-block border-2 border-accent rounded-full'
+								/>
+							) : (
+								<motion.span
+									initial={{ opacity: 0 }}
+									animate={{ opacity: 1 }}
+									exit={{ opacity: 0 }}
+									transition={{ duration: 0.15, ease: 'easeOut' }}
+									className='mt-3 px-4 py-2 inline-block border-2 border-accent rounded-xl font-medium text-sm text-muted leading-none tracking-tighter'
+								>
+									No image selected
+								</motion.span>
+							)}
+							/
+						</AnimatePresence>
 					</div>
 				</aside>
 				<aside className='w-full flex flex-col place-content-start place-items-start gap-12'></aside>

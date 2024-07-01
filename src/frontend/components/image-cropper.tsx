@@ -59,7 +59,7 @@ export default function ImageCropper({
 		<dialog
 			ref={cropperRef}
 			onCancel={() => onCancel()}
-			className='max-w-7xl justify-self-center top-1/2 transform -translate-y-1/2 bg-transparent overflow-hidden'
+			className='max-w-7xl p-2 justify-self-center top-1/2 transform -translate-y-1/2 bg-transparent overflow-hidden'
 		>
 			<div className='flex flex-col place-content-center place-items-center gap-6'>
 				<ReactCrop

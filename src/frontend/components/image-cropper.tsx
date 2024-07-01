@@ -10,10 +10,15 @@ import { setCanvasPreview } from '../utils/helpers';
 
 interface Props {
 	imagePreview: string;
-	onCrop: (croppedImageData: string) => void;
+	onCrop?: (croppedImageData: string) => void;
+	onCancel?: () => void;
 }
 
-export default function ImageCropper({ imagePreview, onCrop }: Props) {
+export default function ImageCropper({
+	imagePreview,
+	onCrop,
+	onCancel,
+}: Props) {
 	const imageRef = useRef<HTMLImageElement | null>(null);
 	const cropperRef = useRef<HTMLDialogElement | null>(null);
 	const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -53,6 +58,7 @@ export default function ImageCropper({ imagePreview, onCrop }: Props) {
 	return (
 		<dialog
 			ref={cropperRef}
+			onCancel={() => onCancel()}
 			className='max-w-7xl justify-self-center top-1/2 transform -translate-y-1/2 bg-transparent overflow-hidden'
 		>
 			<div className='flex flex-col place-content-center place-items-center gap-6'>

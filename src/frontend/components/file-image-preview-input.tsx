@@ -53,6 +53,10 @@ export default function FileImagePreviewInput({
 							setImagePreview(croppedImageData.toString());
 							setImageCropped(true);
 						}}
+						onCancel={() => {
+							setImagePreview('');
+							setImageCropped(false);
+						}}
 					/>
 				)
 			) : (

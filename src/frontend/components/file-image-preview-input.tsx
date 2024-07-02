@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import FileInput from './file-input';
 import ImageCropper from './image-cropper';
@@ -8,11 +8,13 @@ import 'react-image-crop/dist/ReactCrop.css';
 interface Props {
 	id?: string;
 	name?: string;
+	onImageUpdate?: (imageData: string) => void;
 }
 
 export default function FileImagePreviewInput({
 	id = 'image',
 	name = 'image',
+	onImageUpdate,
 }: Props) {
 	const [imagePreview, setImagePreview] = useState('');
 	const [imageCropped, setImageCropped] = useState(false);
@@ -30,6 +32,10 @@ export default function FileImagePreviewInput({
 		};
 		reader.readAsDataURL(file);
 	};
+
+	useEffect(() => {
+		onImageUpdate?.(imagePreview);
+	}, [imagePreview]);
 
 	return (
 		<div className='w-full'>

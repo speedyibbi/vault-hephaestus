@@ -8,6 +8,7 @@ import { PlusCross } from './icons';
 
 export default function AccountForm() {
 	const [additionalFields, setAdditionalFields] = useState([0, 1]);
+	const [imageData, setImageData] = useState<string | null>(null);
 
 	const formSubmissionHandler = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
@@ -15,7 +16,12 @@ export default function AccountForm() {
 		const formData = new FormData(event.currentTarget);
 		const data = Object.fromEntries(formData.entries());
 
-		console.log(data);
+		const accountData = {
+			...data,
+			image: imageData,
+		};
+
+		console.log(imageData);
 	};
 
 	const addField = () => {
@@ -38,7 +44,11 @@ export default function AccountForm() {
 			<div className='w-full h-full grid grid-rows-1 grid-cols-2 gap-24'>
 				<aside className='w-full flex flex-col place-content-start place-items-start gap-12'>
 					<TextInput id='title' name='title' placeholderText='Title' />
-					<FileImagePreviewInput id='image' name='image' />
+					<FileImagePreviewInput
+						id='image'
+						name='image'
+						onImageUpdate={(imageData) => setImageData(imageData)}
+					/>
 					<button
 						type='submit'
 						className='w-24 py-3 font-medium text-base text-white leading-none tracking-tighter border-2 border-white rounded-md hover:text-black hover:bg-white transition-colors duration-150'

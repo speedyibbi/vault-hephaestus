@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 
 import TextInput from './text-input';
 import FileImagePreviewInput from './file-image-preview-input';
-import CheckboxInput from './checkbox-input';
+import AccountFormAdditionalField from './account-form-additional-field';
 import { PlusCross } from './icons';
 
 export default function AccountForm() {
@@ -36,30 +36,12 @@ export default function AccountForm() {
 						Add field
 						<PlusCross className='w-5 stroke-current' />
 					</button>
-					<div className='w-full flex flex-col place-content-start place-items-start gap-3'>
-						<TextInput
-							id='field-1-name'
-							name='field-1-name'
-							placeholderText='Name'
-						/>
-						<TextInput
-							id='field-1-value'
-							name='field-1-value'
-							placeholderText='Value'
-						/>
-						<span className='w-full px-4 flex place-content-start place-items-center gap-3'>
-							<CheckboxInput />
-							<p className='font-medium text-xl leading-none tracking-tighter'>
-								Sensitive
-							</p>
-							<button
-								type='button'
-								className='ml-auto p-4 hover:bg-accent rounded-2xl transition-colors duration-150'
-							>
-								<PlusCross className='w-5 stroke-current transform rotate-45' />
-							</button>
-						</span>
-					</div>
+					<AccountFormAdditionalField id='field-1' name='field-1' />
+					<AccountFormAdditionalField
+						id='field-2'
+						name='field-2'
+						defaultChecked
+					/>
 				</aside>
 			</div>
 		</motion.form>

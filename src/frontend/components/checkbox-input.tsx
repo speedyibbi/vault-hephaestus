@@ -2,14 +2,20 @@ import { useState } from 'react';
 
 import { Tick } from './icons';
 
-export default function CheckboxInput() {
-	const [checked, setChecked] = useState(false);
+interface Props {
+	id?: string;
+	name?: string;
+	defaultChecked?: boolean;
+}
+
+export default function CheckboxInput({ id, name, defaultChecked }: Props) {
+	const [checked, setChecked] = useState(defaultChecked ?? false);
 
 	return (
 		<label className='relative text-white leading-none cursor-pointer'>
 			<input
-				id='field-1-sensitive'
-				name='field-1-sensitive'
+				id={id}
+				name={name}
 				type='checkbox'
 				checked={checked}
 				onChange={() => {

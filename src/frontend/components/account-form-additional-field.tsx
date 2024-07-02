@@ -1,3 +1,5 @@
+import { motion } from 'framer-motion';
+
 import TextInput from './text-input';
 import CheckboxInput from './checkbox-input';
 import { PlusCross } from './icons';
@@ -16,7 +18,14 @@ export default function AccountFormAdditionalField({
 	onCross,
 }: Props) {
 	return (
-		<div className='w-full flex flex-col place-content-start place-items-start gap-3'>
+		<motion.div
+			initial={{ opacity: 0 }}
+			animate={{ opacity: 1 }}
+			exit={{ opacity: 0 }}
+			transition={{ duration: 0.15, ease: 'easeOut' }}
+			layout
+			className='w-full flex flex-col place-content-start place-items-start gap-3'
+		>
 			<TextInput
 				id={`${id}-name`}
 				name={`${name}-name`}
@@ -44,6 +53,6 @@ export default function AccountFormAdditionalField({
 					<PlusCross className='w-5 stroke-current transform rotate-45' />
 				</button>
 			</span>
-		</div>
+		</motion.div>
 	);
 }

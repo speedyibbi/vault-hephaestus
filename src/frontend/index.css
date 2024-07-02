@@ -50,6 +50,18 @@ body,
 	color: var(--muted) !important;
 }
 
+::-webkit-scrollbar {
+	width: 5px;
+}
+
+::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+	background: #ffffff0a;
+}
+
 input::file-selector-button {
 	height: 100%;
 	margin: 0;

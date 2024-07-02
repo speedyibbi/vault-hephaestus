@@ -9,6 +9,15 @@ import { PlusCross } from './icons';
 export default function AccountForm() {
 	const [additionalFields, setAdditionalFields] = useState([0, 1]);
 
+	const formSubmissionHandler = (event: React.FormEvent<HTMLFormElement>) => {
+		event.preventDefault();
+
+		const formData = new FormData(event.currentTarget);
+		const data = Object.fromEntries(formData.entries());
+
+		console.log(data);
+	};
+
 	const addField = () => {
 		setAdditionalFields((prevState) => [
 			...prevState,
@@ -23,15 +32,19 @@ export default function AccountForm() {
 			animate={{ opacity: 1 }}
 			exit={{ opacity: 0 }}
 			transition={{ duration: 0.15, ease: 'easeOut' }}
-			onSubmit={(event) => {
-				event.preventDefault();
-			}}
+			onSubmit={formSubmissionHandler}
 			className='w-full h-full pr-24'
 		>
 			<div className='w-full h-full grid grid-rows-1 grid-cols-2 gap-24'>
 				<aside className='w-full flex flex-col place-content-start place-items-start gap-12'>
 					<TextInput id='title' name='title' placeholderText='Title' />
 					<FileImagePreviewInput id='image' name='image' />
+					<button
+						type='submit'
+						className='w-24 py-3 font-medium text-base text-white leading-none tracking-tighter border-2 border-white rounded-md hover:text-black hover:bg-white transition-colors duration-150'
+					>
+						Save
+					</button>
 				</aside>
 				<aside className='w-full max-h-full pr-1 pb-24 flex flex-col place-content-start place-items-start gap-12 overflow-y-scroll'>
 					<button

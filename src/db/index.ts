@@ -1,9 +1,10 @@
+import { app } from 'electron';
 import Database from 'better-sqlite3';
 import path from 'path';
 
 import { createAccountsTable, createFieldsTable } from './queries';
 
-const dbPath = path.resolve(__dirname, 'database.db');
+const dbPath = path.resolve(path.join(app.getPath('userData')), 'database.db');
 
 const db = new Database(dbPath);
 

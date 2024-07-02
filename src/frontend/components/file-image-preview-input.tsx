@@ -32,7 +32,7 @@ export default function FileImagePreviewInput({
 	};
 
 	return (
-		<>
+		<div className='w-full'>
 			<FileInput
 				id={id}
 				name={name}
@@ -64,6 +64,6 @@ export default function FileImagePreviewInput({
 					No image selected
 				</span>
 			)}
-		</>
+		</div>
 	);
 }

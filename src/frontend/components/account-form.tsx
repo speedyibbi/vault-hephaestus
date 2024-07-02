@@ -23,9 +23,7 @@ export default function AccountForm() {
 			<div className='w-full pr-1 grid grid-rows-1 grid-cols-2 gap-24'>
 				<aside className='w-full flex flex-col place-content-start place-items-start gap-12'>
 					<TextInput id='title' name='title' placeholderText='Title' />
-					<div className='w-full'>
-						<FileImagePreviewInput id='image' name='image' />
-					</div>
+					<FileImagePreviewInput id='image' name='image' />
 				</aside>
 				<aside className='w-full flex flex-col place-content-start place-items-start gap-12'>
 					<button

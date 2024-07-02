@@ -1,4 +1,3 @@
-import TextInput from './text-input';
 import { MagnifyingGlass } from './icons';
 
 export default function Searchbar() {
@@ -12,7 +11,14 @@ export default function Searchbar() {
 			className='h-12 px-6 relative flex-grow flex place-content-start place-items-center gap-12 text-muted rounded-2xl bg-accent'
 		>
 			<MagnifyingGlass className='w-5 stroke-current' />
-			<TextInput placeholderText='Search' onChange={searchHandler} />
+			<input
+				id='searchbar'
+				name='searchbar'
+				type='text'
+				onChange={searchHandler}
+				placeholder='Search'
+				className='flex-grow font-medium text-xl text-foreground leading-none tracking-tighter bg-transparent focus:outline-none'
+			/>
 		</form>
 	);
 }

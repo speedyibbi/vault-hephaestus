@@ -22,9 +22,7 @@ export default function AccountForm() {
 		>
 			<div className='w-full pr-1 grid grid-rows-1 grid-cols-2 gap-24'>
 				<aside className='w-full flex flex-col place-content-start place-items-start gap-12'>
-					<div className='w-full h-12 px-6 relative flex place-content-start place-items-center rounded-2xl bg-accent'>
-						<TextInput id='title' name='title' placeholderText='Title' />
-					</div>
+					<TextInput id='title' name='title' placeholderText='Title' />
 					<div className='w-full'>
 						<FileImagePreviewInput id='image' name='image' />
 					</div>
@@ -39,20 +37,16 @@ export default function AccountForm() {
 						<PlusCross className='w-5 stroke-current' />
 					</button>
 					<div className='w-full flex flex-col place-content-start place-items-start gap-3'>
-						<div className='w-full h-12 px-6 relative flex place-content-start place-items-center rounded-2xl bg-accent'>
-							<TextInput
-								id='field-1-name'
-								name='field-1-name'
-								placeholderText='Name'
-							/>
-						</div>
-						<div className='w-full h-12 px-6 relative flex place-content-start place-items-center rounded-2xl bg-accent'>
-							<TextInput
-								id='field-1-value'
-								name='field-1-value'
-								placeholderText='Value'
-							/>
-						</div>
+						<TextInput
+							id='field-1-name'
+							name='field-1-name'
+							placeholderText='Name'
+						/>
+						<TextInput
+							id='field-1-value'
+							name='field-1-value'
+							placeholderText='Value'
+						/>
 						<span className='w-full px-4 flex place-content-start place-items-center gap-3'>
 							<CheckboxInput />
 							<p className='font-medium text-xl leading-none tracking-tighter'>

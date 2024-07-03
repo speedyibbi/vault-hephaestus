@@ -1,18 +1,21 @@
-import { useEffect, useRef } from 'react';
+import { ReactNode, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 
 import { PlusCross } from './icons';
 
 interface Props {
-	children?: string;
+	error?: boolean;
+	onClear?: () => void;
+	children?: ReactNode;
 }
 
-export default function Flash({ children }: Props) {
+export default function Flash({ error, onClear, children }: Props) {
 	const flashRef = useRef<HTMLDialogElement | null>(null);
 
 	const closeFlash = () => {
 		if (!flashRef.current) return;
 
+		onClear();
 		flashRef.current.close();
 	};
 
@@ -29,8 +32,12 @@ export default function Flash({ children }: Props) {
 			animate={{ opacity: 1 }}
 			transition={{ duration: 0.15 }}
 			className='min-w-fit w-128 px-4 py-2 justify-self-center bottom-6 rounded-full bg-white drop-shadow-2xl'
+			style={{ backgroundColor: error ? 'var(--danger)' : 'white' }}
 		>
-			<span className='flex place-content-between place-items-center gap-4 text-black'>
+			<span
+				className='flex place-content-between place-items-center gap-4'
+				style={{ color: error ? 'white' : 'black' }}
+			>
 				<p className='font-medium text-base leading-none tracking-tighter'>
 					{children}
 				</p>

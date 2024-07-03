@@ -25,6 +25,7 @@ app.on('ready', () => {
 	db.openConnection();
 
 	ipcMain.handle('exitApplication', () => app.quit());
+	ipcMain.handle('submitAccount', (_event, data) => data);
 
 	createWindow();
 });

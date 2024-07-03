@@ -6,22 +6,50 @@ import FileImagePreviewInput from './file-image-preview-input';
 import AccountFormAdditionalField from './account-form-additional-field';
 import { PlusCross } from './icons';
 
+import { submitAccount } from '../utils/helpers';
+import Flash from './flash';
+
 export default function AccountForm() {
 	const [additionalFields, setAdditionalFields] = useState([0, 1]);
 	const [imageData, setImageData] = useState<string | null>(null);
+	const [flash, setFlash] = useState({
+		flash: false,
+		message: '',
+		error: false,
+	});
 
 	const formSubmissionHandler = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
-		const formData = new FormData(event.currentTarget);
-		const data = Object.fromEntries(formData.entries());
+		try {
+			// todo: add error handling
 
-		const accountData = {
-			...data,
-			image: imageData,
-		};
+			const formData = new FormData(event.currentTarget);
+			const data = Object.fromEntries(formData.entries());
 
-		console.log(imageData);
+			const accountData = {
+				...data,
+				image: imageData,
+			};
+
+			submitAccount(accountData)
+				.then(() => {
+					setFlash({
+						flash: true,
+						message: 'Account saved successfully',
+						error: false,
+					});
+				})
+				.catch((_error) => {
+					setFlash({
+						flash: true,
+						message: 'Error saving account',
+						error: true,
+					});
+				});
+		} catch (error) {
+			setFlash({ flash: true, message: 'Error saving account', error: true });
+		}
 	};
 
 	const addField = () => {
@@ -82,6 +110,14 @@ export default function AccountForm() {
 					</AnimatePresence>
 				</aside>
 			</div>
+			{flash.flash && (
+				<Flash
+					error={flash.error}
+					onClear={() => setFlash({ flash: false, message: '', error: false })}
+				>
+					{flash.message}
+				</Flash>
+			)}
 		</motion.form>
 	);
 }

@@ -8,3 +8,7 @@ interface INavigationTab {
 	icon: ({ className }: Props) => JSX.Element;
 	page: () => JSX.Element;
 }
+
+interface Account {
+	[key: string]: string;
+}

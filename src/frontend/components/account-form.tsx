@@ -7,7 +7,7 @@ import AccountFormAdditionalField from './account-form-additional-field';
 import { PlusCross } from './icons';
 import Flash from './flash';
 
-import { submitAccount } from '../utils/helpers';
+import { submitAccount, validateAccount } from '../utils/helpers';
 
 export default function AccountForm() {
 	const formRef = useRef<HTMLFormElement>(null);
@@ -31,6 +31,13 @@ export default function AccountForm() {
 				...data,
 				image: imageData,
 			};
+
+			const { valid, error } = validateAccount(accountData);
+
+			if (!valid) {
+				setFlash({ flash: true, message: error, error: true });
+				return;
+			}
 
 			submitAccount(accountData)
 				.then(() => {

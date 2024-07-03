@@ -1,15 +1,17 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 
 import TextInput from './text-input';
 import FileImagePreviewInput from './file-image-preview-input';
 import AccountFormAdditionalField from './account-form-additional-field';
 import { PlusCross } from './icons';
-
-import { submitAccount } from '../utils/helpers';
 import Flash from './flash';
 
+import { submitAccount } from '../utils/helpers';
+
 export default function AccountForm() {
+	const formRef = useRef<HTMLFormElement>(null);
+	const [formResetCount, setFormResetCount] = useState(0);
 	const [additionalFields, setAdditionalFields] = useState([0, 1]);
 	const [imageData, setImageData] = useState<string | null>(null);
 	const [flash, setFlash] = useState({
@@ -22,8 +24,6 @@ export default function AccountForm() {
 		event.preventDefault();
 
 		try {
-			// todo: add error handling
-
 			const formData = new FormData(event.currentTarget);
 			const data = Object.fromEntries(formData.entries());
 
@@ -39,6 +39,11 @@ export default function AccountForm() {
 						message: 'Account saved successfully',
 						error: false,
 					});
+
+					if (formRef.current) {
+						formRef.current.reset();
+						setFormResetCount((prevState) => prevState + 1);
+					}
 				})
 				.catch((_error) => {
 					setFlash({
@@ -66,6 +71,7 @@ export default function AccountForm() {
 			animate={{ opacity: 1 }}
 			exit={{ opacity: 0 }}
 			transition={{ duration: 0.15, ease: 'easeOut' }}
+			ref={formRef}
 			onSubmit={formSubmissionHandler}
 			className='w-full h-full pr-24'
 		>
@@ -73,6 +79,7 @@ export default function AccountForm() {
 				<aside className='w-full flex flex-col place-content-start place-items-start gap-12'>
 					<TextInput id='title' name='title' placeholderText='Title' />
 					<FileImagePreviewInput
+						key={formResetCount}
 						id='image'
 						name='image'
 						onImageUpdate={(imageData) => setImageData(imageData)}

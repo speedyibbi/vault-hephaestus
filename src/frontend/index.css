@@ -38,6 +38,14 @@ body,
 	scroll-behavior: smooth;
 }
 
+body {
+	font-family: 'Roboto', sans-serif;
+	font-weight: 500;
+	color: var(--foreground);
+	background-color: var(--background);
+	user-select: none;
+}
+
 *:focus {
 	outline-color: var(--muted);
 }
@@ -72,10 +80,7 @@ input::file-selector-button {
 	cursor: inherit;
 }
 
-body {
-	font-family: 'Roboto', sans-serif;
-	font-weight: 500;
-	color: var(--foreground);
-	background-color: var(--background);
-	user-select: none;
+.flash::backdrop {
+	background-color: transparent;
+	backdrop-filter: none;
 }

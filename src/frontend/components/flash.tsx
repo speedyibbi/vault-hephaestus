@@ -22,7 +22,7 @@ export default function Flash({ error, onClear, children }: Props) {
 	useEffect(() => {
 		if (!flashRef.current) return;
 
-		flashRef.current.show();
+		flashRef.current.showModal();
 	}, []);
 
 	return (
@@ -31,7 +31,7 @@ export default function Flash({ error, onClear, children }: Props) {
 			initial={{ opacity: 0 }}
 			animate={{ opacity: 1 }}
 			transition={{ duration: 0.15 }}
-			className='min-w-fit w-128 px-4 py-2 justify-self-center bottom-6 rounded-full bg-white drop-shadow-2xl'
+			className='flash min-w-fit w-128 px-4 py-2 justify-self-center top-full transform -translate-y-12 rounded-full bg-white drop-shadow-2xl'
 			style={{ backgroundColor: error ? 'var(--danger)' : 'white' }}
 		>
 			<span

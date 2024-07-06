@@ -2,7 +2,7 @@ export const createAccountsTable = `
       CREATE TABLE IF NOT EXISTS Accounts (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         title TEXT NOT NULL,
-        image BLOB,
+        image TEXT,
         favourite BOOLEAN NOT NULL DEFAULT 0,
         updated_at DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
         created_at DATE NOT NULL DEFAULT CURRENT_TIMESTAMP

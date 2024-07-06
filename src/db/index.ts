@@ -1,8 +1,10 @@
 import { app } from 'electron';
 import Database from 'better-sqlite3';
+import fs from 'fs/promises';
 import path from 'path';
 
 import { createAccountsTable, createFieldsTable } from './queries';
+import { saveImage } from './helpers';
 
 const dbPath = path.resolve(path.join(app.getPath('userData')), 'database.db');
 
@@ -22,18 +24,25 @@ function closeConnection() {
 	db.close();
 }
 
-function addAccount({
-	title,
-	image,
-	favourite,
-}: {
-	title: string;
-	image: string;
-	favourite: boolean;
-}) {
-	db.prepare(
-		'INSERT INTO Accounts (title, image, favourite) VALUES (?, ?, ?)'
-	).run(title, Buffer.from(image, 'utf-8'), favourite);
+async function addAccount(account: Account) {
+	let imagePath = '';
+	if (account.image && account.image.length > 0) {
+		imagePath = await saveImage(
+			account.image,
+			`${Date.now()}_${account.title}`
+		);
+	}
+
+	// const fieldNameRegex = /^field-\d+-name$/;
+	// const fieldCount = Object.entries(account).filter(([key, _value]) =>
+	// 	fieldNameRegex.test(key)
+	// ).length;
+
+	const info = db
+		.prepare('INSERT INTO Accounts (title, image, favourite) VALUES (?, ?, ?)')
+		.run(account.title, imagePath, 0);
+
+	return info.lastInsertRowid;
 }
 
 function addField({
@@ -64,4 +73,7 @@ export default {
 	db: db,
 	openConnection,
 	closeConnection,
+	app: {
+		addAccount,
+	},
 };

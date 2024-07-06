@@ -7,7 +7,7 @@ import AccountFormAdditionalField from './account-form-additional-field';
 import { PlusCross } from './icons';
 import Flash from './flash';
 
-import { submitAccount, validateAccount } from '../utils/helpers';
+import { saveAccount, validateAccount } from '../utils/helpers';
 
 export default function AccountForm() {
 	const formRef = useRef<HTMLFormElement>(null);
@@ -39,8 +39,10 @@ export default function AccountForm() {
 				return;
 			}
 
-			submitAccount(accountData)
-				.then(() => {
+			saveAccount(accountData)
+				.then((res) => {
+					console.log(res);
+
 					setFlash({
 						flash: true,
 						message: 'Account saved successfully',
@@ -98,7 +100,7 @@ export default function AccountForm() {
 						Save
 					</button>
 				</aside>
-				<aside className='w-full max-h-full pr-1 pb-24 flex flex-col place-content-start place-items-start gap-12 overflow-y-scroll'>
+				<aside className='w-full max-h-full pr-1 pb-24 flex flex-col place-content-start place-items-start gap-12 overflow-x-hidden overflow-y-scroll'>
 					<button
 						type='button'
 						onClick={addField}

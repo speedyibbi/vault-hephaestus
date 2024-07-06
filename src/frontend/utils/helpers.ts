@@ -36,8 +36,8 @@ export function validateAccount(data: Account) {
 	return { valid: true, error: '' };
 }
 
-export async function submitAccount(data: Account) {
-	return await window.electron.submitAccount(JSON.stringify(data));
+export async function saveAccount(data: Account) {
+	return await window.electron.saveAccount(JSON.stringify(data));
 }
 
 export function setCanvasPreview(

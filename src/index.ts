@@ -25,7 +25,10 @@ app.on('ready', () => {
 	db.openConnection();
 
 	ipcMain.handle('exitApplication', () => app.quit());
-	ipcMain.handle('submitAccount', (_event, data) => data);
+	ipcMain.handle(
+		'saveAccount',
+		async (_event, data: string) => await db.app.addAccount(JSON.parse(data))
+	);
 
 	createWindow();
 });

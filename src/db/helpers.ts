@@ -1,8 +1,8 @@
 import { app } from 'electron';
-import fs from 'fs/promises';
+import fs from 'fs';
 import path from 'path';
 
-export async function saveImage(imageBase64: string, imageName: string) {
+export function saveImage(imageBase64: string, imageName: string) {
 	const match = imageBase64.match(/^data:image\/(\w+);base64,/);
 	const imageExtension = match ? match[1] : '';
 
@@ -16,9 +16,12 @@ export async function saveImage(imageBase64: string, imageName: string) {
 	);
 
 	const dirPath = path.dirname(imagePath);
-	await fs.mkdir(dirPath, { recursive: true });
-
-	await fs.writeFile(imagePath, imageBuffer);
+	fs.mkdir(dirPath, { recursive: true }, (err) => {
+		throw err;
+	});
+	fs.writeFile(imagePath, imageBuffer, {}, (err) => {
+		throw err;
+	});
 
 	return imagePath;
 }

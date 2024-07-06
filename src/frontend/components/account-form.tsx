@@ -41,7 +41,9 @@ export default function AccountForm() {
 
 			saveAccount(accountData)
 				.then((res) => {
-					console.log(res);
+					if (!res) {
+						throw new Error('Error saving account');
+					}
 
 					setFlash({
 						flash: true,

@@ -25,9 +25,8 @@ app.on('ready', () => {
 	db.openConnection();
 
 	ipcMain.handle('exitApplication', () => app.quit());
-	ipcMain.handle(
-		'saveAccount',
-		async (_event, data: string) => await db.app.addAccount(JSON.parse(data))
+	ipcMain.handle('saveAccount', (_event, data: string) =>
+		db.app.addAccount(JSON.parse(data))
 	);
 
 	createWindow();

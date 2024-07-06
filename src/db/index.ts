@@ -1,6 +1,5 @@
 import { app } from 'electron';
 import Database from 'better-sqlite3';
-import fs from 'fs/promises';
 import path from 'path';
 
 import { createAccountsTable, createFieldsTable } from './queries';
@@ -24,41 +23,57 @@ function closeConnection() {
 	db.close();
 }
 
-async function addAccount(account: Account) {
-	let imagePath = '';
-	if (account.image && account.image.length > 0) {
-		imagePath = await saveImage(
-			account.image,
-			`${Date.now()}_${account.title}`
-		);
+function addAccount(account: Account) {
+	try {
+		let imagePath = '';
+		if (account.image && account.image.length > 0) {
+			imagePath = saveImage(account.image, `${Date.now()}_${account.title}`);
+		}
+
+		const runTransaction = db.transaction(() => {
+			const accountId = db
+				.prepare(
+					'INSERT INTO Accounts (title, image, favourite) VALUES (?, ?, ?)'
+				)
+				.run(account.title, imagePath, 0);
+
+			const fieldNameRegex = /^field-\d+-name$/;
+			const fieldCount = Object.entries(account).filter(([key, _value]) =>
+				fieldNameRegex.test(key)
+			).length;
+
+			for (let i = 1; i <= fieldCount; i++) {
+				addField({
+					name: account[`field-${i}-name`],
+					value: account[`field-${i}-value`],
+					sensitive: account[`field-${i}-sensitive`] === 'on' ? 1 : 0,
+					accountId: accountId.lastInsertRowid as number,
+				});
+			}
+		});
+
+		runTransaction();
+
+		return true;
+	} catch (_error) {
+		return false;
 	}
-
-	// const fieldNameRegex = /^field-\d+-name$/;
-	// const fieldCount = Object.entries(account).filter(([key, _value]) =>
-	// 	fieldNameRegex.test(key)
-	// ).length;
-
-	const info = db
-		.prepare('INSERT INTO Accounts (title, image, favourite) VALUES (?, ?, ?)')
-		.run(account.title, imagePath, 0);
-
-	return info.lastInsertRowid;
 }
 
 function addField({
 	name,
 	value,
 	sensitive,
-	account_id,
+	accountId,
 }: {
 	name: string;
 	value: string;
-	sensitive: boolean;
-	account_id: number;
+	sensitive: 1 | 0;
+	accountId: number;
 }) {
 	db.prepare(
 		'INSERT INTO Fields (name, value, sensitive, account_id) VALUES (?, ?, ?, ?)'
-	).run(name, value, sensitive, account_id);
+	).run(name, value, sensitive, accountId);
 }
 
 function fetchAcoounts() {

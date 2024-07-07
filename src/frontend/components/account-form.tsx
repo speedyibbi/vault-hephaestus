@@ -87,7 +87,7 @@ export default function AccountForm() {
 			className='w-full h-full pr-24'
 		>
 			<div className='w-full h-full grid grid-rows-1 grid-cols-2 gap-24'>
-				<aside className='w-full flex flex-col place-content-start place-items-start gap-12'>
+				<aside className='w-full pb-24 flex flex-col place-content-start place-items-start gap-12 overflow-y-scroll'>
 					<TextInput id='title' name='title' placeholderText='Title' />
 					<FileImagePreviewInput
 						key={formResetCount}
@@ -102,7 +102,7 @@ export default function AccountForm() {
 						Save
 					</button>
 				</aside>
-				<aside className='w-full max-h-full pr-1 pb-24 flex flex-col place-content-start place-items-start gap-12 overflow-x-hidden overflow-y-scroll'>
+				<aside className='w-full max-h-full pr-1 pb-24 flex flex-col place-content-start place-items-start gap-12 overflow-y-scroll'>
 					<button
 						type='button'
 						onClick={addField}

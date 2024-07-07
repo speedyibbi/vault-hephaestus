@@ -50,7 +50,7 @@ export default function FileImagePreviewInput({
 					<img
 						src={imagePreview}
 						alt='image'
-						className='w-64 mt-3 inline-block border-2 border-accent rounded-full'
+						className='w-48 mt-3 inline-block border-2 border-accent rounded-full'
 					/>
 				) : (
 					<ImageCropper

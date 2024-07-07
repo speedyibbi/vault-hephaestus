@@ -27,8 +27,15 @@ export default function ImageCropper({
 	const onImageLoad = (event: React.SyntheticEvent<HTMLImageElement>) => {
 		const { naturalWidth: width, naturalHeight: height } = event.currentTarget;
 
+		const cropWidthPercentage = width * 0.25 < 128 ? (128 / width) * 100 : 25;
+
 		const crop = centerCrop(
-			makeAspectCrop({ unit: '%', width: 25 }, 1, width, height),
+			makeAspectCrop(
+				{ unit: '%', width: cropWidthPercentage },
+				1,
+				width,
+				height
+			),
 			width,
 			height
 		);

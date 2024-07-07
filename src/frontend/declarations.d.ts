@@ -13,6 +13,12 @@ interface IFlash {
 	text: string;
 }
 
-interface Account {
+interface IAccount {
 	[key: string]: string;
+}
+
+interface IDialog extends HTMLDialogElement {
+	show(): void;
+	showModal(): void;
+	close(): void;
 }

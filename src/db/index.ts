@@ -23,7 +23,7 @@ function closeConnection() {
 	db.close();
 }
 
-function addAccount(account: Account) {
+function addAccount(account: IAccount) {
 	try {
 		let imagePath = '';
 		if (account.image && account.image.length > 0) {

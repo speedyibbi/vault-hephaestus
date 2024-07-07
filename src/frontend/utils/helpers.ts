@@ -1,6 +1,6 @@
 import { type PixelCrop } from 'react-image-crop';
 
-export function validateAccount(data: Account) {
+export function validateAccount(data: IAccount) {
 	const alphanumericRegex = /^[a-zA-Z0-9]+$/;
 	const fieldNameRegex = /^field-\d+-name$/;
 
@@ -36,7 +36,7 @@ export function validateAccount(data: Account) {
 	return { valid: true, error: '' };
 }
 
-export async function saveAccount(data: Account) {
+export async function saveAccount(data: IAccount) {
 	return await window.electron.saveAccount(JSON.stringify(data));
 }
 

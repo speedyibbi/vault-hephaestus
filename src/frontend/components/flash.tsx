@@ -12,7 +12,7 @@ export default function Flash() {
 	const text = useFlashStore((state) => state.text);
 	const setFlash = useFlashStore((state) => state.setFlash);
 
-	const flashRef = useRef<HTMLDialogElement | null>(null);
+	const flashRef = useRef<IDialog | null>(null);
 
 	const closeFlash = () => {
 		if (!flashRef.current) return;

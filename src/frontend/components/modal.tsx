@@ -16,7 +16,7 @@ export default function Modal({
 	onButtonOneClick = () => {},
 	onButtonTwoClick = () => {},
 }: Props) {
-	const modalRef = useRef<HTMLDialogElement | null>(null);
+	const modalRef = useRef<IDialog | null>(null);
 
 	const closeModal = () => {
 		if (!modalRef.current) return;

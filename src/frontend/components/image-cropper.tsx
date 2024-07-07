@@ -22,7 +22,7 @@ export default function ImageCropper({
 	onCancel,
 }: Props) {
 	const imageRef = useRef<HTMLImageElement | null>(null);
-	const cropperRef = useRef<HTMLDialogElement | null>(null);
+	const cropperRef = useRef<IDialog | null>(null);
 	const canvasRef = useRef<HTMLCanvasElement | null>(null);
 	const [crop, setCrop] = useState<Crop>();
 

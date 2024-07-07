@@ -19,6 +19,8 @@ export default function FileImagePreviewInput({
 	const [imagePreview, setImagePreview] = useState('');
 	const [imageCropped, setImageCropped] = useState(false);
 
+	const minimumImageWidth = 128;
+
 	const imageSelectionHandler = (
 		event: React.ChangeEvent<HTMLInputElement>
 	) => {
@@ -27,8 +29,16 @@ export default function FileImagePreviewInput({
 
 		const reader = new FileReader();
 		reader.onload = () => {
-			setImageCropped(false);
-			setImagePreview(reader.result?.toString());
+			const img = new Image();
+			img.onload = () => {
+				if (img.width < minimumImageWidth || img.height < minimumImageWidth) {
+					// error msg
+				} else {
+					setImageCropped(false);
+					setImagePreview(reader.result?.toString());
+				}
+			};
+			img.src = reader.result?.toString();
 		};
 		reader.readAsDataURL(file);
 	};
@@ -55,6 +65,7 @@ export default function FileImagePreviewInput({
 				) : (
 					<ImageCropper
 						imagePreview={imagePreview}
+						minimumWidth={minimumImageWidth}
 						onCrop={(croppedImageData) => {
 							setImagePreview(croppedImageData.toString());
 							setImageCropped(true);

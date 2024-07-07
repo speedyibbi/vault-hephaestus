@@ -10,12 +10,14 @@ import { setCanvasPreview } from '../utils/helpers';
 
 interface Props {
 	imagePreview: string;
+	minimumWidth?: number;
 	onCrop?: (croppedImageData: string) => void;
 	onCancel?: () => void;
 }
 
 export default function ImageCropper({
 	imagePreview,
+	minimumWidth = 128,
 	onCrop,
 	onCancel,
 }: Props) {
@@ -27,7 +29,8 @@ export default function ImageCropper({
 	const onImageLoad = (event: React.SyntheticEvent<HTMLImageElement>) => {
 		const { naturalWidth: width, naturalHeight: height } = event.currentTarget;
 
-		const cropWidthPercentage = width * 0.25 < 128 ? (128 / width) * 100 : 25;
+		const cropWidthPercentage =
+			width * 0.25 < minimumWidth ? (minimumWidth / width) * 100 : 25;
 
 		const crop = centerCrop(
 			makeAspectCrop(
@@ -73,7 +76,7 @@ export default function ImageCropper({
 					crop={crop}
 					onChange={(_crop, percentageCrop) => setCrop(percentageCrop)}
 					aspect={1}
-					minWidth={128}
+					minWidth={minimumWidth}
 					circularCrop
 					keepSelection
 					className='block drop-shadow-2xl'

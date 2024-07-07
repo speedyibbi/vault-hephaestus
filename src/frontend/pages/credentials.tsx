@@ -37,6 +37,8 @@ export default function Credentials() {
 			</span>
 			<AnimatePresence mode='wait'>
 				{showForm ? (
+					<AccountForm />
+				) : (
 					<motion.span
 						key='no-items'
 						initial={{ opacity: 0 }}
@@ -47,12 +49,8 @@ export default function Credentials() {
 					>
 						No items
 					</motion.span>
-				) : (
-					<AccountForm />
 				)}
 			</AnimatePresence>
 		</motion.section>
 	);
 }
-
-// todo: switch form and 'no items' places

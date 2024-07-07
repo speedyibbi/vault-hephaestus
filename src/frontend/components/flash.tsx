@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
+import { animate } from 'framer-motion';
 
 import { PlusCross } from './icons';
 
@@ -15,8 +15,17 @@ export default function Flash() {
 	const closeFlash = () => {
 		if (!flashRef.current) return;
 
-		flashRef.current.close();
-		setFlash({ error: false, text: '' });
+		animate(
+			flashRef.current,
+			{ opacity: 0 },
+			{
+				duration: 0.15,
+				onComplete: () => {
+					flashRef.current.close();
+					setFlash({ error: false, text: '' });
+				},
+			}
+		);
 	};
 
 	useEffect(() => {
@@ -24,16 +33,21 @@ export default function Flash() {
 
 		if (text.length > 0) {
 			flashRef.current.show();
+
+			animate(
+				flashRef.current,
+				{ opacity: 1 },
+				{
+					duration: 0.15,
+				}
+			);
 		}
 	}, [error, text]);
 
 	return (
-		<motion.dialog
+		<dialog
 			ref={flashRef}
-			initial={{ opacity: 0 }}
-			animate={{ opacity: 1 }}
-			transition={{ duration: 0.15 }}
-			className='min-w-fit w-128 px-4 py-2 justify-self-center bottom-6 rounded-full bg-white drop-shadow-2xl'
+			className='min-w-fit w-128 px-4 py-2 justify-self-center bottom-6 rounded-full bg-white drop-shadow-2xl opacity-0'
 			style={{ backgroundColor: error ? 'var(--danger)' : 'white' }}
 		>
 			<span
@@ -47,6 +61,6 @@ export default function Flash() {
 					<PlusCross className='w-4 stroke-current transform rotate-45' />
 				</button>
 			</span>
-		</motion.dialog>
+		</dialog>
 	);
 }

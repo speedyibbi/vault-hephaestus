@@ -2,7 +2,7 @@ declare global {
 	interface Window {
 		electron: {
 			exitApplication: () => void;
-			saveAccount: (data: string) => Promise<boolean>;
+			saveAccount: (data: string) => Promise<string>;
 		};
 	}
 }

@@ -6,7 +6,7 @@ import FileImagePreviewInput from './file-image-preview-input';
 import AccountFormAdditionalField from './account-form-additional-field';
 import { PlusCross } from './icons';
 
-import { saveAccount, validateAccount } from '../utils/helpers';
+import { saveAccount } from '../utils/helpers';
 import { useFlashStore } from '../utils/stores/flash-store';
 
 export default function AccountForm() {
@@ -29,31 +29,22 @@ export default function AccountForm() {
 				image: imageData,
 			};
 
-			const { valid, error } = validateAccount(accountData);
-
-			if (!valid) {
-				setFlash({ error: true, text: error });
-				return;
-			}
-
 			saveAccount(accountData)
-				.then((res) => {
-					if (!res) {
-						throw new Error('Error saving account');
-					}
+				.then(({ valid, error }) => {
+					if (!valid) {
+						setFlash({ error: true, text: error });
+					} else {
+						setFlash({ error: false, text: 'Account saved successfully' });
 
-					setFlash({ error: false, text: 'Account saved successfully' });
-
-					if (formRef.current) {
-						formRef.current.reset();
-						setFormResetCount((prevState) => prevState + 1);
+						if (formRef.current) {
+							formRef.current.reset();
+							setFormResetCount((prevState) => prevState + 1);
+						}
 					}
 				})
-				.catch((_error) => {
-					setFlash({ error: true, text: 'Error saving account' });
-				});
+				.catch();
 		} catch (error) {
-			setFlash({ error: true, text: 'Error saving account' });
+			setFlash({ error: true, text: error.message });
 		}
 	};
 

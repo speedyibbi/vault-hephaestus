@@ -3,7 +3,7 @@ import Database from 'better-sqlite3';
 import path from 'path';
 
 import { createAccountsTable, createFieldsTable } from './queries';
-import { saveImage } from './helpers';
+import { saveImage, validateAccount } from './helpers';
 
 const dbPath = path.resolve(path.join(app.getPath('userData')), 'database.db');
 
@@ -25,6 +25,12 @@ function closeConnection() {
 
 function addAccount(account: IAccount) {
 	try {
+		const { valid, error } = validateAccount(account);
+
+		if (!valid) {
+			throw new Error(error);
+		}
+
 		let imagePath = '';
 		if (account.image && account.image.length > 0) {
 			imagePath = saveImage(account.image, `${Date.now()}_${account.title}`);
@@ -54,9 +60,9 @@ function addAccount(account: IAccount) {
 
 		runTransaction();
 
-		return true;
-	} catch (_error) {
-		return false;
+		return { valid: true, error: '' };
+	} catch (error) {
+		return { valid: false, error: error.message };
 	}
 }
 

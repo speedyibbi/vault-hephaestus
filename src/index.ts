@@ -26,7 +26,7 @@ app.on('ready', () => {
 
 	ipcMain.handle('exitApplication', () => app.quit());
 	ipcMain.handle('saveAccount', (_event, data: string) =>
-		db.app.addAccount(JSON.parse(data))
+		JSON.stringify(db.app.addAccount(JSON.parse(data)))
 	);
 
 	createWindow();

@@ -5,6 +5,8 @@ import { PlusCross } from './icons';
 
 import { useFlashStore } from '../utils/stores/flash-store';
 
+const TIMEOUT = 7000;
+
 export default function Flash() {
 	const error = useFlashStore((state) => state.error);
 	const text = useFlashStore((state) => state.text);
@@ -41,6 +43,10 @@ export default function Flash() {
 					duration: 0.15,
 				}
 			);
+
+			setTimeout(() => {
+				closeFlash();
+			}, TIMEOUT);
 		}
 	}, [error, text]);
 

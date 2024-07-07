@@ -2,7 +2,7 @@ import { AnimatePresence } from 'framer-motion';
 
 import MainLayout from './layouts/main-layout';
 
-import { useTabStore } from './utils/tab-store';
+import { useTabStore } from './utils/stores/tab-store';
 
 export default function App() {
 	const tab = useTabStore((state) => state.tab);

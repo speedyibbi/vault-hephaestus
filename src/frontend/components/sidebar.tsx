@@ -5,7 +5,7 @@ import Logo from './logo';
 import Modal from './modal';
 
 import { navigationTabs, exitTab } from '../utils/data';
-import { useTabStore } from '../utils/tab-store';
+import { useTabStore } from '../utils/stores/tab-store';
 
 export default function Sidebar() {
 	const tab = useTabStore((state) => state.tab);

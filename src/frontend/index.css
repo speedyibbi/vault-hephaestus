@@ -79,8 +79,3 @@ input::file-selector-button {
 	background-color: transparent;
 	cursor: inherit;
 }
-
-.flash::backdrop {
-	background-color: transparent;
-	backdrop-filter: none;
-}

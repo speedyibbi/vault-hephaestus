@@ -5,20 +5,17 @@ import TextInput from './text-input';
 import FileImagePreviewInput from './file-image-preview-input';
 import AccountFormAdditionalField from './account-form-additional-field';
 import { PlusCross } from './icons';
-import Flash from './flash';
 
 import { saveAccount, validateAccount } from '../utils/helpers';
+import { useFlashStore } from '../utils/stores/flash-store';
 
 export default function AccountForm() {
+	const setFlash = useFlashStore((state) => state.setFlash);
+
 	const formRef = useRef<HTMLFormElement>(null);
 	const [formResetCount, setFormResetCount] = useState(0);
 	const [additionalFields, setAdditionalFields] = useState([0, 1]);
 	const [imageData, setImageData] = useState<string | null>(null);
-	const [flash, setFlash] = useState({
-		flash: false,
-		message: '',
-		error: false,
-	});
 
 	const formSubmissionHandler = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
@@ -35,7 +32,7 @@ export default function AccountForm() {
 			const { valid, error } = validateAccount(accountData);
 
 			if (!valid) {
-				setFlash({ flash: true, message: error, error: true });
+				setFlash({ error: true, text: error });
 				return;
 			}
 
@@ -45,11 +42,7 @@ export default function AccountForm() {
 						throw new Error('Error saving account');
 					}
 
-					setFlash({
-						flash: true,
-						message: 'Account saved successfully',
-						error: false,
-					});
+					setFlash({ error: false, text: 'Account saved successfully' });
 
 					if (formRef.current) {
 						formRef.current.reset();
@@ -57,14 +50,10 @@ export default function AccountForm() {
 					}
 				})
 				.catch((_error) => {
-					setFlash({
-						flash: true,
-						message: 'Error saving account',
-						error: true,
-					});
+					setFlash({ error: true, text: 'Error saving account' });
 				});
 		} catch (error) {
-			setFlash({ flash: true, message: 'Error saving account', error: true });
+			setFlash({ error: true, text: 'Error saving account' });
 		}
 	};
 
@@ -128,14 +117,6 @@ export default function AccountForm() {
 					</AnimatePresence>
 				</aside>
 			</div>
-			{flash.flash && (
-				<Flash
-					error={flash.error}
-					onClear={() => setFlash({ flash: false, message: '', error: false })}
-				>
-					{flash.message}
-				</Flash>
-			)}
 		</motion.form>
 	);
 }

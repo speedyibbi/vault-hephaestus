@@ -1,13 +1,13 @@
 import { create } from 'zustand';
 
-import { navigationTabs } from './data';
+import { navigationTabs } from '../data';
 
-interface Store {
+interface TabStore {
 	tab: INavigationTab;
 	setTab: (tab: INavigationTab) => void;
 }
 
-export const useTabStore = create<Store>((set) => ({
+export const useTabStore = create<TabStore>((set) => ({
 	tab: navigationTabs[0],
 	setTab: (tab) => set({ tab }),
 }));

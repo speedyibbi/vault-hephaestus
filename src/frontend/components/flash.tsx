@@ -1,29 +1,31 @@
-import { ReactNode, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 
 import { PlusCross } from './icons';
 
-interface Props {
-	error?: boolean;
-	onClear?: () => void;
-	children?: ReactNode;
-}
+import { useFlashStore } from '../utils/stores/flash-store';
 
-export default function Flash({ error, onClear, children }: Props) {
+export default function Flash() {
+	const error = useFlashStore((state) => state.error);
+	const text = useFlashStore((state) => state.text);
+	const setFlash = useFlashStore((state) => state.setFlash);
+
 	const flashRef = useRef<HTMLDialogElement | null>(null);
 
 	const closeFlash = () => {
 		if (!flashRef.current) return;
 
-		onClear();
 		flashRef.current.close();
+		setFlash({ error: false, text: '' });
 	};
 
 	useEffect(() => {
 		if (!flashRef.current) return;
 
-		flashRef.current.showModal();
-	}, []);
+		if (text.length > 0) {
+			flashRef.current.show();
+		}
+	}, [error, text]);
 
 	return (
 		<motion.dialog
@@ -31,7 +33,7 @@ export default function Flash({ error, onClear, children }: Props) {
 			initial={{ opacity: 0 }}
 			animate={{ opacity: 1 }}
 			transition={{ duration: 0.15 }}
-			className='flash min-w-fit w-128 px-4 py-2 justify-self-center top-full transform -translate-y-12 rounded-full bg-white drop-shadow-2xl'
+			className='min-w-fit w-128 px-4 py-2 justify-self-center bottom-6 rounded-full bg-white drop-shadow-2xl'
 			style={{ backgroundColor: error ? 'var(--danger)' : 'white' }}
 		>
 			<span
@@ -39,7 +41,7 @@ export default function Flash({ error, onClear, children }: Props) {
 				style={{ color: error ? 'white' : 'black' }}
 			>
 				<p className='font-medium text-base leading-none tracking-tighter'>
-					{children}
+					{text}
 				</p>
 				<button onClick={closeFlash} className='focus:outline-none'>
 					<PlusCross className='w-4 stroke-current transform rotate-45' />

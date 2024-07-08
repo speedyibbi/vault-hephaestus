@@ -10,7 +10,6 @@ const dbPath = path.resolve(path.join(app.getPath('userData')), 'database.db');
 const db = new Database(dbPath);
 
 // todo: have an actual secret key
-// todo: error handling in every function
 
 function openConnection() {
 	db.pragma(`key = "${'secretKey'}"`);

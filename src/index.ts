@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow, dialog, ipcMain } from 'electron';
 import db from './db';
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
@@ -22,14 +22,19 @@ const createWindow = (): void => {
 };
 
 app.on('ready', () => {
-	db.openConnection();
+	try {
+		db.openConnection();
 
-	ipcMain.handle('exitApplication', () => app.quit());
-	ipcMain.handle('saveAccount', (_event, data: string) =>
-		JSON.stringify(db.app.addAccount(JSON.parse(data)))
-	);
+		ipcMain.handle('exitApplication', () => app.quit());
+		ipcMain.handle('saveAccount', (_event, data: string) =>
+			JSON.stringify(db.app.addAccount(JSON.parse(data)))
+		);
 
-	createWindow();
+		createWindow();
+	} catch (error) {
+		dialog.showErrorBox('Could not start application', error.message);
+		app.exit();
+	}
 });
 
 app.on('window-all-closed', () => {

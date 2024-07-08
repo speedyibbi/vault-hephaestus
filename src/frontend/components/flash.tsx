@@ -31,23 +31,25 @@ export default function Flash() {
 	};
 
 	useEffect(() => {
-		if (!flashRef.current) return;
+		if (!flashRef.current || text.length === 0) return;
 
-		if (text.length > 0) {
-			flashRef.current.show();
+		flashRef.current.show();
 
-			animate(
-				flashRef.current,
-				{ opacity: 1 },
-				{
-					duration: 0.15,
-				}
-			);
+		animate(
+			flashRef.current,
+			{ opacity: 1 },
+			{
+				duration: 0.15,
+			}
+		);
 
-			setTimeout(() => {
-				closeFlash();
-			}, TIMEOUT);
-		}
+		const timeout = setTimeout(() => {
+			closeFlash();
+		}, TIMEOUT);
+
+		return () => {
+			clearTimeout(timeout);
+		};
 	}, [error, text]);
 
 	return (

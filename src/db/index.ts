@@ -91,10 +91,6 @@ function fetchAccounts() {
 		.all();
 }
 
-function fetchFields() {
-	return db.prepare('SELECT * FROM Fields').all();
-}
-
 export default {
 	db: db,
 	openConnection,

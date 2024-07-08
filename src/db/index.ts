@@ -81,8 +81,14 @@ function addField({
 	).run(name, value, sensitive, accountId);
 }
 
-function fetchAcoounts() {
-	return db.prepare('SELECT * FROM Accounts').all();
+function fetchAccounts() {
+	return db
+		.prepare(
+			`SELECT *
+		FROM Accounts
+		JOIN Fields ON Accounts.id = Fields.account_id`
+		)
+		.all();
 }
 
 function fetchFields() {
@@ -95,5 +101,6 @@ export default {
 	closeConnection,
 	app: {
 		addAccount,
+		fetchAccounts,
 	},
 };

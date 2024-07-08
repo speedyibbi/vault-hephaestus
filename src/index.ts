@@ -29,6 +29,9 @@ app.on('ready', () => {
 		ipcMain.handle('saveAccount', (_event, data: string) =>
 			JSON.stringify(db.app.addAccount(JSON.parse(data)))
 		);
+		ipcMain.handle('loadAccounts', () =>
+			JSON.stringify(db.app.fetchAccounts())
+		);
 
 		createWindow();
 	} catch (error) {

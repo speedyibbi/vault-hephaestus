@@ -3,6 +3,7 @@ declare global {
 		electron: {
 			exitApplication: () => void;
 			saveAccount: (data: string) => Promise<string>;
+			loadAccounts: () => Promise<string>;
 		};
 	}
 }

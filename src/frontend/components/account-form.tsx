@@ -9,7 +9,11 @@ import { PlusCross } from './icons';
 import { saveAccount } from '../utils/helpers';
 import { useFlashStore } from '../utils/stores/flash-store';
 
-export default function AccountForm() {
+interface Props {
+	onAccountSaved?: () => void;
+}
+
+export default function AccountForm({ onAccountSaved = () => {} }: Props) {
 	const setFlash = useFlashStore((state) => state.setFlash);
 
 	const formRef = useRef<HTMLFormElement>(null);
@@ -34,6 +38,8 @@ export default function AccountForm() {
 					if (!valid) {
 						setFlash({ error: true, text: error });
 					} else {
+						onAccountSaved();
+
 						setFlash({ error: false, text: 'Account saved successfully' });
 
 						if (formRef.current) {

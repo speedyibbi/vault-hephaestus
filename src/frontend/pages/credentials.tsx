@@ -1,12 +1,46 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 
 import Searchbar from '../components/searchbar';
 import AccountForm from '../components/account-form';
 import { PlusCross } from '../components/icons';
 
+import { loadAccounts } from '../utils/helpers';
+import { useFlashStore } from '../utils/stores/flash-store';
+
 export default function Credentials() {
+	const setFlash = useFlashStore((state) => state.setFlash);
+
+	const [accounts, setAccounts] = useState([]);
 	const [showForm, setShowForm] = useState(false);
+
+	const getAccounts = async () => {
+		return loadAccounts()
+			.then((res) => setAccounts(res))
+			.catch((_error) => {
+				setFlash({
+					error: true,
+					text: 'Failed to load accounts',
+				});
+			});
+	};
+
+	const onAccountSaved = () => {
+		getAccounts()
+			.then(() => {
+				setShowForm(false);
+			})
+			.catch((_error) => {
+				setFlash({
+					error: true,
+					text: 'Something went wrong',
+				});
+			});
+	};
+
+	useEffect(() => {
+		getAccounts();
+	}, []);
 
 	return (
 		<motion.section
@@ -37,7 +71,9 @@ export default function Credentials() {
 			</span>
 			<AnimatePresence mode='wait'>
 				{showForm ? (
-					<AccountForm />
+					<AccountForm onAccountSaved={onAccountSaved} />
+				) : accounts.length > 0 ? (
+					<>items found</>
 				) : (
 					<motion.span
 						key='no-items'

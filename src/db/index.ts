@@ -82,13 +82,45 @@ function addField({
 }
 
 function fetchAccounts() {
-	return db
+	const rawAccounts = db
 		.prepare(
 			`SELECT *
 		FROM Accounts
 		JOIN Fields ON Accounts.id = Fields.account_id`
 		)
 		.all();
+
+	const accounts: any = {};
+
+	rawAccounts.forEach(
+		({
+			account_id,
+			title,
+			image,
+			favourite,
+			updated_at,
+			created_at,
+			name,
+			value,
+			sensitive,
+		}: any) => {
+			if (!accounts[account_id]) {
+				accounts[account_id] = {
+					account_id,
+					title,
+					image,
+					favourite,
+					updated_at,
+					created_at,
+					details: {},
+				};
+			}
+
+			accounts[account_id].details[name] = { value, sensitive };
+		}
+	);
+
+	return Object.values(accounts);
 }
 
 export default {

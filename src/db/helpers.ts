@@ -53,11 +53,19 @@ export function saveImage(imageBase64: string, imageName: string) {
 
 	const dirPath = path.dirname(imagePath);
 	fs.mkdir(dirPath, { recursive: true }, (err) => {
-		throw err;
+		if (err) {
+			throw err;
+		}
 	});
 	fs.writeFile(imagePath, imageBuffer, {}, (err) => {
-		throw err;
+		if (err) {
+			throw err;
+		}
 	});
 
 	return imagePath;
+}
+
+export function readImage(imagePath: string) {
+	return fs.readFileSync(imagePath, { encoding: 'base64' });
 }

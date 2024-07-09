@@ -3,7 +3,7 @@ import Database from 'better-sqlite3';
 import path from 'path';
 
 import { createAccountsTable, createFieldsTable } from './queries';
-import { saveImage, validateAccount } from './helpers';
+import { readImage, saveImage, validateAccount } from './helpers';
 
 const dbPath = path.resolve(path.join(app.getPath('userData')), 'database.db');
 
@@ -108,7 +108,7 @@ function fetchAccounts() {
 				accounts[account_id] = {
 					account_id,
 					title,
-					image,
+					image: readImage(image),
 					favourite,
 					updated_at,
 					created_at,

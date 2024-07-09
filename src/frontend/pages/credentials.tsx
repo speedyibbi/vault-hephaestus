@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 
 import Searchbar from '../components/searchbar';
 import AccountForm from '../components/account-form';
+import AccountItemList from '../components/account-item-list';
 import { PlusCross } from '../components/icons';
 
 import { loadAccounts } from '../utils/helpers';
@@ -11,7 +12,7 @@ import { useFlashStore } from '../utils/stores/flash-store';
 export default function Credentials() {
 	const setFlash = useFlashStore((state) => state.setFlash);
 
-	const [accounts, setAccounts] = useState([]);
+	const [accounts, setAccounts] = useState<IAccount[]>([]);
 	const [showForm, setShowForm] = useState(false);
 
 	const getAccounts = async () => {
@@ -73,7 +74,7 @@ export default function Credentials() {
 				{showForm ? (
 					<AccountForm onAccountSaved={onAccountSaved} />
 				) : accounts.length > 0 ? (
-					<>items found</>
+					<AccountItemList accounts={accounts} />
 				) : (
 					<motion.span
 						key='no-items'

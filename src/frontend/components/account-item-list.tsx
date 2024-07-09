@@ -15,7 +15,7 @@ export default function AccountItemList({ accounts }: Props) {
 			className='w-full flex flex-wrap place-content-start place-items-start gap-12'
 		>
 			{accounts.map((account) => (
-				<AccountItem key={account.id} account={account} />
+				<AccountItem key={account.account_id} account={account} />
 			))}
 		</motion.ul>
 	);

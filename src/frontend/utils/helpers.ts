@@ -1,6 +1,6 @@
 import { type PixelCrop } from 'react-image-crop';
 
-export async function saveAccount(data: IAccount) {
+export async function saveAccount(data: IAccountData) {
 	return JSON.parse(await window.electron.saveAccount(JSON.stringify(data)));
 }
 

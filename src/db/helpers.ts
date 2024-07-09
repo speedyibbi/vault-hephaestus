@@ -2,7 +2,7 @@ import { app } from 'electron';
 import fs from 'fs';
 import path from 'path';
 
-export function validateAccount(data: IAccount) {
+export function validateAccount(data: IAccountData) {
 	const alphanumericRegex = /^[a-zA-Z0-9 _-]+$/;
 	const fieldNameRegex = /^field-\d+-name$/;
 

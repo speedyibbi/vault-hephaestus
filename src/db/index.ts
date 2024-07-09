@@ -22,7 +22,7 @@ function closeConnection() {
 	db.close();
 }
 
-function addAccount(account: IAccount) {
+function addAccount(account: IAccountData) {
 	try {
 		const { valid, error } = validateAccount(account);
 
@@ -90,7 +90,7 @@ function fetchAccounts() {
 		)
 		.all();
 
-	const accounts: any = {};
+	const accounts: { [key: string]: IAccount } = {};
 
 	rawAccounts.forEach(
 		({
@@ -103,7 +103,7 @@ function fetchAccounts() {
 			name,
 			value,
 			sensitive,
-		}: any) => {
+		}: IAccountData) => {
 			if (!accounts[account_id]) {
 				accounts[account_id] = {
 					account_id,

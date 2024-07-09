@@ -21,7 +21,7 @@ export default function AccountItem({ account }: Props) {
 						{account.title}
 					</p>
 					<p className='font-light text-muted text-base text-left leading-none tracking-tighter'>
-						{account.value}
+						{/* {account.value} */}
 					</p>
 				</span>
 			</button>

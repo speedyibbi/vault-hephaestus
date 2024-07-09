@@ -33,8 +33,20 @@ interface IFlash {
 	text: string;
 }
 
-interface IAccount {
+interface IAccountData {
 	[key: string]: string;
+}
+
+interface IAccount {
+	account_id: string;
+	title: string;
+	image: string;
+	favourite: string;
+	updated_at: string;
+	created_at: string;
+	details: {
+		[key: string]: string | {};
+	};
 }
 
 interface IDialog extends HTMLDialogElement {

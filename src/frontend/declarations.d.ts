@@ -45,7 +45,10 @@ interface IAccount {
 	updated_at: string;
 	created_at: string;
 	details: {
-		[key: string]: string | {};
+		[key: string]: {
+			value: string;
+			sensitive: string;
+		};
 	};
 }
 

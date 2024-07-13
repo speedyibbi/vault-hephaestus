@@ -5,6 +5,7 @@ interface Props {
 }
 
 export default function AccountItem({ account }: Props) {
+	console.log(account);
 	return (
 		<div className='w-128 relative text-foreground'>
 			<button
@@ -14,14 +15,14 @@ export default function AccountItem({ account }: Props) {
 				<img
 					src={account.image}
 					alt={`${account.title}-image-small`}
-					className='w-16 h-16'
+					className='w-16 h-16 rounded-full'
 				/>
 				<span className='flex flex-col gap-2'>
 					<p className='font-medium text-base text-left leading-none tracking-tighter'>
 						{account.title}
 					</p>
 					<p className='font-light text-muted text-base text-left leading-none tracking-tighter'>
-						{/* {account.value} */}
+						{Object.values(account.details)[0].value}
 					</p>
 				</span>
 			</button>

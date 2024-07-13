@@ -32,6 +32,9 @@ app.on('ready', () => {
 		ipcMain.handle('loadAccounts', () =>
 			JSON.stringify(db.app.fetchAccounts())
 		);
+		ipcMain.handle('updateAccountFavouriteStatus', (_event, data: string) =>
+			JSON.stringify(db.app.updateAccountFavouriteStatus(JSON.parse(data)))
+		);
 
 		createWindow();
 	} catch (error) {

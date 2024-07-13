@@ -8,6 +8,15 @@ export async function loadAccounts() {
 	return JSON.parse(await window.electron.loadAccounts());
 }
 
+export async function updateAccountFavouriteStatus(data: {
+	favourite: boolean;
+	account_id: number;
+}) {
+	return JSON.parse(
+		await window.electron.updateAccountFavouriteStatus(JSON.stringify(data))
+	);
+}
+
 export function setCanvasPreview(
 	image: HTMLImageElement,
 	canvas: HTMLCanvasElement,

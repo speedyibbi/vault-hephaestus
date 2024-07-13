@@ -133,6 +133,24 @@ function fetchAccounts() {
 	return Object.values(accounts);
 }
 
+function updateAccountFavouriteStatus({
+	favourite,
+	account_id,
+}: {
+	favourite: boolean;
+	account_id: number;
+}) {
+	try {
+		const accountUpdated = db
+			.prepare('UPDATE Accounts SET favourite = ? WHERE id = ?')
+			.run(favourite, account_id);
+
+		return { updated: accountUpdated.changes > 0 };
+	} catch (_error) {
+		return { updated: false };
+	}
+}
+
 export default {
 	db: db,
 	openConnection,
@@ -140,5 +158,6 @@ export default {
 	app: {
 		addAccount,
 		fetchAccounts,
+		updateAccountFavouriteStatus,
 	},
 };

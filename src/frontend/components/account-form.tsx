@@ -48,7 +48,9 @@ export default function AccountForm({ onAccountSaved = () => {} }: Props) {
 						}
 					}
 				})
-				.catch();
+				.catch(() => {
+					setFlash({ error: true, text: 'Trouble saving account' });
+				});
 		} catch (error) {
 			setFlash({ error: true, text: error.message });
 		}

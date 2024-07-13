@@ -8,10 +8,7 @@ export async function loadAccounts() {
 	return JSON.parse(await window.electron.loadAccounts());
 }
 
-export async function updateAccountFavouriteStatus(data: {
-	favourite: boolean;
-	account_id: number;
-}) {
+export async function updateAccountFavouriteStatus(data: IAccountData) {
 	return JSON.parse(
 		await window.electron.updateAccountFavouriteStatus(JSON.stringify(data))
 	);

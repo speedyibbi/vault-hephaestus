@@ -133,13 +133,7 @@ function fetchAccounts() {
 	return Object.values(accounts);
 }
 
-function updateAccountFavouriteStatus({
-	favourite,
-	account_id,
-}: {
-	favourite: boolean;
-	account_id: number;
-}) {
+function updateAccountFavouriteStatus({ favourite, account_id }: IAccountData) {
 	try {
 		const accountUpdated = db
 			.prepare('UPDATE Accounts SET favourite = ? WHERE id = ?')

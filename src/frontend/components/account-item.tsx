@@ -1,11 +1,32 @@
 import { Star } from './icons';
 
+import { updateAccountFavouriteStatus } from '../utils/helpers';
+import { useFlashStore } from '../utils/stores/flash-store';
+
 interface Props {
 	account: IAccount;
 }
 
 export default function AccountItem({ account }: Props) {
-	console.log(account);
+	const setFlash = useFlashStore((state) => state.setFlash);
+
+	const toggleFavourite = () => {
+		updateAccountFavouriteStatus({
+			favourite: account.favourite.toString() === '0' ? '1' : '0',
+			account_id: account.account_id,
+		})
+			.then(({ updated }) => {
+				if (updated) {
+					setFlash({ error: false, text: 'Account updated' });
+				} else {
+					setFlash({ error: true, text: 'Could not update account' });
+				}
+			})
+			.catch(() => {
+				setFlash({ error: true, text: 'Could not update account' });
+			});
+	};
+
 	return (
 		<div className='w-128 relative text-foreground group'>
 			<button
@@ -27,7 +48,7 @@ export default function AccountItem({ account }: Props) {
 				</span>
 			</button>
 			<button
-				onClick={() => {}}
+				onClick={toggleFavourite}
 				className='mr-6 ml-aut absolute top-1/2 right-0 transform -translate-y-1/2'
 			>
 				{account.favourite ? (

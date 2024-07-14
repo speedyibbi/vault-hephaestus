@@ -1,7 +1,22 @@
 import { MagnifyingGlass } from './icons';
 
-export default function Searchbar() {
-	const searchHandler = (event: React.ChangeEvent<HTMLInputElement>) => {};
+interface Props {
+	searchArray: IAccount[];
+	onSearch: (array: IAccount[]) => void;
+}
+
+export default function Searchbar({ searchArray, onSearch }: Props) {
+	const searchHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+		if (event.target.value.length > 0) {
+			onSearch(
+				searchArray.filter((item) =>
+					item.title.toLowerCase().includes(event.target.value.toLowerCase())
+				)
+			);
+		} else {
+			return onSearch(searchArray);
+		}
+	};
 
 	return (
 		<form

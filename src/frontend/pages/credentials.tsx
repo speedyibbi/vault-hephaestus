@@ -13,11 +13,15 @@ export default function Credentials() {
 	const setFlash = useFlashStore((state) => state.setFlash);
 
 	const [accounts, setAccounts] = useState<IAccount[]>([]);
+	const [searchedAccounts, setSearchedAccounts] = useState<IAccount[]>([]);
 	const [showForm, setShowForm] = useState(false);
 
 	const getAccounts = async () => {
 		return loadAccounts()
-			.then((res) => setAccounts(res))
+			.then((res) => {
+				setAccounts(res);
+				setSearchedAccounts(res);
+			})
 			.catch((_error) => {
 				setFlash({
 					error: true,
@@ -53,7 +57,12 @@ export default function Credentials() {
 			className='h-full relative flex flex-col place-content-start place-items-start gap-24'
 		>
 			<span className='w-full flex place-content-between place-items-center gap-12'>
-				<Searchbar />
+				<Searchbar
+					searchArray={accounts}
+					onSearch={(array: IAccount[]) => {
+						setSearchedAccounts(array);
+					}}
+				/>
 				<button
 					onClick={() => {
 						setShowForm((formState) => !formState);
@@ -73,8 +82,11 @@ export default function Credentials() {
 			<AnimatePresence mode='wait'>
 				{showForm ? (
 					<AccountForm onAccountSaved={onAccountSaved} />
-				) : accounts.length > 0 ? (
-					<AccountItemList accounts={accounts} />
+				) : searchedAccounts.length > 0 ? (
+					<AccountItemList
+						key={JSON.stringify(searchedAccounts)}
+						accounts={searchedAccounts}
+					/>
 				) : (
 					<motion.span
 						key='no-items'

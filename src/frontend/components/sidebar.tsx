@@ -38,7 +38,7 @@ export default function Sidebar() {
 	}, [selectedNavTab]);
 
 	return (
-		<aside className='w-80 h-full pr-12 flex flex-col gap-24 border-r border-accent'>
+		<aside className='min-w-80 w-80 h-full pr-12 flex flex-col gap-24 border-r border-accent'>
 			<Logo className='w-36' />
 			<nav
 				ref={navRef}

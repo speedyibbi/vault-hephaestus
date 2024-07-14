@@ -28,7 +28,7 @@ export default function AccountItem({ account }: Props) {
 	};
 
 	return (
-		<div className='w-128 relative text-foreground group'>
+		<div className='min-w-96 flex-grow relative text-foreground group'>
 			<button
 				onClick={() => {}}
 				className='w-full h-24 px-6 flex place-content-start place-items-center gap-6 border-2 border-transparent rounded-2xl group-hover:border-accent transition-colors duration-150'

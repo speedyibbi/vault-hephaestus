@@ -14,9 +14,11 @@ export default function AccountItemList({ accounts }: Props) {
 			transition={{ duration: 0.15, ease: 'easeOut' }}
 			className='w-full flex flex-wrap place-content-start place-items-start gap-12'
 		>
-			{accounts.map((account) => (
-				<AccountItem key={account.account_id} account={account} />
-			))}
+			{accounts
+				.sort((a, b) => parseInt(b.favourite) - parseInt(a.favourite))
+				.map((account) => (
+					<AccountItem key={account.account_id} account={account} />
+				))}
 		</motion.ul>
 	);
 }

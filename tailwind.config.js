@@ -18,6 +18,10 @@ module.exports = {
 				accent: 'var(--accent)',
 				danger: 'var(--danger)',
 			},
+			fill: {
+				inherit: 'inherit',
+				transparent: 'transparent',
+			},
 		},
 	},
 	variants: {

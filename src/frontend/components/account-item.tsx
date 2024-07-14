@@ -1,3 +1,5 @@
+import { useAnimate } from 'framer-motion';
+
 import { Star } from './icons';
 
 import { updateAccountFavouriteStatus } from '../utils/helpers';
@@ -10,13 +12,37 @@ interface Props {
 export default function AccountItem({ account }: Props) {
 	const setFlash = useFlashStore((state) => state.setFlash);
 
+	const [scope, animate] = useAnimate();
+
+	const animateStar = async (toggleFill: boolean) => {
+		await animate(
+			scope.current,
+			{ scale: 1.7, fill: toggleFill ? 'transparent' : 'currentColor' },
+			{ duration: 0.15, ease: 'easeOut' }
+		);
+		await animate(
+			scope.current,
+			{ scale: 0.9, fill: toggleFill ? 'currentColor' : 'transparent' },
+			{ duration: 0.15, ease: 'easeOut' }
+		);
+		await animate(
+			scope.current,
+			{ scale: 1 },
+			{ duration: 0.15, ease: 'easeOut' }
+		);
+	};
+
 	const toggleFavourite = () => {
+		const favourite = account.favourite.toString() === '0' ? '1' : '0';
+
 		updateAccountFavouriteStatus({
-			favourite: account.favourite.toString() === '0' ? '1' : '0',
+			favourite,
 			account_id: account.account_id,
 		})
 			.then(({ updated }) => {
 				if (updated) {
+					account.favourite = favourite;
+					animateStar(favourite === '1');
 					setFlash({ error: false, text: 'Account updated' });
 				} else {
 					setFlash({ error: true, text: 'Could not update account' });
@@ -49,13 +75,20 @@ export default function AccountItem({ account }: Props) {
 			</button>
 			<button
 				onClick={toggleFavourite}
-				className='mr-6 ml-aut absolute top-1/2 right-0 transform -translate-y-1/2'
+				className='mr-6 absolute top-1/2 right-0 transform -translate-y-1/2'
 			>
-				{account.favourite ? (
-					<Star className='w-5 fill-current' />
-				) : (
-					<Star className='w-5 stroke-current' />
-				)}
+				<div
+					ref={scope}
+					className='fill-transparent'
+					style={{
+						fill:
+							account.favourite.toString() === '1'
+								? 'currentColor'
+								: 'transparent',
+					}}
+				>
+					<Star className='w-5 fill-inherit stroke-current' />
+				</div>
 			</button>
 		</div>
 	);

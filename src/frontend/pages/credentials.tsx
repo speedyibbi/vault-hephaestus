@@ -109,6 +109,9 @@ export default function Credentials() {
 						<AccountItemList
 							key={JSON.stringify(searchedAccounts)}
 							accounts={searchedAccounts}
+							onAccountClick={() => {
+								toggleInfoPanel();
+							}}
 						/>
 					) : (
 						<motion.span

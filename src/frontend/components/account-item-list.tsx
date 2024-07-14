@@ -1,11 +1,13 @@
 import { motion } from 'framer-motion';
+
 import AccountItem from './account-item';
 
 interface Props {
 	accounts: IAccount[];
+	onAccountClick: () => void;
 }
 
-export default function AccountItemList({ accounts }: Props) {
+export default function AccountItemList({ accounts, onAccountClick }: Props) {
 	return (
 		<motion.ul
 			initial={{ opacity: 0 }}
@@ -17,7 +19,11 @@ export default function AccountItemList({ accounts }: Props) {
 			{accounts
 				.sort((a, b) => parseInt(b.favourite) - parseInt(a.favourite))
 				.map((account) => (
-					<AccountItem key={account.account_id} account={account} />
+					<AccountItem
+						key={account.account_id}
+						account={account}
+						onClick={onAccountClick}
+					/>
 				))}
 		</motion.ul>
 	);

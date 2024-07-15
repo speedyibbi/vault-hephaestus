@@ -8,6 +8,7 @@ import { PlusCross } from '../components/icons';
 
 import { loadAccounts } from '../utils/helpers';
 import { useFlashStore } from '../utils/stores/flash-store';
+import AccountInfoPanel from '../components/account-info-panel';
 
 export default function Credentials() {
 	const setFlash = useFlashStore((state) => state.setFlash);
@@ -131,11 +132,7 @@ export default function Credentials() {
 					)}
 				</AnimatePresence>
 			</motion.aside>
-			<motion.aside
-				ref={infoPanelRef}
-				layout
-				className='max-w-xl transform translate-x-12 bg-accent rounded-2xl opacity-0'
-			></motion.aside>
+			<AccountInfoPanel ref={infoPanelRef} account={activeAccount} />
 		</motion.section>
 	);
 }

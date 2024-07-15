@@ -7,10 +7,15 @@ import { useFlashStore } from '../utils/stores/flash-store';
 
 interface Props {
 	account: IAccount;
-	onClick: () => void;
+	active?: boolean;
+	onClick?: () => void;
 }
 
-export default function AccountItem({ account, onClick }: Props) {
+export default function AccountItem({
+	account,
+	active,
+	onClick = () => {},
+}: Props) {
 	const setFlash = useFlashStore((state) => state.setFlash);
 
 	const [scope, animate] = useAnimate();
@@ -59,6 +64,10 @@ export default function AccountItem({ account, onClick }: Props) {
 			<button
 				onClick={() => onClick()}
 				className='w-full h-24 px-6 flex place-content-start place-items-center gap-6 border-2 border-transparent rounded-2xl group-hover:border-accent transition-colors duration-150'
+				style={{
+					backgroundColor:
+						active !== undefined && active ? 'var(--accent)' : 'transparent',
+				}}
 			>
 				<img
 					src={account.image}

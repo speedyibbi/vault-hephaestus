@@ -15,6 +15,7 @@ export default function Credentials() {
 	const infoPanelRef = useRef<HTMLDivElement>(null);
 	const [accounts, setAccounts] = useState<IAccount[]>([]);
 	const [searchedAccounts, setSearchedAccounts] = useState<IAccount[]>([]);
+	const [activeAccount, setActiveAccount] = useState<IAccount>(null);
 	const [showForm, setShowForm] = useState(false);
 	const [infoPanelActive, setInfoPanelActive] = useState(false);
 
@@ -45,8 +46,13 @@ export default function Credentials() {
 			});
 	};
 
-	const toggleInfoPanel = async () => {
+	const toggleInfoPanel = async (account: IAccount) => {
 		if (infoPanelRef.current) {
+			setActiveAccount(account);
+
+			if (infoPanelActive && account.account_id !== activeAccount.account_id)
+				return;
+
 			await animate(
 				infoPanelRef.current,
 				{
@@ -109,9 +115,7 @@ export default function Credentials() {
 						<AccountItemList
 							key={JSON.stringify(searchedAccounts)}
 							accounts={searchedAccounts}
-							onAccountClick={() => {
-								toggleInfoPanel();
-							}}
+							onAccountClick={(account) => toggleInfoPanel(account)}
 						/>
 					) : (
 						<motion.span

@@ -1,13 +1,21 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 
 import AccountItem from './account-item';
 
 interface Props {
 	accounts: IAccount[];
-	onAccountClick: () => void;
+	onAccountClick: (account: IAccount) => void;
 }
 
 export default function AccountItemList({ accounts, onAccountClick }: Props) {
+	const [activeAccount, setActiveAccount] = useState<number>(null);
+
+	const handleAccountClick = (idx: number) => {
+		setActiveAccount((prevState) => (prevState === idx ? null : idx));
+		onAccountClick(accounts[idx]);
+	};
+
 	return (
 		<motion.ul
 			initial={{ opacity: 0 }}
@@ -18,11 +26,12 @@ export default function AccountItemList({ accounts, onAccountClick }: Props) {
 		>
 			{accounts
 				.sort((a, b) => parseInt(b.favourite) - parseInt(a.favourite))
-				.map((account) => (
+				.map((account, idx) => (
 					<AccountItem
 						key={account.account_id}
 						account={account}
-						onClick={onAccountClick}
+						active={idx === activeAccount}
+						onClick={handleAccountClick.bind(null, idx)}
 					/>
 				))}
 		</motion.ul>

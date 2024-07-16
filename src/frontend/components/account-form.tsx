@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import TextInput from './text-input';
 import FileImagePreviewInput from './file-image-preview-input';
 import AccountFormAdditionalField from './account-form-additional-field';
+import Button from './button';
 import { PlusCross } from './icons';
 
 import { saveAccount } from '../utils/helpers';
@@ -91,14 +92,12 @@ export default function AccountForm({ onAccountSaved = () => {} }: Props) {
 					</button>
 				</aside>
 				<aside className='w-full max-h-full pr-1 pb-24 flex flex-col place-content-start place-items-start gap-12 overflow-y-scroll'>
-					<button
-						type='button'
+					<Button
+						text='Add field'
+						icon={PlusCross}
 						onClick={addField}
-						className='mt-2 px-5 py-2 flex place-content-start place-items-center gap-3 font-medium text-base leading-none tracking-tighter border-2 border-white rounded-md'
-					>
-						Add field
-						<PlusCross className='w-5 stroke-current' />
-					</button>
+						style={{ marginTop: '0.5rem' }}
+					/>
 					<AnimatePresence>
 						{additionalFields.map((key, idx) => (
 							<AccountFormAdditionalField

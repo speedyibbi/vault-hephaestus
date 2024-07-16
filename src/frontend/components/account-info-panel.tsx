@@ -1,7 +1,9 @@
-import { ForwardedRef, forwardRef } from 'react';
+import { ForwardedRef, forwardRef, useState } from 'react';
 import { motion } from 'framer-motion';
 
+import SectionSelector from './section-selector';
 import Button from './button';
+import { Trash } from './icons';
 
 interface Props {
 	account: IAccount;
@@ -11,6 +13,10 @@ function AccountInfoPanel(
 	{ account }: Props,
 	ref: ForwardedRef<HTMLDivElement>
 ) {
+	const [selectedSection, setSelectedSection] = useState('Data');
+
+	const selectSection = (section: 'Data' | 'History') => {};
+
 	return (
 		<motion.aside
 			ref={ref}
@@ -29,6 +35,22 @@ function AccountInfoPanel(
 					</p>
 					<Button text='Edit' onClick={() => {}} />
 				</span>
+			</div>
+			<SectionSelector
+				key={account?.account_id}
+				sections={['Data', 'History']}
+				onSectionSelect={selectSection}
+			/>
+			<div className='w-full mt-auto flex place-content-between place-items-end'>
+				<p className='font-medium text-base text-muted leading-none tracking-tighter'>
+					{account?.updated_at}
+				</p>
+				<Button
+					text='Remove'
+					icon={Trash}
+					iconPosition='left'
+					onClick={() => {}}
+				/>
 			</div>
 		</motion.aside>
 	);

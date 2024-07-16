@@ -50,6 +50,7 @@ function AccountInfoPanel(
 					icon={Trash}
 					iconPosition='left'
 					onClick={() => {}}
+					style={{ color: 'var(--danger)', borderColor: 'var(--danger)' }}
 				/>
 			</div>
 		</motion.aside>

@@ -1,5 +1,5 @@
 import { ForwardedRef, forwardRef, useState } from 'react';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 
 import SectionSelector from './section-selector';
 import Button from './button';
@@ -15,7 +15,22 @@ function AccountInfoPanel(
 ) {
 	const [selectedSection, setSelectedSection] = useState('Data');
 
-	const selectSection = (section: 'Data' | 'History') => {};
+	const selectSection = (section: 'Data' | 'History') => {
+		setSelectedSection(section);
+	};
+
+	function formatDateString(dateString: string) {
+		const date = new Date(dateString);
+		const day = String(date.getDate()).padStart(2, '0');
+		const month = String(date.getMonth() + 1).padStart(2, '0');
+		const year = date.getFullYear();
+
+		const hours = String(date.getHours()).padStart(2, '0');
+		const minutes = String(date.getMinutes()).padStart(2, '0');
+		const meridian = date.getHours() >= 12 ? 'PM' : 'AM';
+
+		return `${day}/${month}/${year} ${hours}:${minutes}${meridian}`;
+	}
 
 	return (
 		<motion.aside
@@ -41,9 +56,32 @@ function AccountInfoPanel(
 				sections={['Data', 'History']}
 				onSectionSelect={selectSection}
 			/>
+			<AnimatePresence mode='wait'>
+				{selectedSection === 'Data' ? (
+					<motion.article
+						key='data'
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						exit={{ opacity: 0 }}
+						transition={{ duration: 0.15, ease: 'easeOut' }}
+						className='w-full h-full overflow-y-scroll'
+					></motion.article>
+				) : selectedSection === 'History' ? (
+					<motion.article
+						key='history'
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						exit={{ opacity: 0 }}
+						transition={{ duration: 0.15, ease: 'easeOut' }}
+						className='w-full h-full overflow-y-scroll'
+					></motion.article>
+				) : (
+					<></>
+				)}
+			</AnimatePresence>
 			<div className='w-full mt-auto flex place-content-between place-items-end'>
 				<p className='font-medium text-base text-muted leading-none tracking-tighter'>
-					{account?.updated_at}
+					Last modified: {account && formatDateString(account?.updated_at)}
 				</p>
 				<Button
 					text='Remove'

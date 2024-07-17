@@ -7,6 +7,8 @@ import { PlusCross } from './icons';
 interface Props {
 	id?: string;
 	name?: string;
+	defaultName?: string;
+	defaultValue?: string;
 	defaultChecked?: boolean;
 	onCross?: () => void;
 }
@@ -14,6 +16,8 @@ interface Props {
 export default function AccountFormAdditionalField({
 	id,
 	name,
+	defaultName,
+	defaultValue,
 	defaultChecked,
 	onCross,
 }: Props) {
@@ -30,11 +34,13 @@ export default function AccountFormAdditionalField({
 				id={`${id}-name`}
 				name={`${name}-name`}
 				placeholderText='Name'
+				defaultValue={defaultName}
 			/>
 			<TextInput
 				id={`${id}-value`}
 				name={`${name}-value`}
 				placeholderText='Value'
+				defaultValue={defaultValue}
 			/>
 			<span className='w-full px-4 flex place-content-start place-items-center gap-3'>
 				<CheckboxInput

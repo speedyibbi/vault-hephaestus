@@ -9,15 +9,17 @@ interface Props {
 	id?: string;
 	name?: string;
 	onImageUpdate?: (imageData: string) => void;
+	defaultImage?: string;
 }
 
 export default function FileImagePreviewInput({
 	id = 'image',
 	name = 'image',
 	onImageUpdate,
+	defaultImage,
 }: Props) {
-	const [imagePreview, setImagePreview] = useState('');
-	const [imageCropped, setImageCropped] = useState(false);
+	const [imagePreview, setImagePreview] = useState(defaultImage || '');
+	const [imageCropped, setImageCropped] = useState(defaultImage ? true : false);
 
 	const minimumImageWidth = 128;
 
@@ -32,7 +34,7 @@ export default function FileImagePreviewInput({
 			const img = new Image();
 			img.onload = () => {
 				if (img.width < minimumImageWidth || img.height < minimumImageWidth) {
-					// error msg
+					// todo: error msg
 				} else {
 					setImageCropped(false);
 					setImagePreview(reader.result?.toString());

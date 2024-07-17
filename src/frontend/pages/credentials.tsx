@@ -18,6 +18,7 @@ export default function Credentials() {
 	const [searchedAccounts, setSearchedAccounts] = useState<IAccount[]>([]);
 	const [activeAccount, setActiveAccount] = useState<IAccount>(null);
 	const [showForm, setShowForm] = useState(false);
+	const [formAccount, setFormAccount] = useState<IAccount>(null);
 	const [infoPanelActive, setInfoPanelActive] = useState(false);
 
 	const getAccounts = async () => {
@@ -83,6 +84,7 @@ export default function Credentials() {
 	const handleInfoPanelEdit = () => {
 		toggleInfoPanel(null);
 		setShowForm(true);
+		setFormAccount(activeAccount);
 	};
 
 	useEffect(() => {
@@ -111,7 +113,10 @@ export default function Credentials() {
 					/>
 					<button
 						disabled={infoPanelActive}
-						onClick={() => setShowForm((formState) => !formState)}
+						onClick={() => {
+							setShowForm((formState) => !formState);
+							setFormAccount(null);
+						}}
 						className={`p-4 rounded-2xl transition-colors duration-150 ${
 							!infoPanelActive ? 'hover:bg-accent' : ''
 						}`}
@@ -128,7 +133,10 @@ export default function Credentials() {
 				</span>
 				<AnimatePresence mode='wait'>
 					{showForm ? (
-						<AccountForm onAccountSaved={onAccountSaved} />
+						<AccountForm
+							account={formAccount}
+							onAccountSaved={onAccountSaved}
+						/>
 					) : searchedAccounts.length > 0 ? (
 						<AccountItemList
 							key={JSON.stringify(searchedAccounts)}

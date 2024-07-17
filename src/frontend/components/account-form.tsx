@@ -11,19 +11,33 @@ import { saveAccount } from '../utils/helpers';
 import { useFlashStore } from '../utils/stores/flash-store';
 
 interface Props {
+	account?: IAccount;
 	onAccountSaved?: () => void;
 }
 
-export default function AccountForm({ onAccountSaved = () => {} }: Props) {
+export default function AccountForm({
+	account,
+	onAccountSaved = () => {},
+}: Props) {
 	const setFlash = useFlashStore((state) => state.setFlash);
 
 	const formRef = useRef<HTMLFormElement>(null);
 	const [formResetCount, setFormResetCount] = useState(0);
-	const [additionalFields, setAdditionalFields] = useState([0, 1]);
 	const [imageData, setImageData] = useState<string | null>(null);
+	const [defaultKeys, setDefaultKeys] = useState(
+		Object.keys(account?.details || {})
+	);
+	const [defaultValues, setDefaultValues] = useState(
+		Object.values(account?.details || {})
+	);
+	const [additionalFields, setAdditionalFields] = useState(
+		defaultValues.length > 0 ? defaultValues.map((_value, idx) => idx) : [0, 1]
+	);
 
 	const formSubmissionHandler = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
+
+		// todo: handle account update
 
 		try {
 			const formData = new FormData(event.currentTarget);
@@ -77,12 +91,18 @@ export default function AccountForm({ onAccountSaved = () => {} }: Props) {
 		>
 			<div className='w-full h-full grid grid-rows-1 grid-cols-2 gap-24'>
 				<aside className='w-full pb-24 flex flex-col place-content-start place-items-start gap-12 overflow-y-scroll'>
-					<TextInput id='title' name='title' placeholderText='Title' />
+					<TextInput
+						id='title'
+						name='title'
+						placeholderText='Title'
+						defaultValue={account?.title}
+					/>
 					<FileImagePreviewInput
 						key={formResetCount}
 						id='image'
 						name='image'
 						onImageUpdate={(imageData) => setImageData(imageData)}
+						defaultImage={account?.image}
 					/>
 					<button
 						type='submit'
@@ -104,12 +124,24 @@ export default function AccountForm({ onAccountSaved = () => {} }: Props) {
 								key={key}
 								id={`field-${idx + 1}`}
 								name={`field-${idx + 1}`}
-								defaultChecked={false}
-								onCross={() =>
+								defaultName={defaultKeys[idx]}
+								defaultValue={defaultValues[idx]?.value || ''}
+								defaultChecked={
+									parseInt(defaultValues[idx]?.sensitive) === 1 || false
+								}
+								onCross={() => {
 									setAdditionalFields((prevState) =>
 										prevState.filter((k) => k !== key)
-									)
-								}
+									);
+									setDefaultKeys((prevState) => {
+										prevState.splice(idx, 1);
+										return prevState;
+									});
+									setDefaultValues((prevState) => {
+										prevState.splice(idx, 1);
+										return prevState;
+									});
+								}}
 							/>
 						))}
 					</AnimatePresence>

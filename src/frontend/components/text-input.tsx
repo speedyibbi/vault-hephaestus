@@ -3,6 +3,7 @@ interface Props {
 	name?: string;
 	placeholderText?: string;
 	onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+	defaultValue?: string;
 }
 
 export default function TextInput({
@@ -10,6 +11,7 @@ export default function TextInput({
 	name,
 	placeholderText,
 	onChange,
+	defaultValue,
 }: Props) {
 	return (
 		<div className='w-full h-12 px-6 relative flex place-content-start place-items-center rounded-2xl bg-accent'>
@@ -18,6 +20,7 @@ export default function TextInput({
 				name={name}
 				type='text'
 				onChange={onChange}
+				defaultValue={defaultValue}
 				placeholder={placeholderText}
 				className='flex-grow font-medium text-xl text-foreground leading-none tracking-tighter bg-transparent focus:outline-none'
 			/>

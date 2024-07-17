@@ -51,6 +51,11 @@ body {
 	outline-color: var(--muted);
 }
 
+*:disabled {
+	color: var(--muted);
+	pointer-events: none;
+}
+
 *::backdrop {
 	backdrop-filter: blur(1.6rem);
 }

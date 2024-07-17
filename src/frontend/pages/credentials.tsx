@@ -97,7 +97,9 @@ export default function Credentials() {
 					<button
 						disabled={infoPanelActive}
 						onClick={() => setShowForm((formState) => !formState)}
-						className='p-4 hover:bg-accent rounded-2xl transition-colors duration-150'
+						className={`p-4 rounded-2xl transition-colors duration-150 ${
+							!infoPanelActive ? 'hover:bg-accent' : ''
+						}`}
 					>
 						<motion.span
 							initial={{ rotateZ: '0deg' }}

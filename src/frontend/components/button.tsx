@@ -17,7 +17,7 @@ export default function Button({
 		<button
 			type='button'
 			onClick={onClick}
-			className='px-5 py-2 flex place-content-start place-items-center gap-3 font-medium text-base leading-none tracking-tighter border-2 border-white rounded-md'
+			className='px-5 py-2 flex place-content-start place-items-center gap-3 font-medium text-base leading-none tracking-tighter border-2 border-current rounded-md'
 			style={style}
 		>
 			{text}

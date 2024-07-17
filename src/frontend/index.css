@@ -24,6 +24,7 @@
 	--foreground: #ffffff;
 	--background: #0a0a10;
 	--muted: #ffffff80;
+	--muted-background: #0a0a1080;
 	--accent: #1d1d2f;
 	--danger: #ff4040;
 }

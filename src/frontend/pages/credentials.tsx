@@ -49,9 +49,13 @@ export default function Credentials() {
 
 	const toggleInfoPanel = async (account: IAccount) => {
 		if (infoPanelRef.current) {
-			setActiveAccount(account);
+			if (account !== null) setActiveAccount(account);
 
-			if (infoPanelActive && account.account_id !== activeAccount.account_id)
+			if (
+				infoPanelActive &&
+				account !== null &&
+				account.account_id !== activeAccount.account_id
+			)
 				return;
 
 			await animate(
@@ -66,8 +70,19 @@ export default function Credentials() {
 				}
 			);
 
-			setInfoPanelActive((prevState) => !prevState);
+			setInfoPanelActive((isActive) => {
+				if (isActive) {
+					setActiveAccount(null);
+				}
+
+				return !isActive;
+			});
 		}
+	};
+
+	const handleInfoPanelEdit = () => {
+		toggleInfoPanel(null);
+		setShowForm(true);
 	};
 
 	useEffect(() => {
@@ -134,7 +149,11 @@ export default function Credentials() {
 					)}
 				</AnimatePresence>
 			</motion.aside>
-			<AccountInfoPanel ref={infoPanelRef} account={activeAccount} />
+			<AccountInfoPanel
+				ref={infoPanelRef}
+				account={activeAccount}
+				onEdit={handleInfoPanelEdit}
+			/>
 		</motion.section>
 	);
 }

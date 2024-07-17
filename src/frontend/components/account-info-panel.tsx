@@ -2,16 +2,17 @@ import { ForwardedRef, forwardRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 
 import SectionSelector from './section-selector';
+import AccountInfoPanelData from './account-info-panel-data';
 import Button from './button';
 import { Trash } from './icons';
-import AccountInfoPanelData from './account-info-panel-data';
 
 interface Props {
 	account: IAccount;
+	onEdit?: () => void;
 }
 
 function AccountInfoPanel(
-	{ account }: Props,
+	{ account, onEdit = () => {} }: Props,
 	ref: ForwardedRef<HTMLDivElement>
 ) {
 	const [selectedSection, setSelectedSection] = useState('Data');
@@ -49,7 +50,7 @@ function AccountInfoPanel(
 					<p className='mb-3 font-medium text-3xl text-foreground leading-none tracking-tighter'>
 						{account?.title}
 					</p>
-					<Button text='Edit' onClick={() => {}} />
+					<Button text='Edit' onClick={onEdit} />
 				</span>
 			</div>
 			<SectionSelector

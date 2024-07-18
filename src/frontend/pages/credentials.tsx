@@ -4,11 +4,11 @@ import { animate, AnimatePresence, motion } from 'framer-motion';
 import Searchbar from '../components/searchbar';
 import AccountForm from '../components/account-form';
 import AccountItemList from '../components/account-item-list';
+import AccountInfoPanel from '../components/account-info-panel';
 import { PlusCross } from '../components/icons';
 
-import { loadAccounts } from '../utils/helpers';
+import { loadAccounts, removeAccount } from '../utils/helpers';
 import { useFlashStore } from '../utils/stores/flash-store';
-import AccountInfoPanel from '../components/account-info-panel';
 
 export default function Credentials() {
 	const setFlash = useFlashStore((state) => state.setFlash);
@@ -87,6 +87,31 @@ export default function Credentials() {
 		setFormAccount(activeAccount);
 	};
 
+	const handleInfoPanelRemove = () => {
+		toggleInfoPanel(null);
+		removeAccount(activeAccount.account_id)
+			.then((res) => {
+				if (res.deleted) {
+					setFlash({
+						error: false,
+						text: 'Account removed',
+					});
+					getAccounts();
+				} else {
+					setFlash({
+						error: true,
+						text: 'Something went wrong',
+					});
+				}
+			})
+			.catch((_error) => {
+				setFlash({
+					error: true,
+					text: 'Failed to remove account',
+				});
+			});
+	};
+
 	useEffect(() => {
 		getAccounts();
 	}, []);
@@ -161,6 +186,7 @@ export default function Credentials() {
 				ref={infoPanelRef}
 				account={activeAccount}
 				onEdit={handleInfoPanelEdit}
+				onRemove={handleInfoPanelRemove}
 			/>
 		</motion.section>
 	);

@@ -158,6 +158,14 @@ function updateAccountFavouriteStatus({ favourite, accountId }: IAccountData) {
 
 function deleteAccount(accountId: string) {
 	try {
+		const account: { image?: string } = db
+			.prepare(`SELECT image FROM Accounts WHERE id = ?`)
+			.get(accountId);
+
+		if (account.image && account.image.length > 0) {
+			deleteFile(account.image);
+		}
+
 		db.prepare('DELETE FROM Accounts WHERE id = ?').run(accountId);
 
 		return { deleted: true };

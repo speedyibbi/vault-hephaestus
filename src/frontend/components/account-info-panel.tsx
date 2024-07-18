@@ -9,10 +9,11 @@ import { Trash } from './icons';
 interface Props {
 	account: IAccount;
 	onEdit?: () => void;
+	onRemove?: () => void;
 }
 
 function AccountInfoPanel(
-	{ account, onEdit = () => {} }: Props,
+	{ account, onEdit = () => {}, onRemove = () => {} }: Props,
 	ref: ForwardedRef<HTMLDivElement>
 ) {
 	const [selectedSection, setSelectedSection] = useState('Data');
@@ -82,7 +83,7 @@ function AccountInfoPanel(
 					text='Remove'
 					icon={Trash}
 					iconPosition='left'
-					onClick={() => {}}
+					onClick={onRemove}
 					style={{ color: 'var(--danger)' }}
 				/>
 			</div>

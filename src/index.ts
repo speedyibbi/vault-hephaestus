@@ -42,9 +42,9 @@ app.on('ready', () => {
 		ipcMain.handle('updateAccountFavouriteStatus', (_event, data: string) =>
 			JSON.stringify(db.app.updateAccountFavouriteStatus(JSON.parse(data)))
 		);
-		ipcMain.handle('removeAccount', (_event, accountId: string) => {
-			JSON.stringify(db.app.deleteAccount(accountId));
-		});
+		ipcMain.handle('removeAccount', (_event, accountId: string) =>
+			JSON.stringify(db.app.deleteAccount(accountId))
+		);
 
 		createWindow();
 	} catch (error) {

@@ -103,7 +103,7 @@ function updateAccount(accountId: string, account: IAccountData) {
 
 		if (account.image && account.image.length > 0) {
 			if (existingAccount.image) {
-				deleteFile(existingAccount.image);
+					deleteFile(existingAccount.image);
 			}
 			imagePath = saveImage(account.image, `${Date.now()}_${account.title}`);
 		} else {
@@ -180,16 +180,24 @@ function fetchAccounts() {
 				value,
 				sensitive,
 			}: IAccountData) => {
+				let imageSrc;
+
+				try {
+					imageSrc =
+						image.length > 0
+							? `data:image/${getFileExtension(image)};base64,${readImage(
+									image
+							  )}`
+							: '';
+				} catch (_error) {
+					imageSrc = '';
+				}
+
 				if (!accounts[account_id]) {
 					accounts[account_id] = {
 						account_id,
 						title,
-						image:
-							image.length > 0
-								? `data:image/${getFileExtension(image)};base64,${readImage(
-										image
-								  )}`
-								: '',
+						image: imageSrc,
 						favourite,
 						updated_at,
 						created_at,

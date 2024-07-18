@@ -41,8 +41,6 @@ export default function AccountForm({
 			const formData = new FormData(event.currentTarget);
 			const data = Object.fromEntries(formData.entries());
 
-			console.log(account?.account_id || '-1');
-
 			const accountData = {
 				...data,
 				image: imageData,

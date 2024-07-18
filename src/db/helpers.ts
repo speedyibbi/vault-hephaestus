@@ -42,6 +42,14 @@ export function getFileExtension(filePath: string) {
 	return path.extname(filePath).slice(1);
 }
 
+export function deleteFile(filePath: string) {
+	fs.unlink(filePath, (err) => {
+		if (err) {
+			throw err;
+		}
+	});
+}
+
 export function saveImage(imageBase64: string, imageName: string) {
 	const match = imageBase64.match(/^data:image\/(\w+);base64,/);
 	const imageExtension = match ? match[1] : '';

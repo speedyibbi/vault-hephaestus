@@ -90,8 +90,8 @@ export default function Credentials() {
 	const handleInfoPanelRemove = () => {
 		toggleInfoPanel(null);
 		removeAccount(activeAccount.account_id)
-			.then((res) => {
-				if (res.deleted) {
+			.then(({ deleted }) => {
+				if (deleted) {
 					setFlash({
 						error: false,
 						text: 'Account removed',

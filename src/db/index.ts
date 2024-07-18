@@ -144,11 +144,11 @@ function updateAccount(accountId: string, account: IAccountData) {
 	}
 }
 
-function updateAccountFavouriteStatus({ favourite, accountId }: IAccountData) {
+function updateAccountFavouriteStatus({ favourite, account_id }: IAccountData) {
 	try {
 		const accountUpdated = db
 			.prepare('UPDATE Accounts SET favourite = ? WHERE id = ?')
-			.run(favourite, accountId);
+			.run(favourite, account_id);
 
 		return { updated: accountUpdated.changes > 0 };
 	} catch (_error) {

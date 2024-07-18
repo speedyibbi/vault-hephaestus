@@ -14,6 +14,10 @@ export async function updateAccountFavouriteStatus(data: IAccountData) {
 	);
 }
 
+export async function removeAccount(accountId: string) {
+	return JSON.parse(await window.electron.removeAccount(accountId));
+}
+
 export function setCanvasPreview(
 	image: HTMLImageElement,
 	canvas: HTMLCanvasElement,

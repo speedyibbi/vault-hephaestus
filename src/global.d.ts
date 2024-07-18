@@ -5,6 +5,7 @@ declare global {
 			saveAccount: (data: string) => Promise<string>;
 			loadAccounts: () => Promise<string>;
 			updateAccountFavouriteStatus: (data: string) => Promise<string>;
+			removeAccount: (accountId: string) => Promise<string>;
 		};
 	}
 }

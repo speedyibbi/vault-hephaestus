@@ -103,7 +103,7 @@ function updateAccount(accountId: string, account: IAccountData) {
 
 		if (account.image && account.image.length > 0) {
 			if (existingAccount.image) {
-					deleteFile(existingAccount.image);
+				deleteFile(existingAccount.image);
 			}
 			imagePath = saveImage(account.image, `${Date.now()}_${account.title}`);
 		} else {
@@ -144,15 +144,25 @@ function updateAccount(accountId: string, account: IAccountData) {
 	}
 }
 
-function updateAccountFavouriteStatus({ favourite, account_id }: IAccountData) {
+function updateAccountFavouriteStatus({ favourite, accountId }: IAccountData) {
 	try {
 		const accountUpdated = db
 			.prepare('UPDATE Accounts SET favourite = ? WHERE id = ?')
-			.run(favourite, account_id);
+			.run(favourite, accountId);
 
 		return { updated: accountUpdated.changes > 0 };
 	} catch (_error) {
 		return { updated: false };
+	}
+}
+
+function deleteAccount(accountId: string) {
+	try {
+		db.prepare('DELETE FROM Accounts WHERE id = ?').run(accountId);
+
+		return { deleted: true };
+	} catch (_error) {
+		return { deleted: false };
 	}
 }
 
@@ -223,6 +233,7 @@ export default {
 		addAccount,
 		updateAccount,
 		updateAccountFavouriteStatus,
+		deleteAccount,
 		fetchAccounts,
 	},
 };

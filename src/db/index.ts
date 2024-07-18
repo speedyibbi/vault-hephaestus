@@ -4,6 +4,7 @@ import path from 'path';
 
 import { createAccountsTable, createFieldsTable } from './queries';
 import {
+	deleteFile,
 	getFileExtension,
 	readImage,
 	saveImage,
@@ -94,10 +95,19 @@ function updateAccount(accountId: string, account: IAccountData) {
 			throw new Error(error);
 		}
 
-		// todo: adjust image name so that it overwrites the existing image and not create a new image
 		let imagePath = '';
+
+		const existingAccount: { image?: string } = db
+			.prepare(`SELECT image FROM Accounts WHERE id = ?`)
+			.get(accountId);
+
 		if (account.image && account.image.length > 0) {
+			if (existingAccount.image) {
+				deleteFile(existingAccount.image);
+			}
 			imagePath = saveImage(account.image, `${Date.now()}_${account.title}`);
+		} else {
+			imagePath = existingAccount.image || '';
 		}
 
 		const runTransaction = db.transaction(() => {
@@ -147,50 +157,54 @@ function updateAccountFavouriteStatus({ favourite, account_id }: IAccountData) {
 }
 
 function fetchAccounts() {
-	const rawAccounts = db
-		.prepare(
-			`SELECT *
+	try {
+		const rawAccounts = db
+			.prepare(
+				`SELECT *
 		FROM Accounts
 		JOIN Fields ON Accounts.id = Fields.account_id`
-		)
-		.all();
+			)
+			.all();
 
-	const accounts: { [key: string]: IAccount } = {};
+		const accounts: { [key: string]: IAccount } = {};
 
-	rawAccounts.forEach(
-		({
-			account_id,
-			title,
-			image,
-			favourite,
-			updated_at,
-			created_at,
-			name,
-			value,
-			sensitive,
-		}: IAccountData) => {
-			if (!accounts[account_id]) {
-				accounts[account_id] = {
-					account_id,
-					title,
-					image:
-						image.length > 0
-							? `data:image/${getFileExtension(image)};base64,${readImage(
-									image
-							  )}`
-							: '',
-					favourite,
-					updated_at,
-					created_at,
-					details: {},
-				};
+		rawAccounts.forEach(
+			({
+				account_id,
+				title,
+				image,
+				favourite,
+				updated_at,
+				created_at,
+				name,
+				value,
+				sensitive,
+			}: IAccountData) => {
+				if (!accounts[account_id]) {
+					accounts[account_id] = {
+						account_id,
+						title,
+						image:
+							image.length > 0
+								? `data:image/${getFileExtension(image)};base64,${readImage(
+										image
+								  )}`
+								: '',
+						favourite,
+						updated_at,
+						created_at,
+						details: {},
+					};
+				}
+
+				accounts[account_id].details[name] = { value, sensitive };
 			}
+		);
 
-			accounts[account_id].details[name] = { value, sensitive };
-		}
-	);
-
-	return Object.values(accounts);
+		return Object.values(accounts);
+	} catch (_error) {
+		return [];
+	}
 }
 
 export default {

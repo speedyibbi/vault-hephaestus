@@ -37,15 +37,16 @@ export default function AccountForm({
 	const formSubmissionHandler = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
-		// todo: handle account update
-
 		try {
 			const formData = new FormData(event.currentTarget);
 			const data = Object.fromEntries(formData.entries());
 
+			console.log(account?.account_id || '-1');
+
 			const accountData = {
 				...data,
 				image: imageData,
+				account_id: account?.account_id || '-1',
 			};
 
 			saveAccount(accountData)

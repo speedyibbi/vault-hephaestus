@@ -26,9 +26,16 @@ app.on('ready', () => {
 		db.openConnection();
 
 		ipcMain.handle('exitApplication', () => app.quit());
-		ipcMain.handle('saveAccount', (_event, data: string) =>
-			JSON.stringify(db.app.addAccount(JSON.parse(data)))
-		);
+		ipcMain.handle('saveAccount', (_event, data: string) => {
+			const parsedData = JSON.parse(data);
+
+			if (parsedData.account_id.toString() === '-1')
+				return JSON.stringify(db.app.addAccount(parsedData));
+			else
+				return JSON.stringify(
+					db.app.updateAccount(parsedData.account_id.toString(), parsedData)
+				);
+		});
 		ipcMain.handle('loadAccounts', () =>
 			JSON.stringify(db.app.fetchAccounts())
 		);

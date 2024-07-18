@@ -86,6 +86,66 @@ function addField({
 	).run(name, value, sensitive, accountId);
 }
 
+function updateAccount(accountId: string, account: IAccountData) {
+	try {
+		const { valid, error } = validateAccount(account);
+
+		if (!valid) {
+			throw new Error(error);
+		}
+
+		// todo: adjust image name so that it overwrites the existing image and not create a new image
+		let imagePath = '';
+		if (account.image && account.image.length > 0) {
+			imagePath = saveImage(account.image, `${Date.now()}_${account.title}`);
+		}
+
+		const runTransaction = db.transaction(() => {
+			db.prepare(
+				`UPDATE Accounts SET title = ?, image = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?`
+			).run(account.title, imagePath, accountId);
+
+			const deleteFieldsStmt = db.prepare(`
+                DELETE FROM Fields 
+                WHERE account_id = ?
+            `);
+			deleteFieldsStmt.run(accountId);
+
+			const fieldNameRegex = /^field-\d+-name$/;
+			const fieldCount = Object.entries(account).filter(([key, _value]) =>
+				fieldNameRegex.test(key)
+			).length;
+
+			for (let i = 1; i <= fieldCount; i++) {
+				addField({
+					name: account[`field-${i}-name`],
+					value: account[`field-${i}-value`],
+					sensitive: account[`field-${i}-sensitive`] === 'on' ? 1 : 0,
+					accountId: parseInt(accountId),
+				});
+			}
+		});
+
+		runTransaction();
+
+		return { valid: true, error: '' };
+	} catch (error) {
+		return { valid: false, error: error.message };
+	}
+}
+
+function updateAccountFavouriteStatus({ favourite, account_id }: IAccountData) {
+	try {
+		const accountUpdated = db
+			.prepare('UPDATE Accounts SET favourite = ? WHERE id = ?')
+			.run(favourite, account_id);
+
+		return { updated: accountUpdated.changes > 0 };
+	} catch (_error) {
+		return { updated: false };
+	}
+}
+
 function fetchAccounts() {
 	const rawAccounts = db
 		.prepare(
@@ -133,25 +193,14 @@ function fetchAccounts() {
 	return Object.values(accounts);
 }
 
-function updateAccountFavouriteStatus({ favourite, account_id }: IAccountData) {
-	try {
-		const accountUpdated = db
-			.prepare('UPDATE Accounts SET favourite = ? WHERE id = ?')
-			.run(favourite, account_id);
-
-		return { updated: accountUpdated.changes > 0 };
-	} catch (_error) {
-		return { updated: false };
-	}
-}
-
 export default {
 	db: db,
 	openConnection,
 	closeConnection,
 	app: {
 		addAccount,
-		fetchAccounts,
+		updateAccount,
 		updateAccountFavouriteStatus,
+		fetchAccounts,
 	},
 };

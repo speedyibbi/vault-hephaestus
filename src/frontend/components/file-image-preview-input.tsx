@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import FileInput from './file-input';
 import ImageCropper from './image-cropper';
 
+import { useFlashStore } from '../utils/stores/flash-store';
+
 import 'react-image-crop/dist/ReactCrop.css';
 
 interface Props {
@@ -18,6 +20,8 @@ export default function FileImagePreviewInput({
 	onImageUpdate,
 	defaultImage,
 }: Props) {
+	const setFlash = useFlashStore((state) => state.setFlash);
+
 	const [imagePreview, setImagePreview] = useState(defaultImage || '');
 	const [imageCropped, setImageCropped] = useState(defaultImage ? true : false);
 
@@ -34,7 +38,10 @@ export default function FileImagePreviewInput({
 			const img = new Image();
 			img.onload = () => {
 				if (img.width < minimumImageWidth || img.height < minimumImageWidth) {
-					// todo: error msg
+					setFlash({
+						error: true,
+						text: `Image must be at least ${minimumImageWidth}x${minimumImageWidth}px`,
+					});
 				} else {
 					setImageCropped(false);
 					setImagePreview(reader.result?.toString());

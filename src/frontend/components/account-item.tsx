@@ -1,6 +1,6 @@
 import { useAnimate } from 'framer-motion';
 
-import { Star } from './icons';
+import { Image, Star } from './icons';
 
 import { updateAccountFavouriteStatus } from '../utils/helpers';
 import { useFlashStore } from '../utils/stores/flash-store';
@@ -69,11 +69,17 @@ export default function AccountItem({
 						active !== undefined && active ? 'var(--accent)' : 'transparent',
 				}}
 			>
-				<img
-					src={account.image}
-					alt={`${account.title}-image-small`}
-					className='w-16 h-16 rounded-full'
-				/>
+				{account.image.length > 0 ? (
+					<img
+						src={account.image}
+						alt={`${account.title}-image-small`}
+						className='w-16 h-16 rounded-full'
+					/>
+				) : (
+					<span className='w-16 h-16 relative text-black bg-white rounded-full'>
+						<Image className='w-8 absolute inset-1/2 transform -translate-x-1/2 -translate-y-1/2 stroke-current' />
+					</span>
+				)}
 				<span className='flex flex-col gap-2'>
 					<p className='font-medium text-base text-left leading-none tracking-tighter'>
 						{account.title}

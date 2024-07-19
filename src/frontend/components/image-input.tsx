@@ -1,5 +1,5 @@
 import FileInput from './file-input';
-import { Camera } from './icons';
+import { Image } from './icons';
 
 interface Props {
 	id?: string;
@@ -38,7 +38,7 @@ export default function ImageInput({
 					} group-hover:opacity-100 transition-opacity duration-150`}
 				>
 					<span className='w-full h-full block rounded-full bg-muted-background' />
-					<Camera className='w-6 absolute inset-1/2 transform -translate-x-1/2 -translate-y-1/2 stroke-current' />
+					<Image className='w-6 absolute inset-1/2 transform -translate-x-1/2 -translate-y-1/2 stroke-current' />
 				</span>
 			</label>
 			<p className='font-medium text-sm text-center leading-normal tracking-tighter whitespace-pre-wrap'>

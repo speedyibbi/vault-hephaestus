@@ -209,7 +209,7 @@ export function ArrowToDrive({ className }: Props) {
 	);
 }
 
-export function Camera({ className }: Props) {
+export function Image({ className }: Props) {
 	return (
 		<svg viewBox='0 0 20 20' fill='none' className={className}>
 			<path

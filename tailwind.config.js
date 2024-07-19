@@ -5,6 +5,7 @@ module.exports = {
 	theme: {
 		extend: {
 			minWidth: {
+				36: '9rem',
 				80: '20rem',
 				96: '24rem',
 				fit: 'fit-content',

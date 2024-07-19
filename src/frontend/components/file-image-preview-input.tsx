@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import FileInput from './file-input';
+import ImageInput from './image-input';
 import ImageCropper from './image-cropper';
 
 import { useFlashStore } from '../utils/stores/flash-store';
@@ -58,37 +58,25 @@ export default function FileImagePreviewInput({
 
 	return (
 		<div className='w-full'>
-			<FileInput
+			<ImageInput
 				id={id}
 				name={name}
-				accept='image/*'
 				onChange={imageSelectionHandler}
+				imagePreview={imageCropped ? imagePreview : ''}
 			/>
-			{imagePreview.length > 0 ? (
-				imageCropped ? (
-					<img
-						src={imagePreview}
-						alt='image'
-						className='w-48 mt-3 inline-block border-2 border-accent rounded-full'
-					/>
-				) : (
-					<ImageCropper
-						imagePreview={imagePreview}
-						minimumWidth={minimumImageWidth}
-						onCrop={(croppedImageData) => {
-							setImagePreview(croppedImageData.toString());
-							setImageCropped(true);
-						}}
-						onCancel={() => {
-							setImagePreview('');
-							setImageCropped(false);
-						}}
-					/>
-				)
-			) : (
-				<span className='mt-3 px-4 py-2 inline-block border-2 border-accent rounded-xl font-medium text-sm text-muted leading-none tracking-tighter'>
-					No image selected
-				</span>
+			{imagePreview.length > 0 && !imageCropped && (
+				<ImageCropper
+					imagePreview={imagePreview}
+					minimumWidth={minimumImageWidth}
+					onCrop={(croppedImageData) => {
+						setImagePreview(croppedImageData.toString());
+						setImageCropped(true);
+					}}
+					onCancel={() => {
+						setImagePreview('');
+						setImageCropped(false);
+					}}
+				/>
 			)}
 		</div>
 	);

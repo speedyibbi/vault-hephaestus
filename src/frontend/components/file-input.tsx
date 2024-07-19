@@ -5,9 +5,16 @@ interface Props {
 	name?: string;
 	accept?: string;
 	onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+	style?: React.CSSProperties;
 }
 
-export default function FileInput({ id, name, accept, onChange }: Props) {
+export default function FileInput({
+	id,
+	name,
+	accept,
+	onChange = () => {},
+	style = {},
+}: Props) {
 	const fileInputRef = useRef<HTMLInputElement>(null);
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,6 +36,7 @@ export default function FileInput({ id, name, accept, onChange }: Props) {
 			accept={accept}
 			onChange={handleChange}
 			className='w-full h-12 px-6 flex place-content-start place-items-center font-medium text-xl text-transparent leading-none tracking-tighter rounded-2xl bg-accent cursor-pointer'
+			style={style}
 		/>
 	);
 }

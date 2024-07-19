@@ -127,7 +127,7 @@ export default function Credentials() {
 		>
 			<motion.aside
 				layout
-				className='w-full h-full relative flex flex-col place-content-start place-items-start gap-24'
+				className='w-full h-full relative flex flex-col place-content-start place-items-stretch gap-24'
 			>
 				<span className='w-full flex place-content-between place-items-center gap-12'>
 					<Searchbar
@@ -181,6 +181,7 @@ export default function Credentials() {
 						</motion.span>
 					)}
 				</AnimatePresence>
+				<div className='w-full h-full absolute inset-0 bg-fade pointer-events-none' />
 			</motion.aside>
 			<AccountInfoPanel
 				ref={infoPanelRef}

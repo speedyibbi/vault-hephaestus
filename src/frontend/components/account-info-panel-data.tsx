@@ -19,7 +19,7 @@ export default function AccountInfoPanelData({ details }: Props) {
 			animate={{ opacity: 1 }}
 			exit={{ opacity: 0 }}
 			transition={{ duration: 0.15, ease: 'easeOut' }}
-			className='w-full h-full flex flex-col place-content-start place-items-stretch gap-12 overflow-x-hidden overflow-y-scroll'
+			className='w-full h-full flex flex-col place-content-start place-items-stretch gap-12 overflow-y-scroll'
 		>
 			{Object.entries(details).map(([key, value], idx) => (
 				<AccountInfoPanelDataItem

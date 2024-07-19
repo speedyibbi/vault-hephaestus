@@ -127,7 +127,7 @@ export default function Credentials() {
 		>
 			<motion.aside
 				layout
-				className='h-full flex-grow relative flex flex-col place-content-start place-items-start gap-24'
+				className='w-full h-full relative flex flex-col place-content-start place-items-start gap-24'
 			>
 				<span className='w-full flex place-content-between place-items-center gap-12'>
 					<Searchbar

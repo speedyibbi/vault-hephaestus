@@ -60,7 +60,7 @@ export default function AccountItem({
 	};
 
 	return (
-		<div className='min-w-96 flex-grow relative text-foreground group'>
+		<div className='min-w-80 flex-grow relative text-foreground group'>
 			<button
 				onClick={() => onClick()}
 				className='w-full h-24 px-6 flex place-content-start place-items-center gap-6 border-2 border-transparent rounded-2xl group-hover:border-accent transition-colors duration-150'
@@ -81,10 +81,10 @@ export default function AccountItem({
 					</span>
 				)}
 				<span className='flex flex-col gap-2'>
-					<p className='font-medium text-base text-left leading-none tracking-tighter'>
+					<p className='w-60 font-medium text-base text-left leading-none tracking-tighter overflow-ellipsis overflow-hidden'>
 						{account.title}
 					</p>
-					<p className='font-light text-muted text-base text-left leading-none tracking-tighter'>
+					<p className='w-60 font-light text-muted text-base text-left leading-none tracking-tighter overflow-ellipsis overflow-hidden'>
 						{Object.values(account.details)[0].value}
 					</p>
 				</span>

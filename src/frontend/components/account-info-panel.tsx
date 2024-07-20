@@ -90,7 +90,10 @@ function AccountInfoPanel(
 					icon={Trash}
 					iconPosition='left'
 					onClick={onRemove}
-					style={{ color: 'var(--danger)' }}
+					hover
+					textColor='danger'
+					hoverTextColor='accent'
+					hoverBgColor='danger'
 				/>
 			</div>
 		</motion.aside>

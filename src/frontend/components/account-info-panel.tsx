@@ -24,15 +24,22 @@ function AccountInfoPanel(
 
 	function formatDateString(dateString: string) {
 		const date = new Date(dateString);
-		const day = String(date.getDate()).padStart(2, '0');
-		const month = String(date.getMonth() + 1).padStart(2, '0');
-		const year = date.getFullYear();
+		const localDate = new Date(
+			date.getTime() - date.getTimezoneOffset() * 60000
+		);
 
-		const hours = String(date.getHours()).padStart(2, '0');
-		const minutes = String(date.getMinutes()).padStart(2, '0');
-		const meridian = date.getHours() >= 12 ? 'PM' : 'AM';
+		const day = String(localDate.getDate()).padStart(2, '0');
+		const month = String(localDate.getMonth() + 1).padStart(2, '0');
+		const year = localDate.getFullYear();
 
-		return `${day}/${month}/${year} ${hours}:${minutes}${meridian}`;
+		let hours = localDate.getHours();
+		const minutes = String(localDate.getMinutes()).padStart(2, '0');
+		const meridian = hours >= 12 ? 'PM' : 'AM';
+
+		hours = hours % 12 || 12;
+		const formattedHours = String(hours).padStart(2, '0');
+
+		return `${day}/${month}/${year} ${formattedHours}:${minutes}${meridian}`;
 	}
 
 	return (

@@ -22,7 +22,7 @@ export default function AccountItemList({ accounts, onAccountClick }: Props) {
 			animate={{ opacity: 1 }}
 			exit={{ opacity: 0 }}
 			transition={{ duration: 0.15, ease: 'easeOut' }}
-			className='w-full flex flex-wrap place-content-start place-items-start gap-12 overflow-y-scroll'
+			className='w-full pb-12 flex flex-wrap place-content-start place-items-start gap-12 overflow-y-scroll'
 		>
 			{accounts
 				.sort((a, b) => parseInt(b.favourite) - parseInt(a.favourite))

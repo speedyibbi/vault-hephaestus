@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { useAnimate } from 'framer-motion';
 
 import { Image, Star } from './icons';
@@ -8,7 +9,7 @@ import { useFlashStore } from '../utils/stores/flash-store';
 interface Props {
 	account: IAccount;
 	active?: boolean;
-	onClick?: () => void;
+	onClick?: (element: HTMLElement) => void;
 }
 
 export default function AccountItem({
@@ -18,6 +19,7 @@ export default function AccountItem({
 }: Props) {
 	const setFlash = useFlashStore((state) => state.setFlash);
 
+	const itemRef = useRef<HTMLLIElement>(null);
 	const [scope, animate] = useAnimate();
 
 	const animateStar = async (toggleFill: boolean) => {
@@ -60,9 +62,12 @@ export default function AccountItem({
 	};
 
 	return (
-		<div className='min-w-80 flex-grow relative text-foreground group'>
+		<li
+			ref={itemRef}
+			className='min-w-80 flex-grow relative text-foreground group'
+		>
 			<button
-				onClick={() => onClick()}
+				onClick={() => onClick(itemRef.current || undefined)}
 				className='w-full h-24 px-6 flex place-content-start place-items-center gap-6 border-2 border-transparent rounded-2xl group-hover:border-accent transition-colors duration-150'
 				style={{
 					backgroundColor:
@@ -106,6 +111,6 @@ export default function AccountItem({
 					<Star className='w-5 fill-inherit stroke-current' />
 				</div>
 			</button>
-		</div>
+		</li>
 	);
 }

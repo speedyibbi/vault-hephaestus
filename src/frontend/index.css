@@ -76,6 +76,11 @@ body {
 	background: #ffffff0a;
 }
 
+input:focus + label {
+	outline: 2px solid var(--foreground);
+	outline-offset: -2px;
+}
+
 input::file-selector-button {
 	height: 100%;
 	margin: 0;

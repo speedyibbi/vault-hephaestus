@@ -57,13 +57,14 @@ function AccountInfoPanel(
 					<p className='mb-3 font-medium text-3xl text-foreground leading-none tracking-tighter'>
 						{account?.title}
 					</p>
-					<Button text='Edit' onClick={onEdit} />
+					<Button text='Edit' onClick={onEdit} disabled={!account} />
 				</span>
 			</div>
 			<SectionSelector
 				key={account?.account_id}
 				sections={['Data', 'History']}
 				onSectionSelect={selectSection}
+				disabled={!account}
 			/>
 			<AnimatePresence mode='wait'>
 				{selectedSection === 'Data' && account?.details !== undefined ? (
@@ -90,6 +91,7 @@ function AccountInfoPanel(
 					icon={Trash}
 					iconPosition='left'
 					onClick={onRemove}
+					disabled={!account}
 					hover
 					textColor='danger'
 					hoverTextColor='accent'

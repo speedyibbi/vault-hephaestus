@@ -3,11 +3,13 @@ import { animate } from 'framer-motion';
 
 interface Props {
 	sections: string[];
+	disabled?: boolean;
 	onSectionSelect?: (section: string) => void;
 }
 
 export default function SectionSelector({
 	sections,
+	disabled = false,
 	onSectionSelect = () => {},
 }: Props) {
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -48,6 +50,7 @@ export default function SectionSelector({
 			{sections.map((section, idx) => (
 				<button
 					key={idx}
+					disabled={disabled}
 					onClick={() => handleClick(idx)}
 					className='mx-6 font-medium text-xl leading-none tracking-tighter'
 					style={{

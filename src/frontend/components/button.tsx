@@ -3,6 +3,7 @@ interface Props {
 	icon?: ({ className }: { className: string }) => JSX.Element;
 	iconPosition?: 'left' | 'right';
 	onClick?: () => void;
+	disabled?: boolean;
 	style?: React.CSSProperties;
 	hover?: boolean;
 	textColor?: string;
@@ -15,6 +16,7 @@ export default function Button({
 	icon,
 	iconPosition = 'right',
 	onClick = () => {},
+	disabled = false,
 	style = {},
 	hover = false,
 	textColor = 'currentColor',
@@ -24,6 +26,7 @@ export default function Button({
 	return (
 		<button
 			type='button'
+			disabled={disabled}
 			onClick={onClick}
 			className={`px-5 py-2 flex place-content-start place-items-center gap-3 font-medium text-base leading-none tracking-tighter border-2 border-current rounded-md ${
 				hover

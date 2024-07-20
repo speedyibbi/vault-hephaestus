@@ -15,13 +15,18 @@ export default function ImageInput({
 	imagePreview,
 }: Props) {
 	return (
-		<div className='w-full flex place-content-between place-items-center gap-6 text-foreground'>
+		<div className='w-full relative flex place-content-between place-items-center gap-6 text-foreground'>
 			<FileInput
 				id={id}
 				name={name}
 				accept='image/*'
 				onChange={onChange}
-				style={{ display: 'none' }}
+				style={{
+					width: 0,
+					height: 0,
+					position: 'absolute',
+					opacity: 0,
+				}}
 			/>
 			<label
 				htmlFor={id}

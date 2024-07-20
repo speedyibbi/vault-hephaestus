@@ -85,11 +85,11 @@ export default function AccountItem({
 						<Image className='w-8 absolute inset-1/2 transform -translate-x-1/2 -translate-y-1/2 stroke-current' />
 					</span>
 				)}
-				<span className='flex flex-col gap-2'>
-					<p className='w-60 font-medium text-base text-left leading-none tracking-tighter overflow-ellipsis overflow-hidden'>
+				<span>
+					<p className='w-60 font-medium text-base text-left leading-normal tracking-tighter overflow-ellipsis overflow-hidden'>
 						{account.title}
 					</p>
-					<p className='w-60 font-light text-muted text-base text-left leading-none tracking-tighter overflow-ellipsis overflow-hidden'>
+					<p className='w-60 font-light text-muted text-base text-left leading-normal tracking-tighter overflow-ellipsis overflow-hidden'>
 						{Object.values(account.details)[0].value}
 					</p>
 				</span>

@@ -43,6 +43,17 @@ export default function AccountItemList({ accounts, onAccountClick }: Props) {
 						onClick={handleAccountClick.bind(null, idx)}
 					/>
 				))}
+			{accounts.length % 2 !== 0 && (
+				<AccountItem
+					account={accounts[0]}
+					style={{
+						height: 0,
+						opacity: 1,
+						overflow: 'hidden',
+						pointerEvents: 'none',
+					}}
+				/>
+			)}
 		</motion.ul>
 	);
 }

@@ -10,12 +10,14 @@ interface Props {
 	account: IAccount;
 	active?: boolean;
 	onClick?: (element: HTMLElement) => void;
+	style?: React.CSSProperties;
 }
 
 export default function AccountItem({
 	account,
 	active,
 	onClick = () => {},
+	style = {},
 }: Props) {
 	const setFlash = useFlashStore((state) => state.setFlash);
 
@@ -65,6 +67,7 @@ export default function AccountItem({
 		<li
 			ref={itemRef}
 			className='min-w-80 flex-grow relative text-foreground group'
+			style={style}
 		>
 			<button
 				onClick={() => onClick(itemRef.current || undefined)}

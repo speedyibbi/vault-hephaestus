@@ -55,6 +55,14 @@ interface IAccount {
 			sensitive: string;
 		};
 	};
+	history: {
+		[key: string]: {
+			[key: string]: {
+				value: string;
+				sensitive: string;
+			};
+		};
+	};
 }
 
 interface IDialog extends HTMLDialogElement {

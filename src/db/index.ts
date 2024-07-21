@@ -2,7 +2,16 @@ import { app } from 'electron';
 import Database from 'better-sqlite3';
 import path from 'path';
 
-import { createAccountsTable, createFieldsTable } from './queries';
+import {
+	createAccountsTable,
+	createFieldsTable,
+	createAccountsAuditTable,
+	createFieldsAuditTable,
+	createAccountsUpdateAuditTrigger,
+	createAccountsDeleteAuditTrigger,
+	createFieldsUpdateAuditTrigger,
+	createFieldsDeleteAuditTrigger,
+} from './queries';
 import {
 	deleteFile,
 	getFileExtension,
@@ -22,6 +31,12 @@ function openConnection() {
 
 	db.exec(createAccountsTable);
 	db.exec(createFieldsTable);
+	db.exec(createAccountsAuditTable);
+	db.exec(createFieldsAuditTable);
+	db.exec(createAccountsUpdateAuditTrigger);
+	db.exec(createAccountsDeleteAuditTrigger);
+	db.exec(createFieldsUpdateAuditTrigger);
+	db.exec(createFieldsDeleteAuditTrigger);
 }
 
 function closeConnection() {
@@ -220,16 +235,46 @@ function fetchAccounts() {
 						updated_at,
 						created_at,
 						details: {},
+						history: {},
 					};
 				}
 
 				accounts[account_id].details[name] = { value, sensitive };
+				accounts[account_id].history = fetchAccountHistory(account_id);
 			}
 		);
 
 		return Object.values(accounts);
 	} catch (_error) {
 		return [];
+	}
+}
+
+function fetchAccountHistory(accountId: string) {
+	try {
+		const fieldAuditRecords = db
+			.prepare(
+				`SELECT * FROM Fields_Audit WHERE account_id = ? ORDER BY change_timestamp`
+			)
+			.all(accountId);
+
+		const history: {
+			[key: string]: { [key: string]: { value: string; sensitive: string } };
+		} = {};
+
+		fieldAuditRecords.forEach((record: { [key: string]: string }) => {
+			const { name, value, sensitive, change_timestamp } = record;
+
+			if (!history[change_timestamp]) {
+				history[change_timestamp] = {};
+			}
+
+			history[change_timestamp][name] = { value, sensitive };
+		});
+
+		return history;
+	} catch (error) {
+		return {};
 	}
 }
 

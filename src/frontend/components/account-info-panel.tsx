@@ -7,6 +7,8 @@ import AccountInfoPanelHistory from './account-info-panel-history';
 import Button from './button';
 import { Image, Trash } from './icons';
 
+import { formatDateString } from '../utils/helpers';
+
 interface Props {
 	account: IAccount;
 	onEdit?: () => void;
@@ -22,26 +24,6 @@ function AccountInfoPanel(
 	const selectSection = (section: 'Data' | 'History') => {
 		setSelectedSection(section);
 	};
-
-	function formatDateString(dateString: string) {
-		const date = new Date(dateString);
-		const localDate = new Date(
-			date.getTime() - date.getTimezoneOffset() * 60000
-		);
-
-		const day = String(localDate.getDate()).padStart(2, '0');
-		const month = String(localDate.getMonth() + 1).padStart(2, '0');
-		const year = localDate.getFullYear();
-
-		let hours = localDate.getHours();
-		const minutes = String(localDate.getMinutes()).padStart(2, '0');
-		const meridian = hours >= 12 ? 'PM' : 'AM';
-
-		hours = hours % 12 || 12;
-		const formattedHours = String(hours).padStart(2, '0');
-
-		return `${day}/${month}/${year} ${formattedHours}:${minutes}${meridian}`;
-	}
 
 	return (
 		<motion.aside

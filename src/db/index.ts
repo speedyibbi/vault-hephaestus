@@ -125,29 +125,58 @@ function updateAccount(accountId: string, account: IAccountData) {
 			imagePath = existingAccount.image || '';
 		}
 
+		const existingFields = db
+			.prepare(`SELECT * FROM Fields WHERE account_id = ?`)
+			.all(accountId)
+			.map((field: { [key: string]: string }) => {
+				delete field.id;
+				delete field.account_id;
+
+				return field;
+			});
+
+		const newFields = [];
+		const fieldNameRegex = /^field-\d+-name$/;
+		const fieldCount = Object.entries(account).filter(([key, _value]) =>
+			fieldNameRegex.test(key)
+		).length;
+
+		for (let i = 1; i <= fieldCount; i++) {
+			newFields.push({
+				name: account[`field-${i}-name`],
+				value: account[`field-${i}-value`],
+				sensitive: account[`field-${i}-sensitive`] === 'on' ? 1 : 0,
+			});
+		}
+
+		const fieldsChanged =
+			JSON.stringify(existingFields) !== JSON.stringify(newFields);
+
 		const runTransaction = db.transaction(() => {
 			db.prepare(
 				`UPDATE Accounts SET title = ?, image = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?`
 			).run(account.title, imagePath, accountId);
 
-			const deleteFieldsStmt = db.prepare(`
+			if (fieldsChanged) {
+				const deleteFieldsStmt = db.prepare(`
                 DELETE FROM Fields 
                 WHERE account_id = ?
             `);
-			deleteFieldsStmt.run(accountId);
+				deleteFieldsStmt.run(accountId);
 
-			const fieldNameRegex = /^field-\d+-name$/;
-			const fieldCount = Object.entries(account).filter(([key, _value]) =>
-				fieldNameRegex.test(key)
-			).length;
+				const fieldNameRegex = /^field-\d+-name$/;
+				const fieldCount = Object.entries(account).filter(([key, _value]) =>
+					fieldNameRegex.test(key)
+				).length;
 
-			for (let i = 1; i <= fieldCount; i++) {
-				addField({
-					name: account[`field-${i}-name`],
-					value: account[`field-${i}-value`],
-					sensitive: account[`field-${i}-sensitive`] === 'on' ? 1 : 0,
-					accountId: parseInt(accountId),
-				});
+				for (let i = 1; i <= fieldCount; i++) {
+					addField({
+						name: account[`field-${i}-name`],
+						value: account[`field-${i}-value`],
+						sensitive: account[`field-${i}-sensitive`] === 'on' ? 1 : 0,
+						accountId: parseInt(accountId),
+					});
+				}
 			}
 		});
 

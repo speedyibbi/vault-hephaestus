@@ -40,10 +40,10 @@ export default function AccountInfoPanelDataItem({
 	return (
 		<div className='flex place-content-between place-items-end'>
 			<span>
-				<p className='font-medium text-xl text-muted leading-none tracking-tighter'>
+				<p className='w-80 font-medium text-xl text-muted leading-normal tracking-tighter overflow-ellipsis overflow-hidden'>
 					{name}
 				</p>
-				<p className='mt-3 font-medium text-xl text-foreground leading-none tracking-tighter'>
+				<p className='w-80 font-medium text-xl text-foreground leading-normal tracking-tighter overflow-ellipsis overflow-hidden'>
 					{valueHidden ? Array(value.length).fill('*').join('') : value}
 				</p>
 			</span>

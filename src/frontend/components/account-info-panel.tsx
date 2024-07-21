@@ -1,4 +1,4 @@
-import { ForwardedRef, forwardRef, useState } from 'react';
+import { ForwardedRef, forwardRef, useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 
 import SectionSelector from './section-selector';
@@ -24,6 +24,10 @@ function AccountInfoPanel(
 	const selectSection = (section: 'Data' | 'History') => {
 		setSelectedSection(section);
 	};
+
+	useEffect(() => {
+		setSelectedSection('Data');
+	}, [account]);
 
 	return (
 		<motion.aside

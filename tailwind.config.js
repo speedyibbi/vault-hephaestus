@@ -13,6 +13,9 @@ module.exports = {
 			width: {
 				128: '32rem',
 			},
+			gridTemplateColumns: {
+				'custom-01': 'min-content minmax(0, 1fr)',
+			},
 			colors: {
 				foreground: 'var(--foreground)',
 				background: 'var(--background)',

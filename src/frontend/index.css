@@ -76,6 +76,10 @@ body {
 	background: #ffffff0a;
 }
 
+input[type='range'] {
+	accent-color: var(--foreground);
+}
+
 input:focus + label {
 	outline: 2px solid var(--foreground);
 	outline-offset: -2px;

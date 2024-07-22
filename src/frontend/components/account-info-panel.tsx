@@ -53,7 +53,14 @@ function AccountInfoPanel(
 					<p className='mb-3 font-medium text-3xl text-foreground leading-none tracking-tighter'>
 						{account?.title}
 					</p>
-					<Button text='Edit' onClick={onEdit} disabled={!account} />
+					<Button
+						text='Edit'
+						onClick={onEdit}
+						disabled={!account}
+						hover
+						hoverTextColor='accent'
+						hoverBgColor='foreground'
+					/>
 				</span>
 			</div>
 			<SectionSelector

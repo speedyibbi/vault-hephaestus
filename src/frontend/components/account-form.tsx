@@ -116,6 +116,9 @@ export default function AccountForm({
 						icon={PlusCross}
 						onClick={addField}
 						style={{ marginTop: '0.5rem' }}
+						hover
+						hoverTextColor='accent'
+						hoverBgColor='foreground'
 					/>
 					<AnimatePresence>
 						{additionalFields.map((key, idx) => (

@@ -29,7 +29,7 @@ module.exports = {
 				transparent: 'transparent',
 			},
 			backgroundImage: {
-				fade: 'linear-gradient(180deg,transparent 90%,var(--background) 100%)',
+				fade: 'linear-gradient(180deg, transparent 90%, var(--background) 100%)',
 			},
 		},
 	},

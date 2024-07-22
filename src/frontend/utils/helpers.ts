@@ -74,3 +74,54 @@ export function formatDateString(dateString: string) {
 
 	return `${day}/${month}/${year} ${formattedHours}:${minutes}${meridian}`;
 }
+
+export function generatePassword(options: {
+	length?: number;
+	uppercase?: boolean;
+	lowercase?: boolean;
+	digits?: boolean;
+	specialChars?: boolean;
+}) {
+	const {
+		length = 16,
+		uppercase = true,
+		lowercase = true,
+		digits = false,
+		specialChars = false,
+	} = options;
+
+	const uppercaseChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+	const lowercaseChars = 'abcdefghijklmnopqrstuvwxyz';
+	const digitChars = '0123456789';
+	const specialCharsSet = '~`!@#$%^&*()_+-={[}|:;"\'<,>.?/]/';
+
+	let allowedChars = '';
+	if (uppercase) allowedChars += uppercaseChars;
+	if (lowercase) allowedChars += lowercaseChars;
+	if (digits) allowedChars += digitChars;
+	if (specialChars) allowedChars += specialCharsSet;
+
+	if (allowedChars.length === 0) {
+		throw new Error('At least one character type should be included.');
+	}
+
+	let password = '';
+	while (password.length < length) {
+		const randomIndex = Math.floor(Math.random() * allowedChars.length);
+		password += allowedChars[randomIndex];
+	}
+
+	const ensureCriteria = (criteria: boolean, chars: string) => {
+		if (criteria && !RegExp(`[${chars}]`).test(password)) {
+			password =
+				password.slice(0, -1) + chars[Math.floor(Math.random() * chars.length)];
+		}
+	};
+
+	ensureCriteria(uppercase, uppercaseChars);
+	ensureCriteria(lowercase, lowercaseChars);
+	ensureCriteria(digits, digitChars);
+	ensureCriteria(specialChars, specialCharsSet);
+
+	return password;
+}

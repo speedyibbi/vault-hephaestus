@@ -62,7 +62,7 @@ export default function SectionSelector({
 			))}
 			<hr
 				ref={highlighterRef}
-				className='w-0 border-white absolute left-0 bottom-0'
+				className='w-0 border-foreground absolute left-0 bottom-0'
 			/>
 		</div>
 	);

@@ -41,7 +41,7 @@ export default function Modal({
 			initial={{ scale: 0 }}
 			animate={{ scale: 1 }}
 			transition={{ duration: 0.15 }}
-			className='px-20 py-10 justify-self-center top-1/3 rounded-2xl bg-white drop-shadow-2xl'
+			className='px-20 py-10 justify-self-center top-1/3 rounded-2xl bg-foreground drop-shadow-2xl'
 		>
 			<p className='mb-12 font-medium text-base text-center leading-none tracking-tighter'>
 				{text}
@@ -49,13 +49,13 @@ export default function Modal({
 			<span className='flex place-content-center place-items-center gap-3'>
 				<button
 					onClick={() => buttonClick(onButtonOneClick)}
-					className='w-24 py-3 font-medium text-base leading-none tracking-tighter border-2 border-black rounded-md hover:text-white hover:bg-black transition-colors duration-150'
+					className='w-24 py-3 font-medium text-base leading-none tracking-tighter border-2 border-background rounded-md hover:text-foreground hover:bg-background transition-colors duration-150'
 				>
 					{buttonOneText}
 				</button>
 				<button
 					onClick={() => buttonClick(onButtonTwoClick)}
-					className='w-24 py-3 font-medium text-base leading-none tracking-tighter border-2 border-black rounded-md hover:text-white hover:bg-black transition-colors duration-150'
+					className='w-24 py-3 font-medium text-base leading-none tracking-tighter border-2 border-background rounded-md hover:text-foreground hover:bg-background transition-colors duration-150'
 				>
 					{buttonTwoText}
 				</button>

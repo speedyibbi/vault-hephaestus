@@ -84,7 +84,7 @@ export default function AccountItem({
 						className='w-16 h-16 rounded-full'
 					/>
 				) : (
-					<span className='w-16 h-16 relative text-black bg-white rounded-full'>
+					<span className='w-16 h-16 relative text-background bg-foreground rounded-full'>
 						<Image className='w-8 absolute inset-1/2 transform -translate-x-1/2 -translate-y-1/2 stroke-current' />
 					</span>
 				)}

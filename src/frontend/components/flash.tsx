@@ -5,7 +5,7 @@ import { PlusCross } from './icons';
 
 import { useFlashStore } from '../utils/stores/flash-store';
 
-const TIMEOUT = 7000;
+const TIMEOUT = 3000;
 
 export default function Flash() {
 	const error = useFlashStore((state) => state.error);
@@ -55,12 +55,12 @@ export default function Flash() {
 	return (
 		<dialog
 			ref={flashRef}
-			className='min-w-fit w-128 px-4 py-2 justify-self-center bottom-6 rounded-full bg-white drop-shadow-2xl opacity-0'
-			style={{ backgroundColor: error ? 'var(--danger)' : 'white' }}
+			className='min-w-fit w-128 px-4 py-2 justify-self-center bottom-6 rounded-full drop-shadow-2xl opacity-0'
+			style={{ backgroundColor: error ? 'var(--danger)' : 'var(--foreground)' }}
 		>
 			<span
 				className='flex place-content-between place-items-center gap-4'
-				style={{ color: error ? 'white' : 'black' }}
+				style={{ color: error ? 'var(--foreground)' : 'var(--background)' }}
 			>
 				<p className='font-medium text-base leading-none tracking-tighter'>
 					{text}

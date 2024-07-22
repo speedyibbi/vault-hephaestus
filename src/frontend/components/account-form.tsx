@@ -105,7 +105,7 @@ export default function AccountForm({
 					/>
 					<button
 						type='submit'
-						className='w-24 py-3 font-medium text-base text-white leading-none tracking-tighter border-2 border-white rounded-md hover:text-black hover:bg-white transition-colors duration-150'
+						className='w-24 py-3 font-medium text-base text-foreground leading-none tracking-tighter border-2 border-foreground rounded-md hover:text-background hover:bg-foreground transition-colors duration-150'
 					>
 						Save
 					</button>

@@ -43,7 +43,7 @@ function AccountInfoPanel(
 						className='w-32 h-32 rounded-full'
 					/>
 				) : (
-					<span className='w-32 h-32 relative text-black bg-white rounded-full'>
+					<span className='w-32 h-32 relative text-background bg-foreground rounded-full'>
 						<Image className='w-16 absolute inset-1/2 transform -translate-x-1/2 -translate-y-1/2 stroke-current' />
 					</span>
 				)}

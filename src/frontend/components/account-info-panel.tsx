@@ -8,6 +8,7 @@ import Button from './button';
 import { Image, Trash } from './icons';
 
 import { formatDateString } from '../utils/helpers';
+import Modal from './modal';
 
 interface Props {
 	account: IAccount;
@@ -20,6 +21,7 @@ function AccountInfoPanel(
 	ref: ForwardedRef<HTMLDivElement>
 ) {
 	const [selectedSection, setSelectedSection] = useState('Data');
+	const [removalModalOpen, setRemovalModalOpen] = useState(false);
 
 	const selectSection = (section: 'Data' | 'History') => {
 		setSelectedSection(section);
@@ -77,13 +79,22 @@ function AccountInfoPanel(
 					text='Remove'
 					icon={Trash}
 					iconPosition='left'
-					onClick={onRemove}
+					onClick={() => setRemovalModalOpen(true)}
 					disabled={!account}
 					hover
 					textColor='danger'
 					hoverTextColor='accent'
 					hoverBgColor='danger'
 				/>
+				{removalModalOpen && (
+					<Modal
+						onButtonOneClick={() => setRemovalModalOpen(false)}
+						onButtonTwoClick={() => {
+							setRemovalModalOpen(false);
+							onRemove();
+						}}
+					/>
+				)}
 			</div>
 		</motion.aside>
 	);

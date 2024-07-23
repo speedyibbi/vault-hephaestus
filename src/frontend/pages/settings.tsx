@@ -142,12 +142,6 @@ export default function Settings() {
 							therefore you will not be able to access any saved credentials.
 						</p>
 					</span>
-					<span className='mt-3 flex gap-2'>
-						<span className='text-danger'>*</span>
-						<p className='whitespace-normal break-words'>
-							The security passcode is included in the exported data.
-						</p>
-					</span>
 				</div>
 			</form>
 		</motion.section>

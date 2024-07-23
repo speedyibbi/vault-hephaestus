@@ -173,6 +173,4 @@ export async function generateAccountsCSV() {
 	});
 
 	return csvRows.join('\n');
-	// const csv = new Blob([csvString], { type: 'text/csv' });
-	// const csvUrl = URL.createObjectURL(csv);
 }

@@ -133,3 +133,46 @@ export function generatePassword(options: {
 
 	return password;
 }
+
+export async function generateAccountsCSV() {
+	const accounts: IAccount[] = await loadAccounts();
+
+	let totalFields = 0;
+	let maxFieldsIndex = 0;
+
+	const accountData = accounts.map((account, idx) => {
+		let fields: { [key: string]: string } = {};
+		let fieldCount = 0;
+
+		Object.entries(account.details).map(([key, value], idx) => {
+			fields[`field-${idx + 1}-name`] = key;
+			fields[`field-${idx + 1}-value`] = value.value;
+			++fieldCount;
+		});
+
+		if (fieldCount > totalFields) {
+			totalFields = fieldCount;
+			maxFieldsIndex = idx;
+		}
+
+		return {
+			title: account.title,
+			...fields,
+		};
+	});
+
+	const csvRows = [];
+	const headers = Object.keys(accountData[maxFieldsIndex]);
+	csvRows.push(headers.join(','));
+
+	accountData.forEach((data: { [key: string]: string }) => {
+		const values = headers.map((header) =>
+			data[header] ? `"${data[header]}"` : ''
+		);
+		csvRows.push(values.join(','));
+	});
+
+	return csvRows.join('\n');
+	// const csv = new Blob([csvString], { type: 'text/csv' });
+	// const csvUrl = URL.createObjectURL(csv);
+}

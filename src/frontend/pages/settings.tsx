@@ -1,17 +1,47 @@
-import { useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 
 import TextInput from '../components/text-input';
 import Button from '../components/button';
 import { ArrowToDrive, FloppyDisk } from '../components/icons';
 
-import { updatePasscode } from '../utils/helpers';
+import { generateAccountsCSV, updatePasscode } from '../utils/helpers';
 import { useFlashStore } from '../utils/stores/flash-store';
 
 export default function Settings() {
 	const setFlash = useFlashStore((state) => state.setFlash);
 
 	const formRef = useRef<HTMLFormElement>(null);
+	const csvAnchorRef = useRef<HTMLAnchorElement>(null);
+
+	const generateCSV = useCallback(() => {
+		try {
+			generateAccountsCSV()
+				.then((csvString) => {
+					const csv = new Blob([csvString], { type: 'text/csv' });
+					const csvUrl = URL.createObjectURL(csv);
+
+					if (csvAnchorRef.current) {
+						csvAnchorRef.current.href = csvUrl;
+					}
+				})
+				.catch((_error) => {
+					setFlash({
+						error: true,
+						text: 'Could not generate CSV',
+					});
+				});
+		} catch (_error) {
+			setFlash({
+				error: true,
+				text: 'Something went wrong',
+			});
+		}
+	}, []);
+
+	useEffect(() => {
+		generateCSV();
+	}, []);
 
 	const formSubmissionHandler = (event: React.FormEvent<HTMLFormElement>) => {
 		try {
@@ -91,10 +121,16 @@ export default function Settings() {
 						text='Export Data'
 						icon={ArrowToDrive}
 						iconPosition='left'
-						onClick={() => {}}
+						onClick={() => csvAnchorRef.current?.click()}
 						hover
 						hoverTextColor='accent'
 						hoverBgColor='foreground'
+					/>
+					<a
+						ref={csvAnchorRef}
+						href=''
+						className='hidden'
+						download={'credentials.csv'}
 					/>
 				</span>
 				<div className='mt-auto font-black text-lg leading-normal tracking-tighter'>

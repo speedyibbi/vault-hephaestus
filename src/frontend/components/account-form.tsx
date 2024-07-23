@@ -35,9 +35,9 @@ export default function AccountForm({
 	);
 
 	const formSubmissionHandler = (event: React.FormEvent<HTMLFormElement>) => {
-		event.preventDefault();
-
 		try {
+			event.preventDefault();
+
 			const formData = new FormData(event.currentTarget);
 			const data = Object.fromEntries(formData.entries());
 

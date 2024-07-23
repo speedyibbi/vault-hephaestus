@@ -1,5 +1,5 @@
 import { app } from 'electron';
-import Database from 'better-sqlite3';
+import Database from 'better-sqlite3-multiple-ciphers';
 import path from 'path';
 
 import {
@@ -24,19 +24,23 @@ const dbPath = path.resolve(path.join(app.getPath('userData')), 'database.db');
 
 const db = new Database(dbPath);
 
-// todo: have an actual secret key
+function openConnection(key: string) {
+	try {
+		db.key(Buffer.from(key || ''));
 
-function openConnection() {
-	db.pragma(`key = "${'secretKey'}"`);
+		db.exec(createAccountsTable);
+		db.exec(createFieldsTable);
+		db.exec(createAccountsAuditTable);
+		db.exec(createFieldsAuditTable);
+		db.exec(createAccountsUpdateAuditTrigger);
+		db.exec(createAccountsDeleteAuditTrigger);
+		db.exec(createFieldsUpdateAuditTrigger);
+		db.exec(createFieldsDeleteAuditTrigger);
 
-	db.exec(createAccountsTable);
-	db.exec(createFieldsTable);
-	db.exec(createAccountsAuditTable);
-	db.exec(createFieldsAuditTable);
-	db.exec(createAccountsUpdateAuditTrigger);
-	db.exec(createAccountsDeleteAuditTrigger);
-	db.exec(createFieldsUpdateAuditTrigger);
-	db.exec(createFieldsDeleteAuditTrigger);
+		return { accessGranted: true };
+	} catch (_error) {
+		return { accessGranted: false };
+	}
 }
 
 function closeConnection() {

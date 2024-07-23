@@ -44,7 +44,7 @@ export default function AccountInfoPanelDataItem({
 					{name}
 				</p>
 				<p className='w-80 font-medium text-xl text-foreground leading-normal tracking-tighter overflow-ellipsis overflow-hidden'>
-					{valueHidden ? Array(value.length).fill('*').join('') : value}
+					{valueHidden ? Array(value.length).fill('•').join('') : value}
 				</p>
 			</span>
 			<span>

@@ -12,6 +12,7 @@ const createWindow = (): void => {
 	const mainWindow = new BrowserWindow({
 		height: 720,
 		width: 1280,
+		fullscreen: true,
 		webPreferences: {
 			preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
 			devTools: !app.isPackaged,
@@ -23,8 +24,9 @@ const createWindow = (): void => {
 
 app.on('ready', () => {
 	try {
-		db.openConnection();
-
+		ipcMain.handle('accessApplication', (_event, passcode) =>
+			JSON.stringify(db.openConnection(passcode))
+		);
 		ipcMain.handle('exitApplication', () => app.quit());
 		ipcMain.handle('saveAccount', (_event, data: string) => {
 			const parsedData = JSON.parse(data);

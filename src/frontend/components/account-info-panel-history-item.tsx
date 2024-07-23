@@ -40,7 +40,7 @@ export default function AccountInfoPanelHistoryItem({ date, details }: Props) {
 						<p className='w-40 whitespace-normal break-all'>{key}</p>
 						<p className='w-40 text-foreground whitespace-normal break-all'>
 							{value.sensitive && valueHidden
-								? Array(value.value.length).fill('*').join('')
+								? Array(value.value.length).fill('•').join('')
 								: value.value}
 						</p>
 					</Fragment>

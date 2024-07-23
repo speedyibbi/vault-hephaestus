@@ -1,6 +1,7 @@
 declare global {
 	interface Window {
 		electron: {
+			accessApplication: (passcode: string) => Promise<string>;
 			exitApplication: () => void;
 			saveAccount: (data: string) => Promise<string>;
 			loadAccounts: () => Promise<string>;

@@ -1,6 +1,7 @@
 interface Props {
 	id?: string;
 	name?: string;
+	type?: string;
 	placeholderText?: string;
 	textAlign?: 'left' | 'center' | 'right';
 	onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -11,6 +12,7 @@ interface Props {
 export default function TextInput({
 	id,
 	name,
+	type,
 	placeholderText,
 	textAlign = 'left',
 	onChange,
@@ -25,7 +27,7 @@ export default function TextInput({
 			<input
 				id={id}
 				name={name}
-				type='text'
+				type={type || 'text'}
 				onChange={onChange}
 				defaultValue={defaultValue}
 				placeholder={placeholderText}

@@ -33,7 +33,7 @@ export default function Settings() {
 				return;
 			}
 
-			updatePasscode(data.passcode as string)
+			updatePasscode(passcode)
 				.then(({ updated }) => {
 					if (updated) {
 						setFlash({ error: false, text: 'Passcode updated successfully' });
@@ -61,6 +61,7 @@ export default function Settings() {
 			className='w-full h-full'
 		>
 			<form
+				ref={formRef}
 				onSubmit={formSubmissionHandler}
 				className='w-128 h-full flex flex-col place-content-start place-items-start gap-10'
 			>

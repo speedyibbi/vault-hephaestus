@@ -10,4 +10,6 @@ contextBridge.exposeInMainWorld('electron', {
 		ipcRenderer.invoke('updateAccountFavouriteStatus', data),
 	removeAccount: (accountId: string) =>
 		ipcRenderer.invoke('removeAccount', accountId),
+	updatePasscode: (passcode: string) =>
+		ipcRenderer.invoke('updatePasscode', passcode),
 });

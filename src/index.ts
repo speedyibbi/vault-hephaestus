@@ -47,6 +47,9 @@ app.on('ready', () => {
 		ipcMain.handle('removeAccount', (_event, accountId: string) =>
 			JSON.stringify(db.app.deleteAccount(accountId))
 		);
+		ipcMain.handle('updatePasscode', (_event, passcode: string) =>
+			JSON.stringify(db.updateDatabaseEncryptionKey(passcode))
+		);
 
 		createWindow();
 	} catch (error) {

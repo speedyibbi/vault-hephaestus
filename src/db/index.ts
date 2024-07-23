@@ -47,6 +47,16 @@ function closeConnection() {
 	db.close();
 }
 
+function updateDatabaseEncryptionKey(key: string) {
+	try {
+		db.rekey(Buffer.from(key || ''));
+
+		return { updated: true };
+	} catch (_error) {
+		return { updated: false };
+	}
+}
+
 function addAccount(account: IAccountData) {
 	try {
 		const { valid, error } = validateAccount(account);
@@ -315,6 +325,7 @@ export default {
 	db: db,
 	openConnection,
 	closeConnection,
+	updateDatabaseEncryptionKey,
 	app: {
 		addAccount,
 		updateAccount,

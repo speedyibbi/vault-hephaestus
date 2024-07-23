@@ -18,6 +18,10 @@ export async function updateAccountFavouriteStatus(data: IAccountData) {
 	);
 }
 
+export async function updatePasscode(passcode: string) {
+	return JSON.parse(await window.electron.updatePasscode(passcode));
+}
+
 export async function removeAccount(accountId: string) {
 	return JSON.parse(await window.electron.removeAccount(accountId));
 }

@@ -1,5 +1,6 @@
 interface Props {
 	text: string;
+	type?: 'button' | 'submit' | 'reset';
 	icon?: ({ className }: { className: string }) => JSX.Element;
 	iconPosition?: 'left' | 'right';
 	onClick?: () => void;
@@ -13,6 +14,7 @@ interface Props {
 
 export default function Button({
 	text,
+	type = 'button',
 	icon,
 	iconPosition = 'right',
 	onClick = () => {},
@@ -25,7 +27,7 @@ export default function Button({
 }: Props) {
 	return (
 		<button
-			type='button'
+			type={type}
 			disabled={disabled}
 			onClick={onClick}
 			className={`px-5 py-2 flex place-content-start place-items-center gap-3 font-medium text-base leading-none tracking-tighter border-2 border-current rounded-md ${

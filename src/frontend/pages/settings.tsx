@@ -1,10 +1,56 @@
+import { useRef } from 'react';
 import { motion } from 'framer-motion';
 
 import TextInput from '../components/text-input';
 import Button from '../components/button';
 import { ArrowToDrive, FloppyDisk } from '../components/icons';
 
+import { updatePasscode } from '../utils/helpers';
+import { useFlashStore } from '../utils/stores/flash-store';
+
 export default function Settings() {
+	const setFlash = useFlashStore((state) => state.setFlash);
+
+	const formRef = useRef<HTMLFormElement>(null);
+
+	const formSubmissionHandler = (event: React.FormEvent<HTMLFormElement>) => {
+		try {
+			event.preventDefault();
+
+			const formData = new FormData(event.currentTarget);
+			const data = Object.fromEntries(formData.entries());
+
+			const passcode = data.passcode as string;
+			const passcodeConfirmation = data['passcode-confirmation'] as string;
+
+			if (passcode.length === 0) {
+				setFlash({ error: true, text: 'Passcode cannot be empty' });
+				return;
+			}
+
+			if (passcode !== passcodeConfirmation) {
+				setFlash({ error: true, text: 'Passcodes do not match' });
+				return;
+			}
+
+			updatePasscode(data.passcode as string)
+				.then(({ updated }) => {
+					if (updated) {
+						setFlash({ error: false, text: 'Passcode updated successfully' });
+					} else {
+						setFlash({ error: true, text: 'Passcode could not be updated' });
+					}
+
+					if (formRef.current) formRef.current.reset();
+				})
+				.catch(() => {
+					setFlash({ error: true, text: 'Trouble updating passcode' });
+				});
+		} catch (error) {
+			setFlash({ error: true, text: error.message });
+		}
+	};
+
 	return (
 		<motion.section
 			key='settings'
@@ -15,23 +61,27 @@ export default function Settings() {
 			className='w-full h-full'
 		>
 			<form
-				onSubmit={(event) => {
-					event.preventDefault();
-				}}
+				onSubmit={formSubmissionHandler}
 				className='w-128 h-full flex flex-col place-content-start place-items-start gap-10'
 			>
-				<TextInput id='passcode' name='passcode' placeholderText='Passcode' />
+				<TextInput
+					id='passcode'
+					name='passcode'
+					placeholderText='Passcode'
+					type='password'
+				/>
 				<TextInput
 					id='passcode-confirmation'
 					name='passcode-confirmation'
 					placeholderText='Confirm Passcode'
+					type='password'
 				/>
 				<span className='flex gap-6'>
 					<Button
+						type='submit'
 						text='Save Passcode'
 						icon={FloppyDisk}
 						iconPosition='left'
-						onClick={() => {}}
 						hover
 						hoverTextColor='accent'
 						hoverBgColor='foreground'

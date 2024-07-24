@@ -15,6 +15,7 @@ const config: ForgeConfig = {
 	packagerConfig: {
 		asar: true,
 		icon: './src/images/icon',
+		name: 'Vault Hephaestus',
 	},
 	rebuildConfig: {},
 	makers: [

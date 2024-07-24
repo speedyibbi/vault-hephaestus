@@ -1,4 +1,4 @@
-import { app, BrowserWindow, dialog, ipcMain } from 'electron';
+import { app, BrowserWindow, dialog, ipcMain, Menu } from 'electron';
 import db from './db';
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
@@ -19,6 +19,8 @@ const createWindow = (): void => {
 			devTools: !app.isPackaged,
 		},
 	});
+
+	mainWindow.setMenu(null);
 
 	mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 };

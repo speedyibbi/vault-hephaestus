@@ -4,6 +4,7 @@
 	"version": "1.0.0",
 	"description": "Credential Manager",
 	"main": ".webpack/main",
+	"icon": "./src/images/icon.png",
 	"scripts": {
 		"start": "electron-forge start",
 		"package": "electron-forge package",

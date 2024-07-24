@@ -13,6 +13,7 @@ const createWindow = (): void => {
 		height: 720,
 		width: 1280,
 		fullscreen: true,
+		icon: './images/icon.png',
 		webPreferences: {
 			preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
 			devTools: !app.isPackaged,

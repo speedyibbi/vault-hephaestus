@@ -20,6 +20,7 @@ const config: ForgeConfig = {
 	makers: [
 		new MakerSquirrel({
 			setupIcon: './src/images/icon.ico',
+			loadingGif: './src/images/loading.gif',
 		}),
 		new MakerZIP({}, ['darwin']),
 		new MakerRpm({

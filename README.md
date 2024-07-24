@@ -1,5 +1,7 @@
 # Vault Hephaestus
 
+<img src='src/images/icon.png' />
+
 Vault Hephaestus is a credential manager that securely manages and stores your account credentials, such as usernames, emails, and passwords. It also generates strong passwords for users and allows exporting credentials to a CSV file for backup purposes.
 
 > Built using Electron, React, Tailwind, and TypeScript.

@@ -59,7 +59,7 @@ export default function AccessPanel({ onAccessGranted = () => {} }: Props) {
 				type='password'
 				placeholderText='Enter Passcode'
 				textAlign='center'
-				style={{ width: '500px', transform: 'translateY(-96px)' }}
+				style={{ width: '500px', transform: 'translateY(-81px)' }}
 			/>
 		</motion.form>
 	);

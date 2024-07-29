@@ -8,6 +8,7 @@ module.exports = {
 				36: '9rem',
 				80: '20rem',
 				96: '24rem',
+				160: '40rem',
 				fit: 'fit-content',
 			},
 			width: {

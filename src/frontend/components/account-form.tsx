@@ -95,6 +95,7 @@ export default function AccountForm({
 						name='title'
 						placeholderText='Title'
 						defaultValue={account?.title}
+						style={{ minHeight: '48px' }}
 					/>
 					<FileImagePreviewInput
 						key={formResetCount}

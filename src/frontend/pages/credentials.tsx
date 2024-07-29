@@ -129,7 +129,7 @@ export default function Credentials() {
 				layout
 				className='w-full h-full relative flex flex-col place-content-start place-items-stretch gap-24'
 			>
-				<span className='w-full flex place-content-between place-items-center gap-12'>
+				<span className='min-w-160 w-full flex place-content-between place-items-center gap-12'>
 					<Searchbar
 						searchArray={accounts}
 						onSearch={(array: IAccount[]) => {

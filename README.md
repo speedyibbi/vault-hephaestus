@@ -13,7 +13,6 @@ Vault Hephaestus is a credential manager that securely manages and stores your a
 - [Usage](#usage)
 - [Contributing](#contributing)
 - [License](#license)
-- [Contact](#contact)
 
 ## Features
 

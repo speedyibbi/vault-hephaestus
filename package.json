@@ -1,7 +1,7 @@
 {
 	"name": "vault-hephaestus",
 	"productName": "vault-hephaestus",
-	"version": "1.0.0",
+	"version": "0.1.0",
 	"description": "Credential Manager",
 	"main": ".webpack/main",
 	"icon": "./src/images/icon.png",

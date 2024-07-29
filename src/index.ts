@@ -1,4 +1,4 @@
-import { app, BrowserWindow, dialog, ipcMain } from 'electron';
+import { app, BrowserWindow, dialog, ipcMain, Menu } from 'electron';
 import db from './db';
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
@@ -12,7 +12,6 @@ const createWindow = (): void => {
 	const mainWindow = new BrowserWindow({
 		height: 720,
 		width: 1280,
-		fullscreen: true,
 		icon: './images/icon.png',
 		webPreferences: {
 			preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
@@ -20,7 +19,7 @@ const createWindow = (): void => {
 		},
 	});
 
-	mainWindow.setMenu(null);
+	mainWindow.setMenu(new Menu());
 	mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 };
 

@@ -1,20 +1,33 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { motion } from 'framer-motion';
 
 import AccountItem from './account-item';
 
 interface Props {
 	accounts: IAccount[];
+	activeAccount: IAccount;
 	onAccountClick: (account: IAccount) => void;
+	disabled?: boolean;
 }
 
-export default function AccountItemList({ accounts, onAccountClick }: Props) {
+export default function AccountItemList({
+	accounts,
+	activeAccount,
+	onAccountClick,
+	disabled = false,
+}: Props) {
 	const contaninerRef = useRef<HTMLUListElement>(null);
-	const [activeAccount, setActiveAccount] = useState<number>(null);
 
 	const handleAccountClick = (idx: number, element: HTMLElement) => {
-		setActiveAccount((prevState) => (prevState === idx ? null : idx));
-		onAccountClick(accounts[idx]);
+		if (activeAccount) {
+			onAccountClick(
+				accounts[idx].account_id === activeAccount.account_id
+					? null
+					: accounts[idx]
+			);
+		} else {
+			onAccountClick(accounts[idx]);
+		}
 
 		setTimeout(() => {
 			if (contaninerRef.current) {
@@ -39,8 +52,13 @@ export default function AccountItemList({ accounts, onAccountClick }: Props) {
 					<AccountItem
 						key={account.account_id}
 						account={account}
-						active={idx === activeAccount}
+						active={
+							activeAccount
+								? accounts[idx].account_id === activeAccount.account_id
+								: false
+						}
 						onClick={handleAccountClick.bind(null, idx)}
+						disabled={disabled}
 					/>
 				))}
 			{accounts.length % 2 !== 0 && (

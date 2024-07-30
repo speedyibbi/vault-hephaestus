@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 
 import Searchbar from '../components/searchbar';
@@ -20,6 +20,7 @@ export default function Credentials() {
 	const [formAccount, setFormAccount] = useState<IAccount>(null);
 	const [infoPanelActive, setInfoPanelActive] = useState(false);
 	const [infoPanelKey, setInfoPanelKey] = useState(0);
+	const [infoPanelLoading, setInfoPanelLoading] = useState(false);
 
 	const getAccounts = async () => {
 		return loadAccounts()
@@ -48,24 +49,9 @@ export default function Credentials() {
 			});
 	};
 
-	const toggleInfoPanel = async (account: IAccount) => {
-		if (account !== null) setActiveAccount(account);
-
-		if (
-			infoPanelActive &&
-			account !== null &&
-			account.account_id !== activeAccount.account_id
-		) {
-			return;
-		}
-
-		setInfoPanelActive((isActive) => {
-			if (isActive) {
-				setActiveAccount(null);
-			}
-
-			return !isActive;
-		});
+	const toggleInfoPanel = (account: IAccount) => {
+		setActiveAccount(account);
+		setInfoPanelActive(account ? true : false);
 	};
 
 	const handleInfoPanelEdit = () => {
@@ -104,8 +90,7 @@ export default function Credentials() {
 
 		const handleResize = () => {
 			setInfoPanelKey((prevKey) => prevKey + 1);
-			setInfoPanelActive(false);
-			setActiveAccount(null);
+			toggleInfoPanel(null);
 		};
 
 		window.addEventListener('resize', handleResize);
@@ -165,7 +150,9 @@ export default function Credentials() {
 						<AccountItemList
 							key={JSON.stringify(searchedAccounts)}
 							accounts={searchedAccounts}
+							activeAccount={activeAccount}
 							onAccountClick={(account) => toggleInfoPanel(account)}
+							disabled={infoPanelLoading}
 						/>
 					) : (
 						<motion.span
@@ -190,6 +177,7 @@ export default function Credentials() {
 						onEdit={handleInfoPanelEdit}
 						onClose={() => toggleInfoPanel(null)}
 						onRemove={handleInfoPanelRemove}
+						setLoading={(loading) => setInfoPanelLoading(loading)}
 					/>
 				)}
 			</AnimatePresence>

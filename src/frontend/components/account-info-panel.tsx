@@ -15,6 +15,7 @@ interface Props {
 	onEdit?: () => void;
 	onClose?: () => void;
 	onRemove?: () => void;
+	setLoading?: (loading: boolean) => void;
 }
 
 export default function AccountInfoPanel({
@@ -22,6 +23,7 @@ export default function AccountInfoPanel({
 	onEdit = () => {},
 	onClose = () => {},
 	onRemove = () => {},
+	setLoading = () => {},
 }: Props) {
 	const [selectedSection, setSelectedSection] = useState('Data');
 	const [removalModalOpen, setRemovalModalOpen] = useState(false);
@@ -42,6 +44,12 @@ export default function AccountInfoPanel({
 			transition={{
 				duration: window.innerWidth < 1536 ? 0.15 : 0.45,
 				ease: 'easeOut',
+				onPlay: () => {
+					setLoading(true);
+				},
+				onComplete: () => {
+					setLoading(false);
+				},
 			}}
 			layout
 			className='2xl:max-w-xl p-12 absolute inset-0 2xl:relative transform 2xl:translate-x-12 flex flex-col place-content-start place-items-stretch gap-8 2xl:gap-16 bg-accent rounded-2xl opacity-0 overflow-hidden'

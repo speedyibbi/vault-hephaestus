@@ -11,6 +11,7 @@ interface Props {
 	active?: boolean;
 	onClick?: (element: HTMLElement) => void;
 	style?: React.CSSProperties;
+	disabled?: boolean;
 }
 
 export default function AccountItem({
@@ -18,6 +19,7 @@ export default function AccountItem({
 	active,
 	onClick = () => {},
 	style = {},
+	disabled = false,
 }: Props) {
 	const setFlash = useFlashStore((state) => state.setFlash);
 
@@ -70,9 +72,11 @@ export default function AccountItem({
 			style={style}
 		>
 			<button
+				disabled={disabled}
 				onClick={() => onClick(itemRef.current || undefined)}
 				className='w-full h-24 px-6 flex place-content-start place-items-center gap-6 border-2 border-transparent rounded-2xl group-hover:border-accent transition-colors duration-150'
 				style={{
+					color: 'var(--foreground)',
 					backgroundColor:
 						active !== undefined && active ? 'var(--accent)' : 'transparent',
 				}}

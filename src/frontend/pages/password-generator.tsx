@@ -69,7 +69,7 @@ export default function PasswordGenerator() {
 			animate={{ opacity: 1 }}
 			exit={{ opacity: 0 }}
 			transition={{ duration: 0.15, ease: 'easeOut' }}
-			className='h-full flex place-content-center place-items-center'
+			className='min-w-80 h-full flex place-content-center place-items-center'
 		>
 			<form
 				onSubmit={(event) => {
@@ -99,7 +99,7 @@ export default function PasswordGenerator() {
 						</button>
 					</span>
 				</div>
-				<div className='w-full flex place-content-center place-items-center gap-12'>
+				<div className='w-full flex flex-wrap place-content-center place-items-center gap-12'>
 					<span className='px-4 flex place-content-start place-items-center gap-3'>
 						<CheckboxInput
 							id='uppercase'

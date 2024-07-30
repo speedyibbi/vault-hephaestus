@@ -88,12 +88,12 @@ export default function Settings() {
 			animate={{ opacity: 1 }}
 			exit={{ opacity: 0 }}
 			transition={{ duration: 0.15, ease: 'easeOut' }}
-			className='w-full h-full'
+			className='min-w-80 max-w-lg w-full h-full'
 		>
 			<form
 				ref={formRef}
 				onSubmit={formSubmissionHandler}
-				className='w-128 h-full flex flex-col place-content-start place-items-start gap-10'
+				className='w-full h-full flex flex-col place-content-start place-items-start gap-10'
 			>
 				<TextInput
 					id='passcode'

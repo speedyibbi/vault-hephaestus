@@ -86,10 +86,10 @@ export default function AccountForm({
 			transition={{ duration: 0.15, ease: 'easeOut' }}
 			ref={formRef}
 			onSubmit={formSubmissionHandler}
-			className='w-full pr-24 relative overflow-hidden'
+			className='w-full 2xl:pr-24 relative overflow-hidden'
 		>
-			<div className='w-full h-full grid grid-rows-1 grid-cols-2 place-content-start place-items-stretch gap-24'>
-				<aside className='w-full pb-12 flex flex-col place-content-start place-items-start gap-12 overflow-x-hidden overflow-y-scroll'>
+			<div className='w-full h-full grid grid-rows-1 grid-cols-2 place-content-start place-items-stretch gap-8 2xl:gap-24'>
+				<aside className='w-full pb-12 flex flex-col place-content-start place-items-center lg:place-items-start gap-12 overflow-x-hidden overflow-y-scroll'>
 					<TextInput
 						id='title'
 						name='title'
@@ -111,7 +111,7 @@ export default function AccountForm({
 						Save
 					</button>
 				</aside>
-				<aside className='w-full pr-1 pb-12 flex flex-col place-content-start place-items-start gap-12 overflow-x-hidden overflow-y-scroll'>
+				<aside className='w-full 2xl:pr-1 pb-12 flex flex-col place-content-start place-items-start gap-12 overflow-x-hidden overflow-y-scroll'>
 					<Button
 						text='Add field'
 						icon={PlusCross}

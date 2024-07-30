@@ -101,9 +101,10 @@ export default function AccountInfoPanel({
 					<></>
 				)}
 			</AnimatePresence>
-			<div className='w-full mt-auto flex place-content-between place-items-end'>
-				<p className='font-medium text-base text-muted leading-none tracking-tighter'>
-					Last modified: {account && formatDateString(account?.updated_at)}
+			<div className='w-full mt-auto flex place-content-between place-items-end gap-3'>
+				<p className='font-medium text-base text-muted leading-none tracking-tighter whitespace-pre-line'>
+					Last modified:{' '}
+					<span>{account && formatDateString(account?.updated_at)}</span>
 				</p>
 				<Button
 					text='Remove'

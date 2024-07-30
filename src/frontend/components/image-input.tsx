@@ -15,7 +15,7 @@ export default function ImageInput({
 	imagePreview,
 }: Props) {
 	return (
-		<div className='w-full relative flex place-content-between place-items-center gap-6 text-foreground'>
+		<div className='w-full relative flex flex-col lg:flex-row place-content-between place-items-center gap-6 text-foreground'>
 			<FileInput
 				id={id}
 				name={name}

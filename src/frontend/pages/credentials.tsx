@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { animate, AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 
 import Searchbar from '../components/searchbar';
 import AccountForm from '../components/account-form';
@@ -13,13 +13,13 @@ import { useFlashStore } from '../utils/stores/flash-store';
 export default function Credentials() {
 	const setFlash = useFlashStore((state) => state.setFlash);
 
-	const infoPanelRef = useRef<HTMLDivElement>(null);
 	const [accounts, setAccounts] = useState<IAccount[]>([]);
 	const [searchedAccounts, setSearchedAccounts] = useState<IAccount[]>([]);
 	const [activeAccount, setActiveAccount] = useState<IAccount>(null);
 	const [showForm, setShowForm] = useState(false);
 	const [formAccount, setFormAccount] = useState<IAccount>(null);
 	const [infoPanelActive, setInfoPanelActive] = useState(false);
+	const [infoPanelKey, setInfoPanelKey] = useState(0);
 
 	const getAccounts = async () => {
 		return loadAccounts()
@@ -49,36 +49,23 @@ export default function Credentials() {
 	};
 
 	const toggleInfoPanel = async (account: IAccount) => {
-		if (infoPanelRef.current) {
-			if (account !== null) setActiveAccount(account);
+		if (account !== null) setActiveAccount(account);
 
-			if (
-				infoPanelActive &&
-				account !== null &&
-				account.account_id !== activeAccount.account_id
-			)
-				return;
-
-			await animate(
-				infoPanelRef.current,
-				{
-					width: infoPanelActive ? '0%' : '100%',
-					opacity: infoPanelActive ? 0 : 1,
-				},
-				{
-					duration: 0.45,
-					ease: 'easeOut',
-				}
-			);
-
-			setInfoPanelActive((isActive) => {
-				if (isActive) {
-					setActiveAccount(null);
-				}
-
-				return !isActive;
-			});
+		if (
+			infoPanelActive &&
+			account !== null &&
+			account.account_id !== activeAccount.account_id
+		) {
+			return;
 		}
+
+		setInfoPanelActive((isActive) => {
+			if (isActive) {
+				setActiveAccount(null);
+			}
+
+			return !isActive;
+		});
 	};
 
 	const handleInfoPanelEdit = () => {
@@ -114,6 +101,18 @@ export default function Credentials() {
 
 	useEffect(() => {
 		getAccounts();
+
+		const handleResize = () => {
+			setInfoPanelKey((prevKey) => prevKey + 1);
+			setInfoPanelActive(false);
+			setActiveAccount(null);
+		};
+
+		window.addEventListener('resize', handleResize);
+
+		return () => {
+			window.removeEventListener('resize', handleResize);
+		};
 	}, []);
 
 	return (
@@ -123,13 +122,13 @@ export default function Credentials() {
 			animate={{ opacity: 1 }}
 			exit={{ opacity: 0 }}
 			transition={{ duration: 0.15, ease: 'easeOut' }}
-			className='h-full flex place-content-between place-items-stretch'
+			className='h-full relative flex place-content-between place-items-stretch'
 		>
 			<motion.aside
 				layout
 				className='w-full h-full relative flex flex-col place-content-start place-items-stretch gap-24'
 			>
-				<span className='min-w-160 w-full flex place-content-between place-items-center gap-12'>
+				<span className='w-full flex place-content-between place-items-center gap-12'>
 					<Searchbar
 						searchArray={accounts}
 						onSearch={(array: IAccount[]) => {
@@ -183,12 +182,17 @@ export default function Credentials() {
 				</AnimatePresence>
 				<div className='w-full h-full absolute inset-0 bg-fade pointer-events-none' />
 			</motion.aside>
-			<AccountInfoPanel
-				ref={infoPanelRef}
-				account={activeAccount}
-				onEdit={handleInfoPanelEdit}
-				onRemove={handleInfoPanelRemove}
-			/>
+			<AnimatePresence>
+				{infoPanelActive && (
+					<AccountInfoPanel
+						key={infoPanelKey}
+						account={activeAccount}
+						onEdit={handleInfoPanelEdit}
+						onClose={() => toggleInfoPanel(null)}
+						onRemove={handleInfoPanelRemove}
+					/>
+				)}
+			</AnimatePresence>
 		</motion.section>
 	);
 }

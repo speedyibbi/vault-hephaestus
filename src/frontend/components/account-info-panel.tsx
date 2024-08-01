@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 
 import SectionSelector from './section-selector';
@@ -16,6 +16,8 @@ interface Props {
 	onClose?: () => void;
 	onRemove?: () => void;
 	setLoading?: (loading: boolean) => void;
+	onOutsideClick?: () => void;
+	outsideClickableElements?: HTMLElement[];
 }
 
 export default function AccountInfoPanel({
@@ -24,7 +26,10 @@ export default function AccountInfoPanel({
 	onClose = () => {},
 	onRemove = () => {},
 	setLoading = () => {},
+	onOutsideClick = () => {},
+	outsideClickableElements = null,
 }: Props) {
+	const panelRef = useRef(null);
 	const [selectedSection, setSelectedSection] = useState('Data');
 	const [removalModalOpen, setRemovalModalOpen] = useState(false);
 
@@ -36,8 +41,32 @@ export default function AccountInfoPanel({
 		setSelectedSection('Data');
 	}, [account]);
 
+	useEffect(() => {
+		const handleClickOutside = (event: MouseEvent) => {
+			if (panelRef.current && !panelRef.current.contains(event.target)) {
+				const elements = Array.from(outsideClickableElements);
+				let outsideClickable = true;
+
+				elements.forEach((element) => {
+					if (element.contains(event.target as Node)) {
+						outsideClickable = false;
+					}
+				});
+
+				outsideClickable && onOutsideClick();
+			}
+		};
+
+		document.addEventListener('click', handleClickOutside, true);
+
+		return () => {
+			document.removeEventListener('click', handleClickOutside, true);
+		};
+	}, []);
+
 	return (
 		<motion.aside
+			ref={panelRef}
 			initial={{ width: window.innerWidth < 1536 ? '100%' : 0, opacity: 0 }}
 			animate={{ width: '100%', opacity: 1 }}
 			exit={{ width: window.innerWidth < 1536 ? '100%' : 0, opacity: 0 }}

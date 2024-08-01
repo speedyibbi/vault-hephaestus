@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { ForwardedRef, forwardRef, useRef } from 'react';
 import { motion } from 'framer-motion';
 
 import AccountItem from './account-item';
@@ -10,13 +10,11 @@ interface Props {
 	disabled?: boolean;
 }
 
-export default function AccountItemList({
-	accounts,
-	activeAccount,
-	onAccountClick,
-	disabled = false,
-}: Props) {
-	const contaninerRef = useRef<HTMLUListElement>(null);
+function AccountItemList(
+	{ accounts, activeAccount, onAccountClick, disabled = false }: Props,
+	ref: ForwardedRef<HTMLUListElement>
+) {
+	const containerRef = useRef(null);
 
 	const handleAccountClick = (idx: number, element: HTMLElement) => {
 		if (activeAccount) {
@@ -30,8 +28,10 @@ export default function AccountItemList({
 		}
 
 		setTimeout(() => {
-			if (contaninerRef.current) {
-				contaninerRef.current.scrollTop =
+			if (ref && 'current' in ref && ref.current) {
+				ref.current.scrollTop = element.offsetTop - element.offsetHeight * 2;
+			} else if (containerRef.current) {
+				containerRef.current.scrollTop =
 					element.offsetTop - element.offsetHeight * 2;
 			}
 		}, 450);
@@ -39,7 +39,7 @@ export default function AccountItemList({
 
 	return (
 		<motion.ul
-			ref={contaninerRef}
+			ref={ref ?? containerRef}
 			initial={{ opacity: 0 }}
 			animate={{ opacity: 1 }}
 			exit={{ opacity: 0 }}
@@ -75,3 +75,5 @@ export default function AccountItemList({
 		</motion.ul>
 	);
 }
+
+export default forwardRef(AccountItemList);

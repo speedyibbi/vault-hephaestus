@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 
 import Searchbar from '../components/searchbar';
@@ -13,6 +13,7 @@ import { useFlashStore } from '../utils/stores/flash-store';
 export default function Credentials() {
 	const setFlash = useFlashStore((state) => state.setFlash);
 
+	const accountListRef = useRef(null);
 	const [accounts, setAccounts] = useState<IAccount[]>([]);
 	const [searchedAccounts, setSearchedAccounts] = useState<IAccount[]>([]);
 	const [activeAccount, setActiveAccount] = useState<IAccount>(null);
@@ -149,6 +150,7 @@ export default function Credentials() {
 					) : searchedAccounts.length > 0 ? (
 						<AccountItemList
 							key={JSON.stringify(searchedAccounts)}
+							ref={accountListRef}
 							accounts={searchedAccounts}
 							activeAccount={activeAccount}
 							onAccountClick={(account) => toggleInfoPanel(account)}
@@ -178,6 +180,8 @@ export default function Credentials() {
 						onClose={() => toggleInfoPanel(null)}
 						onRemove={handleInfoPanelRemove}
 						setLoading={(loading) => setInfoPanelLoading(loading)}
+						onOutsideClick={() => toggleInfoPanel(null)}
+						outsideClickableElements={accountListRef.current.children}
 					/>
 				)}
 			</AnimatePresence>

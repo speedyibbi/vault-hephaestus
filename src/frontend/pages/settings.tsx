@@ -1,11 +1,15 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 
 import TextInput from '../components/text-input';
 import Button from '../components/button';
 import { ArrowToDrive, FloppyDisk } from '../components/icons';
 
-import { generateAccountsCSV, updatePasscode } from '../utils/helpers';
+import {
+	generateAccountsCSV,
+	loadAccounts,
+	updatePasscode,
+} from '../utils/helpers';
 import { useFlashStore } from '../utils/stores/flash-store';
 
 export default function Settings() {
@@ -13,16 +17,24 @@ export default function Settings() {
 
 	const formRef = useRef<HTMLFormElement>(null);
 	const csvAnchorRef = useRef<HTMLAnchorElement>(null);
+	const [csvAvailable, setCsvAvailable] = useState(false);
 
-	const generateCSV = useCallback(() => {
+	const generateCSV = useCallback(async () => {
 		try {
-			generateAccountsCSV()
+			const accounts: IAccount[] = await loadAccounts();
+
+			if (accounts.length === 0) {
+				return;
+			}
+
+			generateAccountsCSV(accounts)
 				.then((csvString) => {
 					const csv = new Blob([csvString], { type: 'text/csv' });
 					const csvUrl = URL.createObjectURL(csv);
 
 					if (csvAnchorRef.current) {
 						csvAnchorRef.current.href = csvUrl;
+						setCsvAvailable(true);
 					}
 				})
 				.catch((_error) => {
@@ -122,6 +134,7 @@ export default function Settings() {
 						icon={ArrowToDrive}
 						iconPosition='left'
 						onClick={() => csvAnchorRef.current?.click()}
+						disabled={!csvAvailable}
 						hover
 						hoverTextColor='accent'
 						hoverBgColor='foreground'

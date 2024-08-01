@@ -134,9 +134,7 @@ export function generatePassword(options: {
 	return password;
 }
 
-export async function generateAccountsCSV() {
-	const accounts: IAccount[] = await loadAccounts();
-
+export async function generateAccountsCSV(accounts: IAccount[]) {
 	let totalFields = 0;
 	let maxFieldsIndex = 0;
 

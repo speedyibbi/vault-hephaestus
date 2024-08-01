@@ -66,7 +66,7 @@ export default function AccountInfoPanel({
 						<Image className='w-8 2xl:w-16 absolute inset-1/2 transform -translate-x-1/2 -translate-y-1/2 stroke-current' />
 					</span>
 				)}
-				<span className='w-full flex flex-row 2xl:flex-col place-content-start 2xl:place-content-center place-items-center 2xl:place-items-start gap-3'>
+				<span className='flex-grow flex flex-row 2xl:flex-col place-content-start 2xl:place-content-center place-items-center 2xl:place-items-start gap-3'>
 					<p className='mr-auto 2xl:mr-0 font-medium text-3xl text-foreground leading-none tracking-tighter'>
 						{account?.title}
 					</p>

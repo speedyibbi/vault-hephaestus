@@ -127,10 +127,33 @@ export default function Credentials() {
 							setShowForm((formState) => !formState);
 							setFormAccount(null);
 						}}
-						className={`p-4 rounded-2xl transition-colors duration-150 ${
-							!infoPanelActive ? 'hover:bg-accent' : ''
-						}`}
+						className='px-5 py-2 flex place-content-start place-items-center gap-3 font-medium text-base hover:text-background leading-none tracking-tighter border-2 border-current hover:border-foreground hover:bg-foreground rounded-md transition-colors duration-150 overflow-hidden'
 					>
+						<AnimatePresence mode='wait'>
+							{!showForm ? (
+								<motion.span
+									key='addItem'
+									initial={{ y: '150%' }}
+									animate={{ y: 0 }}
+									exit={{ y: '-150%' }}
+									transition={{ duration: 0.15, ease: 'anticipate' }}
+									className='w-16'
+								>
+									Add Item
+								</motion.span>
+							) : (
+								<motion.span
+									key='goBack'
+									initial={{ y: '150%' }}
+									animate={{ y: 0 }}
+									exit={{ y: '-150%' }}
+									transition={{ duration: 0.15, ease: 'anticipate' }}
+									className='w-16'
+								>
+									Go Back
+								</motion.span>
+							)}
+						</AnimatePresence>
 						<motion.span
 							initial={{ rotateZ: '0deg' }}
 							animate={{ rotateZ: showForm ? '45deg' : '0deg' }}

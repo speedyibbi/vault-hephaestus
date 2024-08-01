@@ -5,6 +5,7 @@ import Searchbar from '../components/searchbar';
 import AccountForm from '../components/account-form';
 import AccountItemList from '../components/account-item-list';
 import AccountInfoPanel from '../components/account-info-panel';
+import Button from '../components/button';
 import { PlusCross } from '../components/icons';
 
 import { loadAccounts, removeAccount } from '../utils/helpers';
@@ -114,56 +115,58 @@ export default function Credentials() {
 				layout
 				className='w-full h-full relative flex flex-col place-content-start place-items-stretch gap-24'
 			>
-				<span className='w-full flex place-content-between place-items-center gap-12'>
-					<Searchbar
-						searchArray={accounts}
-						onSearch={(array: IAccount[]) => {
-							setSearchedAccounts(array);
-						}}
-					/>
-					<button
-						disabled={infoPanelActive}
-						onClick={() => {
-							setShowForm((formState) => !formState);
-							setFormAccount(null);
-						}}
-						className='px-5 py-2 flex place-content-start place-items-center gap-3 font-medium text-base hover:text-background leading-none tracking-tighter border-2 border-current hover:border-foreground hover:bg-foreground rounded-md transition-colors duration-150 overflow-hidden'
-					>
-						<AnimatePresence mode='wait'>
-							{!showForm ? (
-								<motion.span
-									key='addItem'
-									initial={{ y: '150%' }}
-									animate={{ y: 0 }}
-									exit={{ y: '-150%' }}
-									transition={{ duration: 0.15, ease: 'anticipate' }}
-									className='w-16'
-								>
-									Add Item
-								</motion.span>
-							) : (
-								<motion.span
-									key='goBack'
-									initial={{ y: '150%' }}
-									animate={{ y: 0 }}
-									exit={{ y: '-150%' }}
-									transition={{ duration: 0.15, ease: 'anticipate' }}
-									className='w-16'
-								>
-									Go Back
-								</motion.span>
-							)}
-						</AnimatePresence>
-						<motion.span
-							initial={{ rotateZ: '0deg' }}
-							animate={{ rotateZ: showForm ? '45deg' : '0deg' }}
-							exit={{ rotateZ: '0deg' }}
-							className='block'
+				{searchedAccounts.length > 0 && (
+					<span className='w-full flex place-content-between place-items-center gap-12'>
+						<Searchbar
+							searchArray={accounts}
+							onSearch={(array: IAccount[]) => {
+								setSearchedAccounts(array);
+							}}
+						/>
+						<button
+							disabled={infoPanelActive}
+							onClick={() => {
+								setShowForm((formState) => !formState);
+								setFormAccount(null);
+							}}
+							className='px-5 py-2 flex place-content-start place-items-center gap-3 font-medium text-base hover:text-background leading-none tracking-tighter border-2 border-current hover:border-foreground hover:bg-foreground rounded-md transition-colors duration-150 overflow-hidden'
 						>
-							<PlusCross className='w-5 stroke-current' />
-						</motion.span>
-					</button>
-				</span>
+							<AnimatePresence mode='wait'>
+								{!showForm ? (
+									<motion.span
+										key='addItem'
+										initial={{ y: '150%' }}
+										animate={{ y: 0 }}
+										exit={{ y: '-150%' }}
+										transition={{ duration: 0.15, ease: 'anticipate' }}
+										className='w-16'
+									>
+										Add Item
+									</motion.span>
+								) : (
+									<motion.span
+										key='goBack'
+										initial={{ y: '150%' }}
+										animate={{ y: 0 }}
+										exit={{ y: '-150%' }}
+										transition={{ duration: 0.15, ease: 'anticipate' }}
+										className='w-16'
+									>
+										Go Back
+									</motion.span>
+								)}
+							</AnimatePresence>
+							<motion.span
+								initial={{ rotateZ: '0deg' }}
+								animate={{ rotateZ: showForm ? '45deg' : '0deg' }}
+								exit={{ rotateZ: '0deg' }}
+								className='block'
+							>
+								<PlusCross className='w-5 stroke-current' />
+							</motion.span>
+						</button>
+					</span>
+				)}
 				<AnimatePresence mode='wait'>
 					{showForm ? (
 						<AccountForm
@@ -186,9 +189,16 @@ export default function Credentials() {
 							animate={{ opacity: 1 }}
 							exit={{ opacity: 0 }}
 							transition={{ duration: 0.15, ease: 'easeOut' }}
-							className='w-full h-full flex place-content-center place-items-center font-medium text-xl leading-none tracking-tighter'
+							className='w-full h-full flex flex-col place-content-center place-items-center gap-6 font-medium text-xl leading-none tracking-tighter'
 						>
 							No items
+							<Button
+								text='Add Item'
+								onClick={() => setShowForm(true)}
+								hover
+								hoverTextColor='accent'
+								hoverBgColor='foreground'
+							/>
 						</motion.span>
 					)}
 				</AnimatePresence>

@@ -6,17 +6,23 @@ import { Copy, RoundAboutArrows } from '../components/icons';
 
 import { generatePassword } from '../utils/helpers';
 import { useFlashStore } from '../utils/stores/flash-store';
+import { usePasswordStore } from '../utils/stores/password-store';
 
 export default function PasswordGenerator() {
+	const password = usePasswordStore((state) => state.password);
+	const passwordIndex = usePasswordStore((state) => state.passwordIndex);
+	const setPassword = usePasswordStore((state) => state.setPassword);
+	const incrementPasswordIndex = usePasswordStore(
+		(state) => state.incrementPasswordIndex
+	);
 	const setFlash = useFlashStore((state) => state.setFlash);
 
-	const [passwordValue, setPasswordValue] = useState('');
 	const [charactersValue, setCharactersValue] = useState(16);
 
 	const copyHandler = () => {
 		try {
 			navigator.clipboard
-				.writeText(passwordValue)
+				.writeText(password)
 				.then(() => {
 					setFlash({ error: false, text: `Generated password copied` });
 				})
@@ -41,7 +47,8 @@ export default function PasswordGenerator() {
 				specialChars: Boolean(data.specialChars),
 			});
 
-			setPasswordValue(password);
+			setPassword(password);
+			incrementPasswordIndex();
 		} catch (error) {
 			setFlash({ error: true, text: error.message });
 		}
@@ -49,16 +56,19 @@ export default function PasswordGenerator() {
 
 	useEffect(() => {
 		try {
-			setPasswordValue(
-				generatePassword({
-					length: charactersValue,
-					uppercase: true,
-					lowercase: true,
-				})
-			);
+			if (passwordIndex === 0) {
+				setPassword(
+					generatePassword({
+						length: charactersValue,
+						uppercase: true,
+						lowercase: true,
+					})
+				);
+				incrementPasswordIndex();
+			}
 		} catch (error) {
 			setFlash({ error: true, text: error.message });
-			setPasswordValue('');
+			setPassword('');
 		}
 	}, []);
 
@@ -81,7 +91,7 @@ export default function PasswordGenerator() {
 			>
 				<div className='min-w-96 max-w-xl w-full h-12 px-6 relative flex place-content-center place-items-center gap-3 text-muted rounded-2xl bg-accent select-all'>
 					<p className='flex-grow font-medium text-xl text-center leading-none tracking-tighter overflow-x-scroll appearance-none'>
-						{passwordValue}
+						{password}
 					</p>
 					<button
 						type='button'

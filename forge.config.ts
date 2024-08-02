@@ -34,6 +34,10 @@ const config: ForgeConfig = {
 				icon: './src/images/icon@2x.png',
 			},
 		}),
+		{
+			name: '@electron-addons/electron-forge-maker-nsis',
+			config: {},
+		},
 	],
 	plugins: [
 		new AutoUnpackNativesPlugin({}),

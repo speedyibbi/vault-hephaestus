@@ -1,6 +1,6 @@
 {
 	"name": "vault-hephaestus",
-	"productName": "vault-hephaestus",
+	"productName": "Vault Hephaestus",
 	"version": "0.1.0",
 	"description": "Credential Manager",
 	"main": ".webpack/main",
@@ -59,10 +59,32 @@
 		"typescript": "~4.5.4"
 	},
 	"dependencies": {
+		"@electron-addons/electron-forge-maker-nsis": "^7.0.2",
 		"better-sqlite3-multiple-ciphers": "^11.1.2",
 		"electron-squirrel-startup": "^1.0.1",
 		"react": "^18.3.1",
 		"react-dom": "^18.3.1",
 		"zustand": "^4.5.4"
+	},
+	"build": {
+		"asar": true,
+		"nsis": {
+			"shortcutName": "Vault Hephaestus",
+			"license": "./LICENSE",
+			"installerIcon": "./src/images/icon.ico",
+			"uninstallerIcon": "./src/images/icon.ico",
+			"uninstallDisplayName": "Vault Hephaestus x64 0.1.0",
+			"oneClick": false,
+			"allowElevation": true,
+			"allowToChangeInstallationDirectory": true,
+			"createDesktopShortcut": true,
+			"createStartMenuShortcut": true,
+			"deleteAppDataOnUninstall": true
+		},
+		"win": {
+			"target": [
+				"nsis"
+			]
+		}
 	}
 }

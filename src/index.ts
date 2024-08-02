@@ -19,7 +19,7 @@ const createWindow = (): void => {
 		},
 	});
 
-	// mainWindow.setMenu(new Menu());
+	mainWindow.setMenu(new Menu());
 	mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 };
 

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Tick } from './icons';
 
@@ -6,10 +6,20 @@ interface Props {
 	id?: string;
 	name?: string;
 	defaultChecked?: boolean;
+	onChange?: (checked: boolean) => void;
 }
 
-export default function CheckboxInput({ id, name, defaultChecked }: Props) {
+export default function CheckboxInput({
+	id,
+	name,
+	defaultChecked,
+	onChange = () => {},
+}: Props) {
 	const [checked, setChecked] = useState(defaultChecked ?? false);
+
+	useEffect(() => {
+		onChange(checked);
+	}, [checked]);
 
 	return (
 		<label className='relative text-foreground leading-none cursor-pointer'>

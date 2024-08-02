@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import TextInput from './text-input';
 import CheckboxInput from './checkbox-input';
 import { PlusCross } from './icons';
+import { useState } from 'react';
 
 interface Props {
 	id?: string;
@@ -21,6 +22,12 @@ export default function AccountFormAdditionalField({
 	defaultChecked,
 	onCross,
 }: Props) {
+	const [sensitive, setSensitive] = useState(defaultChecked ?? false);
+
+	const handleCheckboxChange = (checkboxChecked: boolean) => {
+		setSensitive(checkboxChecked);
+	};
+
 	return (
 		<motion.div
 			initial={{ opacity: 0 }}
@@ -39,6 +46,7 @@ export default function AccountFormAdditionalField({
 			<TextInput
 				id={`${id}-value`}
 				name={`${name}-value`}
+				type={sensitive ? 'password' : 'text'}
 				placeholderText='Value'
 				defaultValue={defaultValue}
 			/>
@@ -47,6 +55,7 @@ export default function AccountFormAdditionalField({
 					id={`${id}-sensitive`}
 					name={`${name}-sensitive`}
 					defaultChecked={defaultChecked}
+					onChange={handleCheckboxChange}
 				/>
 				<p className='font-medium text-xl leading-none tracking-tighter'>
 					Sensitive

@@ -25,7 +25,7 @@ Vault Hephaestus is a credential manager that securely manages and stores your a
 To install and set up Vault Hephaestus, follow these steps:
 
 1. Clone the repository:
-   `bash git clone https://github.com/speedyibbi/vault-hephaestus.git`
+   `git clone https://github.com/speedyibbi/vault-hephaestus.git`
    `cd vault-hephaestus`
 
 2. Install dependencies: `npm install`
